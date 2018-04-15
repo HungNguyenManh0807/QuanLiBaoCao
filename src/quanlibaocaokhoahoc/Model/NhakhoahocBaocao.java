@@ -16,7 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-
+// vi du ty ve git hub
 /**
  *
  * @author Hung Nguyen
@@ -29,13 +29,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "NhakhoahocBaocao.findByIDBaoCao", query = "SELECT n FROM NhakhoahocBaocao n WHERE n.nhakhoahocBaocaoPK.iDBaoCao = :iDBaoCao")
     , @NamedQuery(name = "NhakhoahocBaocao.findByIDNguoiNghienCuu", query = "SELECT n FROM NhakhoahocBaocao n WHERE n.nhakhoahocBaocaoPK.iDNguoiNghienCuu = :iDNguoiNghienCuu")})
 public class NhakhoahocBaocao implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected NhakhoahocBaocaoPK nhakhoahocBaocaoPK;
     @JoinColumn(name = "IDVaiTro", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false)
-    @JoinColumn(name ="IDChucDanh", referencedColumnName = "IDba")
+//    @JoinColumn(name ="IDChucDanh", referencedColumnName = "IDba")
     private Vaitro iDVaiTro;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "nhakhoahocBaocao")
     private Baocao baocao;
