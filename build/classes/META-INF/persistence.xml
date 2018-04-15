@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="QuanLiBaoCaoKhoaHocPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>quanlibaocaokhoahoc.controller.Model.Chucdanh</class>
+    <class>quanlibaocaokhoahoc.controller.Model.Vaitro</class>
+    <class>quanlibaocaokhoahoc.controller.Model.Nhakhoahoc</class>
+    <class>quanlibaocaokhoahoc.controller.Model.Linhvuc</class>
+    <class>quanlibaocaokhoahoc.controller.Model.NhakhoahocBaocao</class>
+    <class>quanlibaocaokhoahoc.controller.Model.Nguoidung</class>
+    <class>quanlibaocaokhoahoc.controller.Model.Baocao</class>
+    <class>quanlibaocaokhoahoc.controller.Model.Loaibaocao</class>
+    <class>quanlibaocaokhoahoc.controller.Model.Coquan</class>
+    <class>quanlibaocaokhoahoc.Model.Nguoidung</class>
+    <class>quanlibaocaokhoahoc.Model.Baocao</class>
+    <class>quanlibaocaokhoahoc.Model.Chucdanh</class>
+    <class>quanlibaocaokhoahoc.Model.Coquan</class>
+    <class>quanlibaocaokhoahoc.Model.Linhvuc</class>
+    <class>quanlibaocaokhoahoc.Model.Loaibaocao</class>
+    <class>quanlibaocaokhoahoc.Model.Nhakhoahoc</class>
+    <class>quanlibaocaokhoahoc.Model.NhakhoahocBaocao</class>
+    <class>quanlibaocaokhoahoc.Model.Vaitro</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/quanlibaocao?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="QuanLiBaoCaoKhoaHocPU2" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/quanlibaocao?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+</persistence>
