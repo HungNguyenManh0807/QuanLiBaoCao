@@ -7,10 +7,6 @@ package quanlibaocaokhoahoc.View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import quanlibaocaokhoahoc.Model.Nguoidung;
 
 /**
  *
@@ -21,15 +17,12 @@ public class Form_ManageThesis extends javax.swing.JFrame {
     /**
      * Creates new form Form_Manage
      */
-    private ArrayList<Nguoidung> list;
-    DefaultTableModel model;
-    private int flag = 1;
+  
 
     public Form_ManageThesis() {
         initComponents();
         createAndShow();
-        list = new ArrayList<>();
-        model = (DefaultTableModel) jTable1.getModel();
+      
 
     }
 
@@ -41,10 +34,7 @@ public class Form_ManageThesis extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         btn_Add = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txt_User = new javax.swing.JTextField();
@@ -64,8 +54,8 @@ public class Form_ManageThesis extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-
-        jTextField1.setText("jTextField1");
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -73,23 +63,6 @@ public class Form_ManageThesis extends javax.swing.JFrame {
         jLabel1.setText("List Thesises");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(360, 10, 120, 60);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "STT", "ID", "Name", "Resume", "Time", "Url", "Type", "Field"
-            }
-        ));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(0, 50, 770, 170);
 
         btn_Add.setText("Add Thesis");
         btn_Add.addActionListener(new java.awt.event.ActionListener() {
@@ -186,68 +159,73 @@ public class Form_ManageThesis extends javax.swing.JFrame {
         getContentPane().add(jLabel7);
         jLabel7.setBounds(20, 380, 22, 14);
 
+        jScrollPane3.setViewportView(jTable2);
+
+        getContentPane().add(jScrollPane3);
+        jScrollPane3.setBounds(0, 50, 810, 170);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        // TODO add your handling code here:
-//
-//        Nguoidung n = new Nguoidung();
-//       
-//        if(txt_User.getText().equals("")||txt_password.getText().equals("")||txt_right.getText().equals("") ){
-//            JOptionPane.showMessageDialog(rootPane, "Please fill all before ");
-//        
-//        }else{
-//             //n.getId(); when connection with dtb
-//        n.setUsername(txt_User.getText());
-//        n.setPassword(txt_password.getText());
-//        n.setQuyenHan(Integer.parseInt(txt_right.getText()));
-//         list.add(n);
-//        showResult();
-//        }
-       
-//        if (flag == 1) {
-//            btn_Add.setEnabled(true);
-//            flag = 2;
-//           
-//        } else {
-//            btn_Add.setEnabled(false);
-//        }
-    }//GEN-LAST:event_btn_AddActionPerformed
-
-    private void txt_UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_UserActionPerformed
-
-    private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
-//        if (flag == 2) {
-//            setEnabled(true);
-//            flag = 1;
-//        } else {
-//            setEnabled(false);
-//        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_SaveActionPerformed
     int i = 1;
 
-    public void showResult() {
-        Nguoidung n = list.get(list.size() - 1);
-        model.addRow(new Object[]{
-            i++, n.getUsername(), n.getPassword(), n.getQuyenHan()
+//    public void showResult() {
+//        Nguoidung n = list.get(list.size() - 1);
+//        model.addRow(new Object[]{
+//            i++, n.getUsername(), n.getPassword(), n.getQuyenHan()
+//
+//        });
+//
+//    }
 
-        });
 
-    }
-
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
+        //        if (flag == 2) {
+            //            setEnabled(true);
+            //            flag = 1;
+            //        } else {
+            //            setEnabled(false);
+            //        }
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_btn_SaveActionPerformed
+
+    private void txt_UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_UserActionPerformed
+
+    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
+        // TODO add your handling code here:
+        //
+        //        Nguoidung n = new Nguoidung();
+        //
+        //        if(txt_User.getText().equals("")||txt_password.getText().equals("")||txt_right.getText().equals("") ){
+            //            JOptionPane.showMessageDialog(rootPane, "Please fill all before ");
+            //
+            //        }else{
+            //             //n.getId(); when connection with dtb
+            //        n.setUsername(txt_User.getText());
+            //        n.setPassword(txt_password.getText());
+            //        n.setQuyenHan(Integer.parseInt(txt_right.getText()));
+            //         list.add(n);
+            //        showResult();
+            //        }
+
+        //        if (flag == 1) {
+            //            btn_Add.setEnabled(true);
+            //            flag = 2;
+            //
+            //        } else {
+            //            btn_Add.setEnabled(false);
+            //        }
+    }//GEN-LAST:event_btn_AddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,29 +274,28 @@ public class Form_ManageThesis extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Add;
-    private javax.swing.JButton btn_Delete;
-    private javax.swing.JButton btn_Save;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    javax.swing.JButton btn_Add;
+    javax.swing.JButton btn_Delete;
+    javax.swing.JButton btn_Save;
+    javax.swing.JButton jButton1;
+    javax.swing.JButton jButton2;
+    javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox3;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField txt_User;
-    private javax.swing.JTextField txt_password;
+    com.toedter.calendar.JDateChooser jDateChooser1;
+    javax.swing.JLabel jLabel1;
+    javax.swing.JLabel jLabel2;
+    javax.swing.JLabel jLabel3;
+    javax.swing.JLabel jLabel4;
+    javax.swing.JLabel jLabel5;
+    javax.swing.JLabel jLabel6;
+    javax.swing.JLabel jLabel7;
+    javax.swing.JScrollPane jScrollPane2;
+    javax.swing.JScrollPane jScrollPane3;
+    javax.swing.JTable jTable2;
+    javax.swing.JTextArea jTextArea1;
+    javax.swing.JTextField txt_User;
+    javax.swing.JTextField txt_password;
     // End of variables declaration//GEN-END:variables
 
     private static class ActionListenerImpl implements ActionListener {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package quanlibaocaokhoahoc.controller;
+package quanlibaocaokhoahoc.Controller;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,16 +13,14 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 import quanlibaocaokhoahoc.Model.Nguoidung;
-import quanlibaocaokhoahoc.exceptions.NonexistentEntityException;
 
 /**
  *
  * @author Hung Nguyen
  */
 public class NguoidungJpaController implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     public NguoidungJpaController(EntityManagerFactory emf) {
         this.emf = emf;

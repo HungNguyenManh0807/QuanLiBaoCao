@@ -10,15 +10,17 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,49 +28,43 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Hung Nguyen
  */
 @Entity
-@Table(name = "nhakhoahoc", catalog = "quanlibaocao", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"IDCoQuan"})
-    , @UniqueConstraint(columnNames = {"IDChucDanh"})
-    ,@UniqueConstraint(columnNames = "ID")})
-    
+@Table(catalog = "quanlibaocao", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Nhakhoahoc.findAll", query = "SELECT n FROM Nhakhoahoc n")
-    , @NamedQuery(name = "Nhakhoahoc.findById", query = "SELECT n FROM Nhakhoahoc n WHERE n.id = :id")
-    , @NamedQuery(name = "Nhakhoahoc.findByTen", query = "SELECT n FROM Nhakhoahoc n WHERE n.ten = :ten")
-    , @NamedQuery(name = "Nhakhoahoc.findByNgaySinh", query = "SELECT n FROM Nhakhoahoc n WHERE n.ngaySinh = :ngaySinh")})
-public class Nhakhoahoc implements Serializable {
+    @NamedQuery(name = "Nhanghiencuu.findAll", query = "SELECT n FROM Nhanghiencuu n")
+    , @NamedQuery(name = "Nhanghiencuu.findById", query = "SELECT n FROM Nhanghiencuu n WHERE n.id = :id")
+    , @NamedQuery(name = "Nhanghiencuu.findByTen", query = "SELECT n FROM Nhanghiencuu n WHERE n.ten = :ten")
+    , @NamedQuery(name = "Nhanghiencuu.findByNgaySinh", query = "SELECT n FROM Nhanghiencuu n WHERE n.ngaySinh = :ngaySinh")})
+public class Nhanghiencuu implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "Ten", nullable = false, length = 30)
+    @Column(nullable = false, length = 30)
     private String ten;
     @Basic(optional = false)
-    @Column(name = "NgaySinh", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date ngaySinh;
     @JoinColumn(name = "IDChucDanh", referencedColumnName = "ID", nullable = false)
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Chucdanh iDChucDanh;
-    @JoinColumn(name = "IDCoQuan", referencedColumnName = "IDCoQuan", nullable = false)
-    @OneToOne(optional = false)
+    @JoinColumn(name = "IDCoQuan", referencedColumnName = "ID", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Coquan iDCoQuan;
-    @JoinColumn(name = "ID", referencedColumnName = "IDNguoiNghienCuu", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private NhakhoahocBaocao nhakhoahocBaocao;
 
-    public Nhakhoahoc() {
+    public Nhanghiencuu() {
     }
 
-    public Nhakhoahoc(Integer id) {
+    public Nhanghiencuu(Integer id) {
         this.id = id;
     }
 
-    public Nhakhoahoc(Integer id, String ten, Date ngaySinh) {
+    public Nhanghiencuu(Integer id, String ten, Date ngaySinh) {
         this.id = id;
         this.ten = ten;
         this.ngaySinh = ngaySinh;
@@ -114,14 +110,6 @@ public class Nhakhoahoc implements Serializable {
         this.iDCoQuan = iDCoQuan;
     }
 
-    public NhakhoahocBaocao getNhakhoahocBaocao() {
-        return nhakhoahocBaocao;
-    }
-
-    public void setNhakhoahocBaocao(NhakhoahocBaocao nhakhoahocBaocao) {
-        this.nhakhoahocBaocao = nhakhoahocBaocao;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -132,10 +120,10 @@ public class Nhakhoahoc implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Nhakhoahoc)) {
+        if (!(object instanceof Nhanghiencuu)) {
             return false;
         }
-        Nhakhoahoc other = (Nhakhoahoc) object;
+        Nhanghiencuu other = (Nhanghiencuu) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -144,7 +132,7 @@ public class Nhakhoahoc implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Nhakhoahoc[ id=" + id + " ]";
+        return "quanlibaocaokhoahoc.Model.Nhanghiencuu[ id=" + id + " ]";
     }
-
+    
 }

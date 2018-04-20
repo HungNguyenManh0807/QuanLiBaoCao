@@ -7,11 +7,13 @@ package quanlibaocaokhoahoc.View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import quanlibaocaokhoahoc.Model.Nguoidung;
-import quanlibaocaokhoahoc.controller.NguoidungJpaController;
+import quanlibaocaokhoahoc.Controller.NguoidungJpaController;
 
 /**
  *
@@ -44,13 +46,12 @@ public class Form_ManageUser extends javax.swing.JFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         QuanLiBaoCaoKhoaHocPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU").createEntityManager();
-        nguoidungQuery = java.beans.Beans.isDesignTime() ? null : QuanLiBaoCaoKhoaHocPUEntityManager.createQuery("SELECT n FROM Nguoidung n");
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU").createEntityManager();
+        nguoidungQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT n FROM Nguoidung n");
         nguoidungList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : nguoidungQuery.getResultList();
-        nguoidungQuery1 = java.beans.Beans.isDesignTime() ? null : QuanLiBaoCaoKhoaHocPUEntityManager.createQuery("SELECT n FROM Nguoidung n");
-        nguoidungList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : nguoidungQuery1.getResultList();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_User = new javax.swing.JTable();
         btn_Add = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -69,21 +70,26 @@ public class Form_ManageUser extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(380, 10, 120, 60);
 
-        jTable1.getTableHeader().setReorderingAllowed(false);
+        tbl_User.getTableHeader().setReorderingAllowed(false);
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, nguoidungList1, jTable1);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${username}"));
-        columnBinding.setColumnName("Username");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${password}"));
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, nguoidungList, tbl_User);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${password}"));
         columnBinding.setColumnName("Password");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${username}"));
+        columnBinding.setColumnName("Username");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${quyenHan}"));
         columnBinding.setColumnName("Quyen Han");
         columnBinding.setColumnClass(Integer.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane1.setViewportView(jTable1);
+        tbl_User.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tbl_UserPropertyChange(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_User);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(250, 50, 350, 180);
@@ -95,7 +101,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_Add);
-        btn_Add.setBounds(30, 80, 110, 60);
+        btn_Add.setBounds(10, 10, 110, 60);
 
         jLabel2.setText("Username");
         getContentPane().add(jLabel2);
@@ -122,17 +128,22 @@ public class Form_ManageUser extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_Save);
-        btn_Save.setBounds(100, 300, 80, 23);
+        btn_Save.setBounds(30, 300, 80, 23);
 
         btn_Delete.setText("Delete");
         getContentPane().add(btn_Delete);
-        btn_Delete.setBounds(190, 300, 80, 23);
+        btn_Delete.setBounds(170, 300, 80, 23);
 
         jLabel4.setText("Role");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(20, 260, 50, 20);
 
         jButton3.setText("Close");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3);
         jButton3.setBounds(510, 300, 73, 23);
 
@@ -149,6 +160,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
         // TODO add your handling code here:
@@ -167,41 +179,50 @@ public class Form_ManageUser extends javax.swing.JFrame {
         txt_User.setEnabled(false);
     }//GEN-LAST:event_txt_UserActionPerformed
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "unchecked"})
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
-        
+
         try {
-                Nguoidung n1 = new Nguoidung();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");//dung de ket noi voi database ten lay o file persistence.xml
-        n1.setUsername(txt_User.getText());
-        NguoidungJpaController njc = new NguoidungJpaController(emf);
-        n1.setPassword(txt_password.getText());
-        n1.setQuyenHan(cb_role.getSelectedIndex());
-        if (txt_User.getText().equals("") || txt_password.getText().equals("") || txt_password.getText().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Please fill all before ");
+            Nguoidung n1 = new Nguoidung();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");//dung de ket noi voi database ten lay o file persistence.xml
 
-        } else {
+            NguoidungJpaController njc = new NguoidungJpaController(emf);// tao ra viec xac nhan transaction
+            n1.setUsername(txt_User.getText());// lay du lieu tu textbox
+            n1.setPassword(txt_password.getText());
+            n1.setQuyenHan(cb_role.getSelectedIndex());
+            if (txt_User.getText().equals("") || txt_password.getText().equals("") || txt_password.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Please fill all before ");
 
-            njc.create(n1);//store into database
-            JOptionPane.showMessageDialog(rootPane, "Added successfully");
-            jTable1 = new javax.swing.JTable();
+            } else {
 
+                njc.create(n1);//store into database
+                JOptionPane.showMessageDialog(rootPane, "Added successfully");
+                bindUserTable();
 
-
-
-
-            
-        }
+            }
         } catch (Exception e) {
-            
+
             e.printStackTrace();
         }
+
 
     }//GEN-LAST:event_btn_SaveActionPerformed
 
     private void cb_roleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_roleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_roleActionPerformed
+
+    private void tbl_UserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbl_UserPropertyChange
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_tbl_UserPropertyChange
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Form_Home fh = new Form_Home();
+        fh.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
     int i = 1;
 
 //    public void showResult() {
@@ -224,11 +245,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -245,16 +262,30 @@ public class Form_ManageUser extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Form_ManageUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Form_ManageUser().setVisible(true);
+                
             }
         });
     }
+
+    private void bindUserTable() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NguoidungJpaController controller = new NguoidungJpaController(emf);
+        List<Nguoidung> nguoiDung = controller.findNguoidungEntities();
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Username", "Password", "Quyen han"});
+        // int user_role = (int) cb_role.getSelectedItem();
+        for (Nguoidung nguoidung : nguoiDung) {
+           model.addRow(new Object[]{nguoidung.getUsername(), nguoidung.getPassword(),nguoidung.getQuyenHan()});
+        }
+        tbl_User.setModel(model);
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager QuanLiBaoCaoKhoaHocPUEntityManager;
@@ -262,17 +293,16 @@ public class Form_ManageUser extends javax.swing.JFrame {
     private javax.swing.JButton btn_Delete;
     private javax.swing.JButton btn_Save;
     private javax.swing.JComboBox<String> cb_role;
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private java.util.List<quanlibaocaokhoahoc.Model.Nguoidung> nguoidungList;
-    private java.util.List<quanlibaocaokhoahoc.Model.Nguoidung> nguoidungList1;
+    private java.util.List<quanlibaocaokhoahoc.View.Nguoidung> nguoidungList;
     private javax.persistence.Query nguoidungQuery;
-    private javax.persistence.Query nguoidungQuery1;
+    private javax.swing.JTable tbl_User;
     private javax.swing.JTextField txt_User;
     private javax.swing.JTextField txt_password;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
@@ -281,6 +311,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
     private static class ActionListenerImpl implements ActionListener {
 
         public ActionListenerImpl() {
+
         }
 
         @Override

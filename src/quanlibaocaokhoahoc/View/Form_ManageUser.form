@@ -7,11 +7,16 @@
         <Property name="persistenceUnit" type="java.lang.String" value="QuanLiBaoCaoKhoaHocPU"/>
       </Properties>
     </Component>
+    <Component class="javax.persistence.EntityManager" name="entityManager">
+      <Properties>
+        <Property name="persistenceUnit" type="java.lang.String" value="QuanLiBaoCao?zeroDateTimeBehavior=convertToNullPU"/>
+      </Properties>
+    </Component>
     <Component class="javax.persistence.Query" name="nguoidungQuery">
       <Properties>
         <Property name="query" type="java.lang.String" value="SELECT n FROM Nguoidung n"/>
         <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="QuanLiBaoCaoKhoaHocPUEntityManager"/>
+          <ComponentRef name="entityManager"/>
         </Property>
       </Properties>
     </Component>
@@ -22,25 +27,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;quanlibaocaokhoahoc.Model.Nguoidung&gt;"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.persistence.Query" name="nguoidungQuery1">
-      <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT n FROM Nguoidung n"/>
-        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="QuanLiBaoCaoKhoaHocPUEntityManager"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="java.util.List" name="nguoidungList1">
-      <Properties>
-        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="nguoidungQuery1"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;quanlibaocaokhoahoc.Model.Nguoidung&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;quanlibaocaokhoahoc.View.Nguoidung&gt;"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -90,28 +77,50 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="tbl_User">
           <Properties>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0"/>
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
           <BindingProperties>
-            <BindingProperty name="elements" source="nguoidungList1" target="jTable1" targetPath="elements" updateStrategy="0" immediately="true">
-              <Subbinding sourcePath="${username}">
+            <BindingProperty name="elements" source="nguoidungList" target="tbl_User" targetPath="elements" updateStrategy="0" immediately="true">
+              <Subbinding sourcePath="${password}">
+                <BindingParameter name="NAME" value="Password"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${password}">
+              <Subbinding sourcePath="${username}">
+                <BindingParameter name="NAME" value="Username"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${quyenHan}">
+                <BindingParameter name="NAME" value="Quyen Han"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
               </Subbinding>
             </BindingProperty>
           </BindingProperties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="tbl_UserPropertyChange"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -124,7 +133,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="30" y="80" width="110" height="60"/>
+          <AbsoluteConstraints x="10" y="10" width="110" height="60"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -174,7 +183,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="100" y="300" width="80" height="-1"/>
+          <AbsoluteConstraints x="30" y="300" width="80" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -184,7 +193,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="190" y="300" width="80" height="-1"/>
+          <AbsoluteConstraints x="170" y="300" width="80" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -202,6 +211,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="510" y="300" width="73" height="-1"/>

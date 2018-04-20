@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package quanlibaocaokhoahoc.controller;
+package quanlibaocaokhoahoc.Controller;
 
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import quanlibaocaokhoahoc.Model.Nhakhoahoc;
+import quanlibaocaokhoahoc.Model.Nhanghiencuu;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import quanlibaocaokhoahoc.Controller.exceptions.IllegalOrphanException;
+import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 import quanlibaocaokhoahoc.Model.Coquan;
-import quanlibaocaokhoahoc.exceptions.IllegalOrphanException;
-import quanlibaocaokhoahoc.exceptions.NonexistentEntityException;
 
 /**
  *
@@ -35,24 +35,28 @@ public class CoquanJpaController implements Serializable {
     }
 
     public void create(Coquan coquan) {
+        if (coquan.getNhanghiencuuList() == null) {
+            coquan.setNhanghiencuuList(new ArrayList<Nhanghiencuu>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Nhakhoahoc nhakhoahoc = coquan.getNhakhoahoc();
-            if (nhakhoahoc != null) {
-                nhakhoahoc = em.getReference(nhakhoahoc.getClass(), nhakhoahoc.getId());
-                coquan.setNhakhoahoc(nhakhoahoc);
+            List<Nhanghiencuu> attachedNhanghiencuuList = new ArrayList<Nhanghiencuu>();
+            for (Nhanghiencuu nhanghiencuuListNhanghiencuuToAttach : coquan.getNhanghiencuuList()) {
+                nhanghiencuuListNhanghiencuuToAttach = em.getReference(nhanghiencuuListNhanghiencuuToAttach.getClass(), nhanghiencuuListNhanghiencuuToAttach.getId());
+                attachedNhanghiencuuList.add(nhanghiencuuListNhanghiencuuToAttach);
             }
+            coquan.setNhanghiencuuList(attachedNhanghiencuuList);
             em.persist(coquan);
-            if (nhakhoahoc != null) {
-                Coquan oldIDCoQuanOfNhakhoahoc = nhakhoahoc.getIDCoQuan();
-                if (oldIDCoQuanOfNhakhoahoc != null) {
-                    oldIDCoQuanOfNhakhoahoc.setNhakhoahoc(null);
-                    oldIDCoQuanOfNhakhoahoc = em.merge(oldIDCoQuanOfNhakhoahoc);
+            for (Nhanghiencuu nhanghiencuuListNhanghiencuu : coquan.getNhanghiencuuList()) {
+                Coquan oldIDCoQuanOfNhanghiencuuListNhanghiencuu = nhanghiencuuListNhanghiencuu.getIDCoQuan();
+                nhanghiencuuListNhanghiencuu.setIDCoQuan(coquan);
+                nhanghiencuuListNhanghiencuu = em.merge(nhanghiencuuListNhanghiencuu);
+                if (oldIDCoQuanOfNhanghiencuuListNhanghiencuu != null) {
+                    oldIDCoQuanOfNhanghiencuuListNhanghiencuu.getNhanghiencuuList().remove(nhanghiencuuListNhanghiencuu);
+                    oldIDCoQuanOfNhanghiencuuListNhanghiencuu = em.merge(oldIDCoQuanOfNhanghiencuuListNhanghiencuu);
                 }
-                nhakhoahoc.setIDCoQuan(coquan);
-                nhakhoahoc = em.merge(nhakhoahoc);
             }
             em.getTransaction().commit();
         } finally {
@@ -67,38 +71,45 @@ public class CoquanJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Coquan persistentCoquan = em.find(Coquan.class, coquan.getIDCoQuan());
-            Nhakhoahoc nhakhoahocOld = persistentCoquan.getNhakhoahoc();
-            Nhakhoahoc nhakhoahocNew = coquan.getNhakhoahoc();
+            Coquan persistentCoquan = em.find(Coquan.class, coquan.getId());
+            List<Nhanghiencuu> nhanghiencuuListOld = persistentCoquan.getNhanghiencuuList();
+            List<Nhanghiencuu> nhanghiencuuListNew = coquan.getNhanghiencuuList();
             List<String> illegalOrphanMessages = null;
-            if (nhakhoahocOld != null && !nhakhoahocOld.equals(nhakhoahocNew)) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
+            for (Nhanghiencuu nhanghiencuuListOldNhanghiencuu : nhanghiencuuListOld) {
+                if (!nhanghiencuuListNew.contains(nhanghiencuuListOldNhanghiencuu)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Nhanghiencuu " + nhanghiencuuListOldNhanghiencuu + " since its IDCoQuan field is not nullable.");
                 }
-                illegalOrphanMessages.add("You must retain Nhakhoahoc " + nhakhoahocOld + " since its IDCoQuan field is not nullable.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (nhakhoahocNew != null) {
-                nhakhoahocNew = em.getReference(nhakhoahocNew.getClass(), nhakhoahocNew.getId());
-                coquan.setNhakhoahoc(nhakhoahocNew);
+            List<Nhanghiencuu> attachedNhanghiencuuListNew = new ArrayList<Nhanghiencuu>();
+            for (Nhanghiencuu nhanghiencuuListNewNhanghiencuuToAttach : nhanghiencuuListNew) {
+                nhanghiencuuListNewNhanghiencuuToAttach = em.getReference(nhanghiencuuListNewNhanghiencuuToAttach.getClass(), nhanghiencuuListNewNhanghiencuuToAttach.getId());
+                attachedNhanghiencuuListNew.add(nhanghiencuuListNewNhanghiencuuToAttach);
             }
+            nhanghiencuuListNew = attachedNhanghiencuuListNew;
+            coquan.setNhanghiencuuList(nhanghiencuuListNew);
             coquan = em.merge(coquan);
-            if (nhakhoahocNew != null && !nhakhoahocNew.equals(nhakhoahocOld)) {
-                Coquan oldIDCoQuanOfNhakhoahoc = nhakhoahocNew.getIDCoQuan();
-                if (oldIDCoQuanOfNhakhoahoc != null) {
-                    oldIDCoQuanOfNhakhoahoc.setNhakhoahoc(null);
-                    oldIDCoQuanOfNhakhoahoc = em.merge(oldIDCoQuanOfNhakhoahoc);
+            for (Nhanghiencuu nhanghiencuuListNewNhanghiencuu : nhanghiencuuListNew) {
+                if (!nhanghiencuuListOld.contains(nhanghiencuuListNewNhanghiencuu)) {
+                    Coquan oldIDCoQuanOfNhanghiencuuListNewNhanghiencuu = nhanghiencuuListNewNhanghiencuu.getIDCoQuan();
+                    nhanghiencuuListNewNhanghiencuu.setIDCoQuan(coquan);
+                    nhanghiencuuListNewNhanghiencuu = em.merge(nhanghiencuuListNewNhanghiencuu);
+                    if (oldIDCoQuanOfNhanghiencuuListNewNhanghiencuu != null && !oldIDCoQuanOfNhanghiencuuListNewNhanghiencuu.equals(coquan)) {
+                        oldIDCoQuanOfNhanghiencuuListNewNhanghiencuu.getNhanghiencuuList().remove(nhanghiencuuListNewNhanghiencuu);
+                        oldIDCoQuanOfNhanghiencuuListNewNhanghiencuu = em.merge(oldIDCoQuanOfNhanghiencuuListNewNhanghiencuu);
+                    }
                 }
-                nhakhoahocNew.setIDCoQuan(coquan);
-                nhakhoahocNew = em.merge(nhakhoahocNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = coquan.getIDCoQuan();
+                Integer id = coquan.getId();
                 if (findCoquan(id) == null) {
                     throw new NonexistentEntityException("The coquan with id " + id + " no longer exists.");
                 }
@@ -119,17 +130,17 @@ public class CoquanJpaController implements Serializable {
             Coquan coquan;
             try {
                 coquan = em.getReference(Coquan.class, id);
-                coquan.getIDCoQuan();
+                coquan.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The coquan with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Nhakhoahoc nhakhoahocOrphanCheck = coquan.getNhakhoahoc();
-            if (nhakhoahocOrphanCheck != null) {
+            List<Nhanghiencuu> nhanghiencuuListOrphanCheck = coquan.getNhanghiencuuList();
+            for (Nhanghiencuu nhanghiencuuListOrphanCheckNhanghiencuu : nhanghiencuuListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Coquan (" + coquan + ") cannot be destroyed since the Nhakhoahoc " + nhakhoahocOrphanCheck + " in its nhakhoahoc field has a non-nullable IDCoQuan field.");
+                illegalOrphanMessages.add("This Coquan (" + coquan + ") cannot be destroyed since the Nhanghiencuu " + nhanghiencuuListOrphanCheckNhanghiencuu + " in its nhanghiencuuList field has a non-nullable IDCoQuan field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

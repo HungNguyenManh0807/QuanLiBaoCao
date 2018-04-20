@@ -1,4 +1,4 @@
-package quanlibaocaokhoahoc.exceptions;
+package quanlibaocaokhoahoc.Controller.exceptions;
 
 public class PreexistingEntityException extends Exception {
     public PreexistingEntityException(String message, Throwable cause) {

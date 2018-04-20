@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,10 +44,10 @@ public class Form_Home extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        btn_exit = new javax.swing.JButton();
+        WhiteLine = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         dateLab = new javax.swing.JLabel();
@@ -56,7 +57,6 @@ public class Form_Home extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\img0134-1.png")); // NOI18N
         jLabel7.setText("jLabel7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -120,7 +120,7 @@ public class Form_Home extends javax.swing.JFrame {
 
         jButton7.setBackground(new java.awt.Color(51, 51, 255));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\ICON-icon.png")); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\SEO-icon.png")); // NOI18N
         jButton7.setText("Check Duplication");
         getContentPane().add(jButton7);
         jButton7.setBounds(190, 210, 210, 90);
@@ -133,14 +133,23 @@ public class Form_Home extends javax.swing.JFrame {
         getContentPane().add(jButton8);
         jButton8.setBounds(460, 310, 100, 20);
 
-        jButton9.setBackground(new java.awt.Color(51, 51, 255));
-        jButton9.setFont(new java.awt.Font("Tw Cen MT", 1, 11)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Shut-Down-icon.png")); // NOI18N
-        jButton9.setText("Exit");
-        jButton9.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        getContentPane().add(jButton9);
-        jButton9.setBounds(430, 250, 130, 50);
+        btn_exit.setBackground(new java.awt.Color(51, 51, 255));
+        btn_exit.setFont(new java.awt.Font("Tw Cen MT", 1, 11)); // NOI18N
+        btn_exit.setForeground(new java.awt.Color(255, 255, 255));
+        btn_exit.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Shut-Down-icon.png")); // NOI18N
+        btn_exit.setText("Exit");
+        btn_exit.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_exitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_exit);
+        btn_exit.setBounds(430, 250, 130, 50);
+
+        WhiteLine.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\White--------.png")); // NOI18N
+        getContentPane().add(WhiteLine);
+        WhiteLine.setBounds(0, 90, 580, 10);
         getContentPane().add(jLabel1);
         jLabel1.setBounds(190, 50, 0, 0);
 
@@ -151,13 +160,7 @@ public class Form_Home extends javax.swing.JFrame {
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(10, 300, 50, 30);
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\blue-color.png")); // NOI18N
-        jLabel3.setText("jLabel3");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(-20, 90, 600, 10);
+        jLabel2.setBounds(20, 300, 50, 30);
 
         jLabel4.setBackground(new java.awt.Color(153, 153, 255));
         jLabel4.setFont(new java.awt.Font("Agency FB", 1, 24)); // NOI18N
@@ -166,13 +169,14 @@ public class Form_Home extends javax.swing.JFrame {
         jLabel4.setText("Thesis Managenent System");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(150, 0, 360, 50);
+        jLabel4.setBounds(170, 10, 360, 50);
 
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\blue-abstract-background.jpg")); // NOI18N
         jLabel5.setText("jLabel5");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(0, -10, 580, 90);
+        jLabel5.setBounds(0, -10, 580, 120);
 
         dateLab.setFont(new java.awt.Font("Agency FB", 1, 12)); // NOI18N
         dateLab.setForeground(new java.awt.Color(0, 51, 153));
@@ -180,14 +184,14 @@ public class Form_Home extends javax.swing.JFrame {
         dateLab.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         dateLab.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         getContentPane().add(dateLab);
-        dateLab.setBounds(170, 310, 90, 20);
+        dateLab.setBounds(150, 310, 90, 20);
 
         timeLab.setBackground(new java.awt.Color(102, 102, 255));
         timeLab.setFont(new java.awt.Font("Agency FB", 1, 12)); // NOI18N
         timeLab.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         timeLab.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         getContentPane().add(timeLab);
-        timeLab.setBounds(260, 310, 90, 20);
+        timeLab.setBounds(230, 310, 90, 20);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 204));
@@ -198,29 +202,39 @@ public class Form_Home extends javax.swing.JFrame {
         getContentPane().add(jLabel10);
         jLabel10.setBounds(80, 300, 60, 30);
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\img0134-1.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\White--------.png")); // NOI18N
         jLabel8.setText("jLabel8");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(-10, 310, 590, 20);
+        jLabel8.setBounds(-10, 310, 590, 40);
 
         jLabel9.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\light-blue-wallpaper-full-hd-For-Desktop-Wallpaper.jpg")); // NOI18N
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(0, 100, 580, 210);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\img0134-1.png")); // NOI18N
+        jLabel9.setBounds(0, 110, 580, 200);
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(-10, 80, 590, 800);
+        jLabel6.setBounds(-10, 80, 590, 0);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        Form_ManageUser fmu = new Form_ManageUser();
+        fmu.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
+        // TODO add your handling code here:
+       int p =  JOptionPane.showConfirmDialog(null, "Are you sure to exit","Exit",JOptionPane.YES_OPTION);
+        if(p==0){
+        System.exit(0);
+        }else{
+        this.setVisible(true);
+        }
+    }//GEN-LAST:event_btn_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,7 +259,7 @@ public class Form_Home extends javax.swing.JFrame {
 
     public void creatAndShow() {
         
-        this.setSize(585, 380);
+        this.setSize(585, 375);
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -285,6 +299,8 @@ public class Form_Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel WhiteLine;
+    private javax.swing.JButton btn_exit;
     private javax.swing.JLabel dateLab;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -294,11 +310,9 @@ public class Form_Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

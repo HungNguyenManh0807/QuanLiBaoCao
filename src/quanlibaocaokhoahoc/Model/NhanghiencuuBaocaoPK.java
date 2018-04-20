@@ -15,19 +15,19 @@ import javax.persistence.Embeddable;
  * @author Hung Nguyen
  */
 @Embeddable
-public class NhakhoahocBaocaoPK implements Serializable {
+public class NhanghiencuuBaocaoPK implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "IDBaoCao", nullable = false)
+    @Column(nullable = false)
     private int iDBaoCao;
     @Basic(optional = false)
-    @Column(name = "IDNguoiNghienCuu", nullable = false)
+    @Column(nullable = false)
     private int iDNguoiNghienCuu;
 
-    public NhakhoahocBaocaoPK() {
+    public NhanghiencuuBaocaoPK() {
     }
 
-    public NhakhoahocBaocaoPK(int iDBaoCao, int iDNguoiNghienCuu) {
+    public NhanghiencuuBaocaoPK(int iDBaoCao, int iDNguoiNghienCuu) {
         this.iDBaoCao = iDBaoCao;
         this.iDNguoiNghienCuu = iDNguoiNghienCuu;
     }
@@ -59,10 +59,10 @@ public class NhakhoahocBaocaoPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof NhakhoahocBaocaoPK)) {
+        if (!(object instanceof NhanghiencuuBaocaoPK)) {
             return false;
         }
-        NhakhoahocBaocaoPK other = (NhakhoahocBaocaoPK) object;
+        NhanghiencuuBaocaoPK other = (NhanghiencuuBaocaoPK) object;
         if (this.iDBaoCao != other.iDBaoCao) {
             return false;
         }
@@ -74,7 +74,7 @@ public class NhakhoahocBaocaoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.NhakhoahocBaocaoPK[ iDBaoCao=" + iDBaoCao + ", iDNguoiNghienCuu=" + iDNguoiNghienCuu + " ]";
+        return "quanlibaocaokhoahoc.Model.NhanghiencuuBaocaoPK[ iDBaoCao=" + iDBaoCao + ", iDNguoiNghienCuu=" + iDNguoiNghienCuu + " ]";
     }
     
 }

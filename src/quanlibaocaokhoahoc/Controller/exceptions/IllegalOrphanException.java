@@ -1,4 +1,4 @@
-package quanlibaocaokhoahoc.exceptions;
+package quanlibaocaokhoahoc.Controller.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

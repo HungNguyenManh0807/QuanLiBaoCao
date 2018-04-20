@@ -5,8 +5,6 @@
  */
 package quanlibaocaokhoahoc.Model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,8 +16,6 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,40 +23,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Hung Nguyen
  */
 @Entity
-@Table(name = "nguoidung", catalog = "quanlibaocao", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"ID"})})
+@Table(catalog = "quanlibaocao", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Nguoidung.findAll", query = "SELECT n FROM Nguoidung n")// Nguoidung la ten class === @Entity(name= Nguoidung)
-    , @NamedQuery(name = "Nguoidung.findById", query = "SELECT n FROM Nguoidung n WHERE n.id = :id")// jpa sql id la id trong class Nguoidung
+    @NamedQuery(name = "Nguoidung.findAll", query = "SELECT n FROM Nguoidung n")
+    , @NamedQuery(name = "Nguoidung.findById", query = "SELECT n FROM Nguoidung n WHERE n.id = :id")
     , @NamedQuery(name = "Nguoidung.findByPassword", query = "SELECT n FROM Nguoidung n WHERE n.password = :password")
     , @NamedQuery(name = "Nguoidung.findByQuyenHan", query = "SELECT n FROM Nguoidung n WHERE n.quyenHan = :quyenHan")})
 public class Nguoidung implements Serializable {
-
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false) // column ID trong bang nguoi dung trong database
+    @Column(nullable = false)
     private Integer id;
-    
-    
     @Basic(optional = false)
     @Lob
-    @Column(name = "Username", nullable = false, length = 65535)// column username trong bang nguoi dung trong database
+    @Column(nullable = false, length = 65535)
     private String username;
-    
-    
     @Basic(optional = false)
-    @Column(name = "Password", nullable = false, length = 20)
+    @Column(nullable = false, length = 20)
     private String password;
-    
-    
     @Basic(optional = false)
-    @Column(name = "QuyenHan", nullable = false)
+    @Column(nullable = false)
     private int quyenHan;
 
     public Nguoidung() {
@@ -82,9 +68,7 @@ public class Nguoidung implements Serializable {
     }
 
     public void setId(Integer id) {
-        Integer oldId = this.id;
         this.id = id;
-        changeSupport.firePropertyChange("id", oldId, id);
     }
 
     public String getUsername() {
@@ -92,9 +76,7 @@ public class Nguoidung implements Serializable {
     }
 
     public void setUsername(String username) {
-        String oldUsername = this.username;
         this.username = username;
-        changeSupport.firePropertyChange("username", oldUsername, username);
     }
 
     public String getPassword() {
@@ -102,9 +84,7 @@ public class Nguoidung implements Serializable {
     }
 
     public void setPassword(String password) {
-        String oldPassword = this.password;
         this.password = password;
-        changeSupport.firePropertyChange("password", oldPassword, password);
     }
 
     public int getQuyenHan() {
@@ -112,9 +92,7 @@ public class Nguoidung implements Serializable {
     }
 
     public void setQuyenHan(int quyenHan) {
-        int oldQuyenHan = this.quyenHan;
         this.quyenHan = quyenHan;
-        changeSupport.firePropertyChange("quyenHan", oldQuyenHan, quyenHan);
     }
 
     @Override
@@ -140,14 +118,6 @@ public class Nguoidung implements Serializable {
     @Override
     public String toString() {
         return "quanlibaocaokhoahoc.Model.Nguoidung[ id=" + id + " ]";
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

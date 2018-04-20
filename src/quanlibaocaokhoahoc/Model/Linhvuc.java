@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,11 +25,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Hung Nguyen
  */
 @Entity
-@Table(name = "linhvuc", catalog = "quanlibaocao", schema = "")
+@Table(catalog = "quanlibaocao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Linhvuc.findAll", query = "SELECT l FROM Linhvuc l")
-    , @NamedQuery(name = "Linhvuc.findByIDLinhVuc", query = "SELECT l FROM Linhvuc l WHERE l.iDLinhVuc = :iDLinhVuc")
+    , @NamedQuery(name = "Linhvuc.findById", query = "SELECT l FROM Linhvuc l WHERE l.id = :id")
     , @NamedQuery(name = "Linhvuc.findByTen", query = "SELECT l FROM Linhvuc l WHERE l.ten = :ten")})
 public class Linhvuc implements Serializable {
 
@@ -36,32 +37,32 @@ public class Linhvuc implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "IDLinhVuc", nullable = false)
-    private Integer iDLinhVuc;
+    @Column(nullable = false)
+    private Integer id;
     @Basic(optional = false)
-    @Column(name = "Ten", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String ten;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "iDLinhVuc")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "iDLinhVuc", fetch = FetchType.LAZY)
     private Baocao baocao;
 
     public Linhvuc() {
     }
 
-    public Linhvuc(Integer iDLinhVuc) {
-        this.iDLinhVuc = iDLinhVuc;
+    public Linhvuc(Integer id) {
+        this.id = id;
     }
 
-    public Linhvuc(Integer iDLinhVuc, String ten) {
-        this.iDLinhVuc = iDLinhVuc;
+    public Linhvuc(Integer id, String ten) {
+        this.id = id;
         this.ten = ten;
     }
 
-    public Integer getIDLinhVuc() {
-        return iDLinhVuc;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIDLinhVuc(Integer iDLinhVuc) {
-        this.iDLinhVuc = iDLinhVuc;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTen() {
@@ -83,7 +84,7 @@ public class Linhvuc implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (iDLinhVuc != null ? iDLinhVuc.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -94,7 +95,7 @@ public class Linhvuc implements Serializable {
             return false;
         }
         Linhvuc other = (Linhvuc) object;
-        if ((this.iDLinhVuc == null && other.iDLinhVuc != null) || (this.iDLinhVuc != null && !this.iDLinhVuc.equals(other.iDLinhVuc))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -102,7 +103,7 @@ public class Linhvuc implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Linhvuc[ iDLinhVuc=" + iDLinhVuc + " ]";
+        return "quanlibaocaokhoahoc.Model.Linhvuc[ id=" + id + " ]";
     }
     
 }

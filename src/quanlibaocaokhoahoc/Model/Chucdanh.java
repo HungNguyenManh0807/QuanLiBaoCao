@@ -7,27 +7,30 @@ package quanlibaocaokhoahoc.Model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Hung Nguyen
  */
 @Entity
-@Table(name = "chucdanh", catalog = "quanlibaocao", schema = "")
+@Table(catalog = "quanlibaocao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Chucdanh.findAll", query = "SELECT c FROM Chucdanh c")
@@ -40,17 +43,17 @@ public class Chucdanh implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "Ten", nullable = false, length = 30)
+    @Column(nullable = false, length = 30)
     private String ten;
     @Basic(optional = false)
-    @Column(name = "NgayCap", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayCap;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "iDChucDanh")
-    private Nhakhoahoc nhakhoahoc;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDChucDanh", fetch = FetchType.LAZY)
+    private List<Nhanghiencuu> nhanghiencuuList;
 
     public Chucdanh() {
     }
@@ -89,12 +92,13 @@ public class Chucdanh implements Serializable {
         this.ngayCap = ngayCap;
     }
 
-    public Nhakhoahoc getNhakhoahoc() {
-        return nhakhoahoc;
+    @XmlTransient
+    public List<Nhanghiencuu> getNhanghiencuuList() {
+        return nhanghiencuuList;
     }
 
-    public void setNhakhoahoc(Nhakhoahoc nhakhoahoc) {
-        this.nhakhoahoc = nhakhoahoc;
+    public void setNhanghiencuuList(List<Nhanghiencuu> nhanghiencuuList) {
+        this.nhanghiencuuList = nhanghiencuuList;
     }
 
     @Override

@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Hung Nguyen
  */
 @Entity
-@Table(name = "loaibaocao", catalog = "quanlibaocao", schema = "")
+@Table(catalog = "quanlibaocao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Loaibaocao.findAll", query = "SELECT l FROM Loaibaocao l")
@@ -36,12 +37,12 @@ public class Loaibaocao implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "LoaiBaoCao", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String loaiBaoCao;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "iDLoai")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "iDLoai", fetch = FetchType.LAZY)
     private Baocao baocao;
 
     public Loaibaocao() {

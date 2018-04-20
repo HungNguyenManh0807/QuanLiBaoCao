@@ -3,23 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package quanlibaocaokhoahoc.controller;
+package quanlibaocaokhoahoc.Controller;
 
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import quanlibaocaokhoahoc.Model.NhakhoahocBaocao;
+import quanlibaocaokhoahoc.Model.NhanghiencuuBaocao;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import quanlibaocaokhoahoc.Controller.exceptions.IllegalOrphanException;
+import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
+import quanlibaocaokhoahoc.Controller.exceptions.PreexistingEntityException;
 import quanlibaocaokhoahoc.Model.Vaitro;
-import quanlibaocaokhoahoc.exceptions.IllegalOrphanException;
-import quanlibaocaokhoahoc.exceptions.NonexistentEntityException;
-import quanlibaocaokhoahoc.exceptions.PreexistingEntityException;
 
 /**
  *
@@ -37,27 +36,27 @@ public class VaitroJpaController implements Serializable {
     }
 
     public void create(Vaitro vaitro) throws PreexistingEntityException, Exception {
-        if (vaitro.getNhakhoahocBaocaoCollection() == null) {
-            vaitro.setNhakhoahocBaocaoCollection(new ArrayList<NhakhoahocBaocao>());
+        if (vaitro.getNhanghiencuuBaocaoList() == null) {
+            vaitro.setNhanghiencuuBaocaoList(new ArrayList<NhanghiencuuBaocao>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<NhakhoahocBaocao> attachedNhakhoahocBaocaoCollection = new ArrayList<NhakhoahocBaocao>();
-            for (NhakhoahocBaocao nhakhoahocBaocaoCollectionNhakhoahocBaocaoToAttach : vaitro.getNhakhoahocBaocaoCollection()) {
-                nhakhoahocBaocaoCollectionNhakhoahocBaocaoToAttach = em.getReference(nhakhoahocBaocaoCollectionNhakhoahocBaocaoToAttach.getClass(), nhakhoahocBaocaoCollectionNhakhoahocBaocaoToAttach.getNhakhoahocBaocaoPK());
-                attachedNhakhoahocBaocaoCollection.add(nhakhoahocBaocaoCollectionNhakhoahocBaocaoToAttach);
+            List<NhanghiencuuBaocao> attachedNhanghiencuuBaocaoList = new ArrayList<NhanghiencuuBaocao>();
+            for (NhanghiencuuBaocao nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach : vaitro.getNhanghiencuuBaocaoList()) {
+                nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach = em.getReference(nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach.getClass(), nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach.getNhanghiencuuBaocaoPK());
+                attachedNhanghiencuuBaocaoList.add(nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach);
             }
-            vaitro.setNhakhoahocBaocaoCollection(attachedNhakhoahocBaocaoCollection);
+            vaitro.setNhanghiencuuBaocaoList(attachedNhanghiencuuBaocaoList);
             em.persist(vaitro);
-            for (NhakhoahocBaocao nhakhoahocBaocaoCollectionNhakhoahocBaocao : vaitro.getNhakhoahocBaocaoCollection()) {
-                Vaitro oldIDVaiTroOfNhakhoahocBaocaoCollectionNhakhoahocBaocao = nhakhoahocBaocaoCollectionNhakhoahocBaocao.getIDVaiTro();
-                nhakhoahocBaocaoCollectionNhakhoahocBaocao.setIDVaiTro(vaitro);
-                nhakhoahocBaocaoCollectionNhakhoahocBaocao = em.merge(nhakhoahocBaocaoCollectionNhakhoahocBaocao);
-                if (oldIDVaiTroOfNhakhoahocBaocaoCollectionNhakhoahocBaocao != null) {
-                    oldIDVaiTroOfNhakhoahocBaocaoCollectionNhakhoahocBaocao.getNhakhoahocBaocaoCollection().remove(nhakhoahocBaocaoCollectionNhakhoahocBaocao);
-                    oldIDVaiTroOfNhakhoahocBaocaoCollectionNhakhoahocBaocao = em.merge(oldIDVaiTroOfNhakhoahocBaocaoCollectionNhakhoahocBaocao);
+            for (NhanghiencuuBaocao nhanghiencuuBaocaoListNhanghiencuuBaocao : vaitro.getNhanghiencuuBaocaoList()) {
+                Vaitro oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao = nhanghiencuuBaocaoListNhanghiencuuBaocao.getIDVaiTro();
+                nhanghiencuuBaocaoListNhanghiencuuBaocao.setIDVaiTro(vaitro);
+                nhanghiencuuBaocaoListNhanghiencuuBaocao = em.merge(nhanghiencuuBaocaoListNhanghiencuuBaocao);
+                if (oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao != null) {
+                    oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocaoListNhanghiencuuBaocao);
+                    oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao = em.merge(oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao);
                 }
             }
             em.getTransaction().commit();
@@ -79,36 +78,36 @@ public class VaitroJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Vaitro persistentVaitro = em.find(Vaitro.class, vaitro.getId());
-            Collection<NhakhoahocBaocao> nhakhoahocBaocaoCollectionOld = persistentVaitro.getNhakhoahocBaocaoCollection();
-            Collection<NhakhoahocBaocao> nhakhoahocBaocaoCollectionNew = vaitro.getNhakhoahocBaocaoCollection();
+            List<NhanghiencuuBaocao> nhanghiencuuBaocaoListOld = persistentVaitro.getNhanghiencuuBaocaoList();
+            List<NhanghiencuuBaocao> nhanghiencuuBaocaoListNew = vaitro.getNhanghiencuuBaocaoList();
             List<String> illegalOrphanMessages = null;
-            for (NhakhoahocBaocao nhakhoahocBaocaoCollectionOldNhakhoahocBaocao : nhakhoahocBaocaoCollectionOld) {
-                if (!nhakhoahocBaocaoCollectionNew.contains(nhakhoahocBaocaoCollectionOldNhakhoahocBaocao)) {
+            for (NhanghiencuuBaocao nhanghiencuuBaocaoListOldNhanghiencuuBaocao : nhanghiencuuBaocaoListOld) {
+                if (!nhanghiencuuBaocaoListNew.contains(nhanghiencuuBaocaoListOldNhanghiencuuBaocao)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain NhakhoahocBaocao " + nhakhoahocBaocaoCollectionOldNhakhoahocBaocao + " since its IDVaiTro field is not nullable.");
+                    illegalOrphanMessages.add("You must retain NhanghiencuuBaocao " + nhanghiencuuBaocaoListOldNhanghiencuuBaocao + " since its IDVaiTro field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<NhakhoahocBaocao> attachedNhakhoahocBaocaoCollectionNew = new ArrayList<NhakhoahocBaocao>();
-            for (NhakhoahocBaocao nhakhoahocBaocaoCollectionNewNhakhoahocBaocaoToAttach : nhakhoahocBaocaoCollectionNew) {
-                nhakhoahocBaocaoCollectionNewNhakhoahocBaocaoToAttach = em.getReference(nhakhoahocBaocaoCollectionNewNhakhoahocBaocaoToAttach.getClass(), nhakhoahocBaocaoCollectionNewNhakhoahocBaocaoToAttach.getNhakhoahocBaocaoPK());
-                attachedNhakhoahocBaocaoCollectionNew.add(nhakhoahocBaocaoCollectionNewNhakhoahocBaocaoToAttach);
+            List<NhanghiencuuBaocao> attachedNhanghiencuuBaocaoListNew = new ArrayList<NhanghiencuuBaocao>();
+            for (NhanghiencuuBaocao nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach : nhanghiencuuBaocaoListNew) {
+                nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach = em.getReference(nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach.getClass(), nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach.getNhanghiencuuBaocaoPK());
+                attachedNhanghiencuuBaocaoListNew.add(nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach);
             }
-            nhakhoahocBaocaoCollectionNew = attachedNhakhoahocBaocaoCollectionNew;
-            vaitro.setNhakhoahocBaocaoCollection(nhakhoahocBaocaoCollectionNew);
+            nhanghiencuuBaocaoListNew = attachedNhanghiencuuBaocaoListNew;
+            vaitro.setNhanghiencuuBaocaoList(nhanghiencuuBaocaoListNew);
             vaitro = em.merge(vaitro);
-            for (NhakhoahocBaocao nhakhoahocBaocaoCollectionNewNhakhoahocBaocao : nhakhoahocBaocaoCollectionNew) {
-                if (!nhakhoahocBaocaoCollectionOld.contains(nhakhoahocBaocaoCollectionNewNhakhoahocBaocao)) {
-                    Vaitro oldIDVaiTroOfNhakhoahocBaocaoCollectionNewNhakhoahocBaocao = nhakhoahocBaocaoCollectionNewNhakhoahocBaocao.getIDVaiTro();
-                    nhakhoahocBaocaoCollectionNewNhakhoahocBaocao.setIDVaiTro(vaitro);
-                    nhakhoahocBaocaoCollectionNewNhakhoahocBaocao = em.merge(nhakhoahocBaocaoCollectionNewNhakhoahocBaocao);
-                    if (oldIDVaiTroOfNhakhoahocBaocaoCollectionNewNhakhoahocBaocao != null && !oldIDVaiTroOfNhakhoahocBaocaoCollectionNewNhakhoahocBaocao.equals(vaitro)) {
-                        oldIDVaiTroOfNhakhoahocBaocaoCollectionNewNhakhoahocBaocao.getNhakhoahocBaocaoCollection().remove(nhakhoahocBaocaoCollectionNewNhakhoahocBaocao);
-                        oldIDVaiTroOfNhakhoahocBaocaoCollectionNewNhakhoahocBaocao = em.merge(oldIDVaiTroOfNhakhoahocBaocaoCollectionNewNhakhoahocBaocao);
+            for (NhanghiencuuBaocao nhanghiencuuBaocaoListNewNhanghiencuuBaocao : nhanghiencuuBaocaoListNew) {
+                if (!nhanghiencuuBaocaoListOld.contains(nhanghiencuuBaocaoListNewNhanghiencuuBaocao)) {
+                    Vaitro oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao = nhanghiencuuBaocaoListNewNhanghiencuuBaocao.getIDVaiTro();
+                    nhanghiencuuBaocaoListNewNhanghiencuuBaocao.setIDVaiTro(vaitro);
+                    nhanghiencuuBaocaoListNewNhanghiencuuBaocao = em.merge(nhanghiencuuBaocaoListNewNhanghiencuuBaocao);
+                    if (oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao != null && !oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao.equals(vaitro)) {
+                        oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocaoListNewNhanghiencuuBaocao);
+                        oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao = em.merge(oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao);
                     }
                 }
             }
@@ -142,12 +141,12 @@ public class VaitroJpaController implements Serializable {
                 throw new NonexistentEntityException("The vaitro with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<NhakhoahocBaocao> nhakhoahocBaocaoCollectionOrphanCheck = vaitro.getNhakhoahocBaocaoCollection();
-            for (NhakhoahocBaocao nhakhoahocBaocaoCollectionOrphanCheckNhakhoahocBaocao : nhakhoahocBaocaoCollectionOrphanCheck) {
+            List<NhanghiencuuBaocao> nhanghiencuuBaocaoListOrphanCheck = vaitro.getNhanghiencuuBaocaoList();
+            for (NhanghiencuuBaocao nhanghiencuuBaocaoListOrphanCheckNhanghiencuuBaocao : nhanghiencuuBaocaoListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Vaitro (" + vaitro + ") cannot be destroyed since the NhakhoahocBaocao " + nhakhoahocBaocaoCollectionOrphanCheckNhakhoahocBaocao + " in its nhakhoahocBaocaoCollection field has a non-nullable IDVaiTro field.");
+                illegalOrphanMessages.add("This Vaitro (" + vaitro + ") cannot be destroyed since the NhanghiencuuBaocao " + nhanghiencuuBaocaoListOrphanCheckNhanghiencuuBaocao + " in its nhanghiencuuBaocaoList field has a non-nullable IDVaiTro field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

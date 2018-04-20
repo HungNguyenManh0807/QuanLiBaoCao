@@ -6,11 +6,12 @@
 package quanlibaocaokhoahoc.Model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Hung Nguyen
  */
 @Entity
-@Table(name = "vaitro", catalog = "quanlibaocao", schema = "")
+@Table(catalog = "quanlibaocao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Vaitro.findAll", query = "SELECT v FROM Vaitro v")
@@ -35,13 +36,13 @@ public class Vaitro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "Ten", nullable = false, length = 20)
+    @Column(nullable = false, length = 20)
     private String ten;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDVaiTro")
-    private Collection<NhakhoahocBaocao> nhakhoahocBaocaoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDVaiTro", fetch = FetchType.LAZY)
+    private List<NhanghiencuuBaocao> nhanghiencuuBaocaoList;
 
     public Vaitro() {
     }
@@ -72,12 +73,12 @@ public class Vaitro implements Serializable {
     }
 
     @XmlTransient
-    public Collection<NhakhoahocBaocao> getNhakhoahocBaocaoCollection() {
-        return nhakhoahocBaocaoCollection;
+    public List<NhanghiencuuBaocao> getNhanghiencuuBaocaoList() {
+        return nhanghiencuuBaocaoList;
     }
 
-    public void setNhakhoahocBaocaoCollection(Collection<NhakhoahocBaocao> nhakhoahocBaocaoCollection) {
-        this.nhakhoahocBaocaoCollection = nhakhoahocBaocaoCollection;
+    public void setNhanghiencuuBaocaoList(List<NhanghiencuuBaocao> nhanghiencuuBaocaoList) {
+        this.nhanghiencuuBaocaoList = nhanghiencuuBaocaoList;
     }
 
     @Override

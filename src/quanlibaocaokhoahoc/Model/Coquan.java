@@ -6,29 +6,32 @@
 package quanlibaocaokhoahoc.Model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Hung Nguyen
  */
 @Entity
-@Table(name = "coquan", catalog = "quanlibaocao", schema = "")
+@Table(catalog = "quanlibaocao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Coquan.findAll", query = "SELECT c FROM Coquan c")
-    , @NamedQuery(name = "Coquan.findByIDCoQuan", query = "SELECT c FROM Coquan c WHERE c.iDCoQuan = :iDCoQuan")
+    , @NamedQuery(name = "Coquan.findById", query = "SELECT c FROM Coquan c WHERE c.id = :id")
     , @NamedQuery(name = "Coquan.findByTen", query = "SELECT c FROM Coquan c WHERE c.ten = :ten")
     , @NamedQuery(name = "Coquan.findByDiaChi", query = "SELECT c FROM Coquan c WHERE c.diaChi = :diaChi")})
 public class Coquan implements Serializable {
@@ -37,43 +40,43 @@ public class Coquan implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "IDCoQuan", nullable = false)
-    private Integer iDCoQuan;
+    @Column(nullable = false)
+    private Integer id;
     @Basic(optional = false)
-    @Column(name = "Ten", nullable = false)
-    private int ten;
+    @Column(nullable = false, length = 30)
+    private String ten;
     @Basic(optional = false)
-    @Column(name = "DiaChi", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String diaChi;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "iDCoQuan")
-    private Nhakhoahoc nhakhoahoc;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDCoQuan", fetch = FetchType.LAZY)
+    private List<Nhanghiencuu> nhanghiencuuList;
 
     public Coquan() {
     }
 
-    public Coquan(Integer iDCoQuan) {
-        this.iDCoQuan = iDCoQuan;
+    public Coquan(Integer id) {
+        this.id = id;
     }
 
-    public Coquan(Integer iDCoQuan, int ten, String diaChi) {
-        this.iDCoQuan = iDCoQuan;
+    public Coquan(Integer id, String ten, String diaChi) {
+        this.id = id;
         this.ten = ten;
         this.diaChi = diaChi;
     }
 
-    public Integer getIDCoQuan() {
-        return iDCoQuan;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIDCoQuan(Integer iDCoQuan) {
-        this.iDCoQuan = iDCoQuan;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getTen() {
+    public String getTen() {
         return ten;
     }
 
-    public void setTen(int ten) {
+    public void setTen(String ten) {
         this.ten = ten;
     }
 
@@ -85,18 +88,19 @@ public class Coquan implements Serializable {
         this.diaChi = diaChi;
     }
 
-    public Nhakhoahoc getNhakhoahoc() {
-        return nhakhoahoc;
+    @XmlTransient
+    public List<Nhanghiencuu> getNhanghiencuuList() {
+        return nhanghiencuuList;
     }
 
-    public void setNhakhoahoc(Nhakhoahoc nhakhoahoc) {
-        this.nhakhoahoc = nhakhoahoc;
+    public void setNhanghiencuuList(List<Nhanghiencuu> nhanghiencuuList) {
+        this.nhanghiencuuList = nhanghiencuuList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (iDCoQuan != null ? iDCoQuan.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -107,7 +111,7 @@ public class Coquan implements Serializable {
             return false;
         }
         Coquan other = (Coquan) object;
-        if ((this.iDCoQuan == null && other.iDCoQuan != null) || (this.iDCoQuan != null && !this.iDCoQuan.equals(other.iDCoQuan))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -115,7 +119,7 @@ public class Coquan implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Coquan[ iDCoQuan=" + iDCoQuan + " ]";
+        return "quanlibaocaokhoahoc.Model.Coquan[ id=" + id + " ]";
     }
     
 }

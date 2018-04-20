@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package quanlibaocaokhoahoc.controller;
+package quanlibaocaokhoahoc.Controller;
 
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -15,17 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import quanlibaocaokhoahoc.Model.Linhvuc;
-import quanlibaocaokhoahoc.exceptions.IllegalOrphanException;
-import quanlibaocaokhoahoc.exceptions.NonexistentEntityException;
+import quanlibaocaokhoahoc.Controller.exceptions.IllegalOrphanException;
+import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
+import quanlibaocaokhoahoc.Model.Loaibaocao;
 
 /**
  *
  * @author Hung Nguyen
  */
-public class LinhvucJpaController implements Serializable {
+public class LoaibaocaoJpaController implements Serializable {
 
-    public LinhvucJpaController(EntityManagerFactory emf) {
+    public LoaibaocaoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -34,24 +34,24 @@ public class LinhvucJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Linhvuc linhvuc) {
+    public void create(Loaibaocao loaibaocao) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Baocao baocao = linhvuc.getBaocao();
+            Baocao baocao = loaibaocao.getBaocao();
             if (baocao != null) {
                 baocao = em.getReference(baocao.getClass(), baocao.getId());
-                linhvuc.setBaocao(baocao);
+                loaibaocao.setBaocao(baocao);
             }
-            em.persist(linhvuc);
+            em.persist(loaibaocao);
             if (baocao != null) {
-                Linhvuc oldIDLinhVucOfBaocao = baocao.getIDLinhVuc();
-                if (oldIDLinhVucOfBaocao != null) {
-                    oldIDLinhVucOfBaocao.setBaocao(null);
-                    oldIDLinhVucOfBaocao = em.merge(oldIDLinhVucOfBaocao);
+                Loaibaocao oldIDLoaiOfBaocao = baocao.getIDLoai();
+                if (oldIDLoaiOfBaocao != null) {
+                    oldIDLoaiOfBaocao.setBaocao(null);
+                    oldIDLoaiOfBaocao = em.merge(oldIDLoaiOfBaocao);
                 }
-                baocao.setIDLinhVuc(linhvuc);
+                baocao.setIDLoai(loaibaocao);
                 baocao = em.merge(baocao);
             }
             em.getTransaction().commit();
@@ -62,45 +62,45 @@ public class LinhvucJpaController implements Serializable {
         }
     }
 
-    public void edit(Linhvuc linhvuc) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Loaibaocao loaibaocao) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Linhvuc persistentLinhvuc = em.find(Linhvuc.class, linhvuc.getIDLinhVuc());
-            Baocao baocaoOld = persistentLinhvuc.getBaocao();
-            Baocao baocaoNew = linhvuc.getBaocao();
+            Loaibaocao persistentLoaibaocao = em.find(Loaibaocao.class, loaibaocao.getId());
+            Baocao baocaoOld = persistentLoaibaocao.getBaocao();
+            Baocao baocaoNew = loaibaocao.getBaocao();
             List<String> illegalOrphanMessages = null;
             if (baocaoOld != null && !baocaoOld.equals(baocaoNew)) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("You must retain Baocao " + baocaoOld + " since its IDLinhVuc field is not nullable.");
+                illegalOrphanMessages.add("You must retain Baocao " + baocaoOld + " since its IDLoai field is not nullable.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             if (baocaoNew != null) {
                 baocaoNew = em.getReference(baocaoNew.getClass(), baocaoNew.getId());
-                linhvuc.setBaocao(baocaoNew);
+                loaibaocao.setBaocao(baocaoNew);
             }
-            linhvuc = em.merge(linhvuc);
+            loaibaocao = em.merge(loaibaocao);
             if (baocaoNew != null && !baocaoNew.equals(baocaoOld)) {
-                Linhvuc oldIDLinhVucOfBaocao = baocaoNew.getIDLinhVuc();
-                if (oldIDLinhVucOfBaocao != null) {
-                    oldIDLinhVucOfBaocao.setBaocao(null);
-                    oldIDLinhVucOfBaocao = em.merge(oldIDLinhVucOfBaocao);
+                Loaibaocao oldIDLoaiOfBaocao = baocaoNew.getIDLoai();
+                if (oldIDLoaiOfBaocao != null) {
+                    oldIDLoaiOfBaocao.setBaocao(null);
+                    oldIDLoaiOfBaocao = em.merge(oldIDLoaiOfBaocao);
                 }
-                baocaoNew.setIDLinhVuc(linhvuc);
+                baocaoNew.setIDLoai(loaibaocao);
                 baocaoNew = em.merge(baocaoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = linhvuc.getIDLinhVuc();
-                if (findLinhvuc(id) == null) {
-                    throw new NonexistentEntityException("The linhvuc with id " + id + " no longer exists.");
+                Integer id = loaibaocao.getId();
+                if (findLoaibaocao(id) == null) {
+                    throw new NonexistentEntityException("The loaibaocao with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -116,25 +116,25 @@ public class LinhvucJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Linhvuc linhvuc;
+            Loaibaocao loaibaocao;
             try {
-                linhvuc = em.getReference(Linhvuc.class, id);
-                linhvuc.getIDLinhVuc();
+                loaibaocao = em.getReference(Loaibaocao.class, id);
+                loaibaocao.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The linhvuc with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The loaibaocao with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Baocao baocaoOrphanCheck = linhvuc.getBaocao();
+            Baocao baocaoOrphanCheck = loaibaocao.getBaocao();
             if (baocaoOrphanCheck != null) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Linhvuc (" + linhvuc + ") cannot be destroyed since the Baocao " + baocaoOrphanCheck + " in its baocao field has a non-nullable IDLinhVuc field.");
+                illegalOrphanMessages.add("This Loaibaocao (" + loaibaocao + ") cannot be destroyed since the Baocao " + baocaoOrphanCheck + " in its baocao field has a non-nullable IDLoai field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            em.remove(linhvuc);
+            em.remove(loaibaocao);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -143,19 +143,19 @@ public class LinhvucJpaController implements Serializable {
         }
     }
 
-    public List<Linhvuc> findLinhvucEntities() {
-        return findLinhvucEntities(true, -1, -1);
+    public List<Loaibaocao> findLoaibaocaoEntities() {
+        return findLoaibaocaoEntities(true, -1, -1);
     }
 
-    public List<Linhvuc> findLinhvucEntities(int maxResults, int firstResult) {
-        return findLinhvucEntities(false, maxResults, firstResult);
+    public List<Loaibaocao> findLoaibaocaoEntities(int maxResults, int firstResult) {
+        return findLoaibaocaoEntities(false, maxResults, firstResult);
     }
 
-    private List<Linhvuc> findLinhvucEntities(boolean all, int maxResults, int firstResult) {
+    private List<Loaibaocao> findLoaibaocaoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Linhvuc.class));
+            cq.select(cq.from(Loaibaocao.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -167,20 +167,20 @@ public class LinhvucJpaController implements Serializable {
         }
     }
 
-    public Linhvuc findLinhvuc(Integer id) {
+    public Loaibaocao findLoaibaocao(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Linhvuc.class, id);
+            return em.find(Loaibaocao.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getLinhvucCount() {
+    public int getLoaibaocaoCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Linhvuc> rt = cq.from(Linhvuc.class);
+            Root<Loaibaocao> rt = cq.from(Loaibaocao.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
