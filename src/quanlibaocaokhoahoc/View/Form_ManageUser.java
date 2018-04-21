@@ -63,21 +63,22 @@ public class Form_ManageUser extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         cb_role = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("User Management");
+        setBackground(java.awt.Color.lightGray);
         getContentPane().setLayout(null);
 
         jLabel1.setText("Lists username");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(380, 10, 120, 60);
+        jLabel1.setBounds(230, 20, 120, 60);
 
         tbl_User.getTableHeader().setReorderingAllowed(false);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, nguoidungList, tbl_User);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${password}"));
-        columnBinding.setColumnName("Password");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${username}"));
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${username}"));
         columnBinding.setColumnName("Username");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${password}"));
+        columnBinding.setColumnName("Password");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${quyenHan}"));
         columnBinding.setColumnName("Quyen Han");
@@ -92,7 +93,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_User);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(250, 50, 350, 180);
+        jScrollPane1.setBounds(10, 70, 590, 140);
 
         btn_Add.setText("New user");
         btn_Add.addActionListener(new java.awt.event.ActionListener() {
@@ -101,15 +102,15 @@ public class Form_ManageUser extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_Add);
-        btn_Add.setBounds(10, 10, 110, 60);
+        btn_Add.setBounds(10, 0, 110, 60);
 
         jLabel2.setText("Username");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 180, 50, 14);
+        jLabel2.setBounds(20, 240, 50, 14);
 
         jLabel3.setText("password");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 220, 60, 14);
+        jLabel3.setBounds(20, 280, 60, 14);
 
         txt_User.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,9 +118,11 @@ public class Form_ManageUser extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txt_User);
-        txt_User.setBounds(80, 180, 100, 30);
+        txt_User.setBounds(80, 240, 150, 30);
+
+        txt_password.setMinimumSize(new java.awt.Dimension(4, 20));
         getContentPane().add(txt_password);
-        txt_password.setBounds(80, 220, 100, 30);
+        txt_password.setBounds(80, 280, 150, 30);
 
         btn_Save.setText("Save");
         btn_Save.addActionListener(new java.awt.event.ActionListener() {
@@ -128,15 +131,15 @@ public class Form_ManageUser extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_Save);
-        btn_Save.setBounds(30, 300, 80, 23);
+        btn_Save.setBounds(30, 360, 80, 23);
 
         btn_Delete.setText("Delete");
         getContentPane().add(btn_Delete);
-        btn_Delete.setBounds(170, 300, 80, 23);
+        btn_Delete.setBounds(170, 360, 80, 23);
 
         jLabel4.setText("Role");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 260, 50, 20);
+        jLabel4.setBounds(20, 320, 50, 20);
 
         jButton3.setText("Close");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +148,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(510, 300, 73, 23);
+        jButton3.setBounds(510, 360, 73, 23);
 
         cb_role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User", " " }));
         cb_role.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +157,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cb_role);
-        cb_role.setBounds(80, 260, 100, 20);
+        cb_role.setBounds(80, 320, 100, 20);
 
         bindingGroup.bind();
 
@@ -266,7 +269,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Form_ManageUser().setVisible(true);
-                
+
             }
         });
     }
@@ -278,9 +281,8 @@ public class Form_ManageUser extends javax.swing.JFrame {
 
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new String[]{"Username", "Password", "Quyen han"});
-        // int user_role = (int) cb_role.getSelectedItem();
         for (Nguoidung nguoidung : nguoiDung) {
-           model.addRow(new Object[]{nguoidung.getUsername(), nguoidung.getPassword(),nguoidung.getQuyenHan()});
+            model.addRow(new Object[]{nguoidung.getUsername(), nguoidung.getPassword(), nguoidung.getQuyenHan()});
         }
         tbl_User.setModel(model);
 

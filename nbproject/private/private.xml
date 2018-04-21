@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/View/Form_ManageScientist.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocao/QuanLiBaoCaoKhoaHoc.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/controller/LinhvucJpaController.java</file>
             <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/View/Form_ManageUser.java</file>
-            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/View/Form_Login.java</file>
-            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/Nguoidung.java</file>
             <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/View/Form_SetUp.java</file>
-            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/Model/Nhakhoahoc.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/View/Nguoidung.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/View/Form_Manager_Scientist.java</file>
             <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/View/Form_Home.java</file>
             <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCaoKhoaHoc/src/quanlibaocaokhoahoc/View/Form_ManageThesis.java</file>
         </group>
