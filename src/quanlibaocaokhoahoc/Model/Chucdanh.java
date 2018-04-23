@@ -123,7 +123,7 @@ public class Chucdanh implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Chucdanh[ id=" + id + " ]";
+        return  ten +"-- "+ ngayCap ;
     }
     
 }

@@ -36,9 +36,9 @@ public class Form_Home extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_LinkToManagement_User = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btn_LinkToMaagenment_Scientist = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -63,17 +63,17 @@ public class Form_Home extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(null);
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 255));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\man-icon.png")); // NOI18N
-        jButton1.setText("Manage User");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_LinkToManagement_User.setBackground(new java.awt.Color(51, 51, 255));
+        btn_LinkToManagement_User.setForeground(new java.awt.Color(255, 255, 255));
+        btn_LinkToManagement_User.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\man-icon.png")); // NOI18N
+        btn_LinkToManagement_User.setText("Manage User");
+        btn_LinkToManagement_User.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_LinkToManagement_UserActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(20, 110, 210, 90);
+        getContentPane().add(btn_LinkToManagement_User);
+        btn_LinkToManagement_User.setBounds(20, 110, 210, 90);
 
         jButton2.setBackground(new java.awt.Color(51, 51, 255));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -83,17 +83,27 @@ public class Form_Home extends javax.swing.JFrame {
         getContentPane().add(jButton2);
         jButton2.setBounds(360, 310, 90, 20);
 
-        jButton3.setBackground(new java.awt.Color(51, 51, 255));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Professor-icon.png")); // NOI18N
-        jButton3.setText("Manage Scientist");
-        getContentPane().add(jButton3);
-        jButton3.setBounds(20, 210, 160, 90);
+        btn_LinkToMaagenment_Scientist.setBackground(new java.awt.Color(51, 51, 255));
+        btn_LinkToMaagenment_Scientist.setForeground(new java.awt.Color(255, 255, 255));
+        btn_LinkToMaagenment_Scientist.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Professor-icon.png")); // NOI18N
+        btn_LinkToMaagenment_Scientist.setText("Manage Scientist");
+        btn_LinkToMaagenment_Scientist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_LinkToMaagenment_ScientistActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_LinkToMaagenment_Scientist);
+        btn_LinkToMaagenment_Scientist.setBounds(20, 210, 160, 90);
 
         jButton4.setBackground(new java.awt.Color(51, 51, 255));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Play-Books-icon.png")); // NOI18N
         jButton4.setText("Manage Thesis");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton4);
         jButton4.setBounds(240, 110, 160, 90);
 
@@ -220,11 +230,11 @@ public class Form_Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_LinkToManagement_UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LinkToManagement_UserActionPerformed
         this.setVisible(false);
         Form_ManageUser fmu = new Form_ManageUser();
         fmu.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_LinkToManagement_UserActionPerformed
 
     private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
         // TODO add your handling code here:
@@ -235,6 +245,18 @@ public class Form_Home extends javax.swing.JFrame {
         this.setVisible(true);
         }
     }//GEN-LAST:event_btn_exitActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btn_LinkToMaagenment_ScientistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LinkToMaagenment_ScientistActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Form_Manager_Scientist fms = new Form_Manager_Scientist();
+        fms.setVisible(true);
+        
+    }//GEN-LAST:event_btn_LinkToMaagenment_ScientistActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,11 +322,11 @@ public class Form_Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel WhiteLine;
+    private javax.swing.JButton btn_LinkToMaagenment_Scientist;
+    private javax.swing.JButton btn_LinkToManagement_User;
     private javax.swing.JButton btn_exit;
     private javax.swing.JLabel dateLab;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

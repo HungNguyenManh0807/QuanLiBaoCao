@@ -119,7 +119,7 @@ public class Coquan implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Coquan[ id=" + id + " ]";
+        return ten+"--"+ diaChi;
     }
     
 }

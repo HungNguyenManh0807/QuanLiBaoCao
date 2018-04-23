@@ -132,7 +132,9 @@ public class Nhanghiencuu implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Nhanghiencuu[ id=" + id + " ]";
+        return ten;
     }
+
+
     
 }

@@ -7,16 +7,18 @@ package quanlibaocaokhoahoc.View;
 
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import quanlibaocaokhoahoc.Controller.ChucdanhJpaController;
 import quanlibaocaokhoahoc.Controller.CoquanJpaController;
+import quanlibaocaokhoahoc.Controller.NhanghiencuuJpaController;
 
 import quanlibaocaokhoahoc.Model.Chucdanh;
 import quanlibaocaokhoahoc.Model.Coquan;
+import quanlibaocaokhoahoc.Model.Nhanghiencuu;
 
 /**
  *
@@ -30,8 +32,12 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
     public Form_Manager_Scientist() {
         initComponents();
         createAndShow();
+        bindScientist();
         bindChucDanh();
         bindCoQuan();
+        bindCBboxChucDanh();
+        bindCBboxCoQuan();
+
     }
 
     /**
@@ -47,18 +53,18 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_NhaKhoaHoc = new javax.swing.JTable();
-        btn_Add = new javax.swing.JButton();
+        btn_AddScientist = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txt_User = new javax.swing.JTextField();
+        txt_Scientist_Name = new javax.swing.JTextField();
         btn_Save = new javax.swing.JButton();
         btn_Delete = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        DateChose_Scientist = new com.toedter.calendar.JDateChooser();
+        cb_ChucDanh = new javax.swing.JComboBox<>();
+        cb_CoQuan = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -76,7 +82,7 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Panel_ChucDanh = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        txt_Ten = new javax.swing.JTextField();
+        txt_TenChucDanh = new javax.swing.JTextField();
         btn_InsertChucDanh = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -89,6 +95,7 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Manage Scientist");
 
         QuanLiNhaKhoaHoc.setFont(new java.awt.Font("Lucida Console", 0, 13)); // NOI18N
 
@@ -101,18 +108,18 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         tbl_NhaKhoaHoc.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_NhaKhoaHoc);
 
-        btn_Add.setText("Add");
-        btn_Add.addActionListener(new java.awt.event.ActionListener() {
+        btn_AddScientist.setText("Add");
+        btn_AddScientist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AddActionPerformed(evt);
+                btn_AddScientistActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Date");
 
-        txt_User.addActionListener(new java.awt.event.ActionListener() {
+        txt_Scientist_Name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_UserActionPerformed(evt);
+                txt_Scientist_NameActionPerformed(evt);
             }
         });
 
@@ -137,18 +144,23 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         });
 
         jButton3.setText("close");
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Giáo Sư", "Tiến Sĩ", "Thạc  Sĩ" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Công ti VTV", "Công ti VTC", "Other" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cb_ChucDanh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Giáo Sư", "Tiến Sĩ", "Thạc  Sĩ" }));
+        cb_ChucDanh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cb_ChucDanhActionPerformed(evt);
+            }
+        });
+
+        cb_CoQuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Công ti VTV", "Công ti VTC", "Other" }));
+        cb_CoQuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_CoQuanActionPerformed(evt);
             }
         });
 
@@ -179,11 +191,11 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
                                         .addComponent(jLabel2))
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGap(268, 268, 268)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(cb_ChucDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btn_Save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btn_Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btn_AddScientist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btn_Delete, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(69, 69, 69))))
@@ -193,10 +205,10 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_User, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txt_Scientist_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(DateChose_Scientist, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(94, 94, 94)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cb_CoQuan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(217, 217, 217)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -207,7 +219,7 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_Add, btn_Delete, btn_Save, jButton3});
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_AddScientist, btn_Delete, btn_Save, jButton3});
 
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,12 +231,12 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_Add, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_AddScientist, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_User, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_Scientist_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_Save))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_Delete)
@@ -238,20 +250,20 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
                                 .addGap(19, 19, 19)
                                 .addComponent(jLabel5)
                                 .addGap(8, 8, 8)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cb_CoQuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DateChose_Scientist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cb_ChucDanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_Add, btn_Delete, btn_Save, jButton3});
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_AddScientist, btn_Delete, btn_Save, jButton3});
 
         jPanel3.add(jPanel4);
         jPanel4.setBounds(0, 0, 773, 420);
@@ -279,6 +291,11 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         jButton9.setPreferredSize(new java.awt.Dimension(63, 23));
 
         jButton10.setText("Close");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setText("Delete");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -386,9 +403,9 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         jPanel2.setBackground(java.awt.Color.lightGray);
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chuc Danh", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
 
-        txt_Ten.addActionListener(new java.awt.event.ActionListener() {
+        txt_TenChucDanh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_TenActionPerformed(evt);
+                txt_TenChucDanhActionPerformed(evt);
             }
         });
 
@@ -423,11 +440,9 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(DateChose_NgayCap, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txt_Ten)
-                                .addGap(20, 20, 20))))
+                                .addComponent(txt_TenChucDanh)
+                                .addGap(20, 20, 20))
+                            .addComponent(DateChose_NgayCap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(btn_InsertChucDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -447,7 +462,7 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txt_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_TenChucDanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -501,21 +516,21 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_TenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TenActionPerformed
+    private void txt_TenChucDanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TenChucDanhActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_TenActionPerformed
+    }//GEN-LAST:event_txt_TenChucDanhActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cb_CoQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_CoQuanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cb_CoQuanActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void cb_ChucDanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_ChucDanhActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_cb_ChucDanhActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -532,41 +547,58 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_SaveActionPerformed
 
-    private void txt_UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UserActionPerformed
+    private void txt_Scientist_NameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_Scientist_NameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_UserActionPerformed
+    }//GEN-LAST:event_txt_Scientist_NameActionPerformed
+    private void clearCoQuan() {
+        txt_TenCoQuan.setText("");
+        txt_DiaChi.setText("");
 
-    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        // TODO add your handling code here:
+    }
 
-        //        Baocao b = new Baocao();
-        //
-        //        if(txt_User.getText().equals("")||txt_password.getText().equals("")||txt_right.getText().equals("") ){
-        //            JOptionPane.showMessageDialog(rootPane, "Please fill all before! ");
-        //
-        //        }else{
-        //             //n.getId(); when connection with dtb
-        //        n.setUsername(txt_User.getText());
-        //        n.setPassword(txt_password.getText());
-        //        n.setQuyenHan(Integer.parseInt(txt_right.getText()));
-        //         list.add(n);
-        //        showResult();
-        //        }
-        //        if (flag == 1) {
-        //            btn_Add.setEnabled(true);
-        //            flag = 2;
-        //
-        //        } else {
-        //            btn_Add.setEnabled(false);
-        //        }
-    }//GEN-LAST:event_btn_AddActionPerformed
+    private void clearChucDanh() {
+        txt_TenChucDanh.setText("");
+        DateChose_NgayCap.setCalendar(null);
+
+    }
+
+    private void clearScientist() {
+        txt_Scientist_Name.setText("");
+        DateChose_Scientist.setCalendar(null);
+
+    }
+    private void btn_AddScientistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddScientistActionPerformed
+//         TODO add your handling code here:
+        Nhanghiencuu nhanghiencuu = new Nhanghiencuu();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NhanghiencuuJpaController controller = new NhanghiencuuJpaController(emf);
+
+        Chucdanh chucDanh = (Chucdanh) cb_ChucDanh.getSelectedItem();
+        Coquan coQuan = (Coquan) cb_CoQuan.getSelectedItem();
+        nhanghiencuu.setTen(txt_Scientist_Name.getText());
+        nhanghiencuu.setNgaySinh(DateChose_Scientist.getDate());
+        nhanghiencuu.setIDChucDanh(chucDanh);
+        nhanghiencuu.setIDCoQuan(coQuan);
+        if (txt_Scientist_Name.getText().equals("") || DateChose_Scientist.getCalendar().equals(null)) {
+
+            JOptionPane.showMessageDialog(rootPane, "Please fill all before!");
+
+        } else {
+
+            JOptionPane.showMessageDialog(rootPane, "Added successfully");
+            controller.create(nhanghiencuu);
+            bindScientist();
+        }
+
+
+    }//GEN-LAST:event_btn_AddScientistActionPerformed
 
     private void btn_InsertCoQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_InsertCoQuanActionPerformed
         // TODO add your handling code here:
         Coquan coquan = new Coquan();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
-
         CoquanJpaController controller = new CoquanJpaController(emf);
+
         coquan.setTen(txt_TenCoQuan.getText());
         coquan.setDiaChi(txt_DiaChi.getText());
         if (txt_DiaChi.getText().equals("") || txt_TenCoQuan.getText().equals("")) {
@@ -576,6 +608,8 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
             controller.create(coquan);
             JOptionPane.showMessageDialog(rootPane, "Added successfully");
             bindCoQuan();
+            bindCBboxCoQuan();
+            clearCoQuan();
         }
 
 
@@ -586,11 +620,11 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         try {
             Chucdanh chucdanh = new Chucdanh();
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");//dung de ket noi voi database ten lay o file persistence.xml
-
             ChucdanhJpaController controller = new ChucdanhJpaController(emf);// tao ra viec xac nhan transaction
-            chucdanh.setTen(txt_Ten.getText());
+
+            chucdanh.setTen(txt_TenChucDanh.getText());
             chucdanh.setNgayCap(DateChose_NgayCap.getDate());
-            if (txt_Ten.getText().equals("") || DateChose_NgayCap.getDate().equals("")) {
+            if (txt_TenChucDanh.getText().equals("") || DateChose_NgayCap.getDate().equals("")) {
                 JOptionPane.showMessageDialog(rootPane, "Please fill all before inserting ");
 
             } else {
@@ -598,6 +632,8 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
                 controller.create(chucdanh);//store into database
                 JOptionPane.showMessageDialog(rootPane, "Added successfully");
                 bindChucDanh();
+                bindCBboxChucDanh();
+                clearChucDanh();
 
             }
         } catch (Exception e) {
@@ -607,11 +643,24 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_InsertChucDanhActionPerformed
 
-    public void createAndShow(){
-    
-    this.setLocationRelativeTo(null);
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Form_Home fh = new Form_Home();
+        fh.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    public void createAndShow() {
+
+        this.setLocationRelativeTo(null);
+        bindScientist();
     }
-            public static void main(String args[]) {
+
+    public static void main(String args[]) {
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -638,6 +687,48 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         });
     }
 
+    private void bindScientist() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NhanghiencuuJpaController controller = new NhanghiencuuJpaController(emf);
+        List<Nhanghiencuu> list = controller.findNhanghiencuuEntities();
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Ten", "Ngay Sinh", "Chuc Danh", "Co Quan"});
+
+        String TenCoQuan = "";
+        String TenChucDanh = "";
+        for (Nhanghiencuu nhanghiencuu : list) {
+
+            TenCoQuan = nhanghiencuu.getIDCoQuan().getTen();
+            TenChucDanh = nhanghiencuu.getIDChucDanh().getTen();
+            model.addRow(new Object[]{nhanghiencuu.getTen(), nhanghiencuu.getNgaySinh(),
+                TenChucDanh, TenCoQuan});
+        }
+        tbl_NhaKhoaHoc.setModel(model);
+    }
+
+    private void bindCBboxChucDanh() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        ChucdanhJpaController controller = new ChucdanhJpaController(emf);
+        List<Chucdanh> list = controller.findChucdanhEntities();
+
+        Object[] AddressArray = list.toArray();
+        DefaultComboBoxModel boxModel = new DefaultComboBoxModel(AddressArray);
+        cb_ChucDanh.setModel(boxModel);
+
+    }
+
+    private void bindCBboxCoQuan() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        CoquanJpaController controller = new CoquanJpaController(emf);
+        List<Coquan> list = controller.findCoquanEntities();
+
+        Object[] PromotionArray = list.toArray();
+        DefaultComboBoxModel boxModel = new DefaultComboBoxModel(PromotionArray);
+        cb_CoQuan.setModel(boxModel);
+
+    }
+
     private void bindCoQuan() {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
@@ -645,7 +736,7 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         List<Coquan> list = controller.findCoquanEntities();
 
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Ten Co Quan", "Dia Chi"});
+        model.setColumnIdentifiers(new String[]{"ID", "Ten Co Quan", "Dia Chi"});
         for (Coquan coquan : list) {
             model.addRow(new Object[]{coquan.getTen(), coquan.getDiaChi()});
         }
@@ -658,10 +749,10 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         ChucdanhJpaController controller = new ChucdanhJpaController(emf);
         List<Chucdanh> chucDanhList = controller.findChucdanhEntities();
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Ten Chuc Danh", "Ngay Cap"});
+        model.setColumnIdentifiers(new String[]{"ID", "Ten Chuc Danh", "Ngay Cap"});
 
         for (Chucdanh chucdanh : chucDanhList) {
-            model.addRow(new Object[]{chucdanh.getTen(), chucdanh.getNgayCap()});
+            model.addRow(new Object[]{chucdanh.getId(), chucdanh.getTen(), chucdanh.getNgayCap()});
         }
         tbl_ChucDanh.setModel(model);
 
@@ -670,13 +761,16 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateChose_NgayCap;
+    private com.toedter.calendar.JDateChooser DateChose_Scientist;
     private javax.swing.JPanel Panel_ChucDanh;
     private javax.swing.JTabbedPane QuanLiNhaKhoaHoc;
-    private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_AddScientist;
     private javax.swing.JButton btn_Delete;
     private javax.swing.JButton btn_InsertChucDanh;
     private javax.swing.JButton btn_InsertCoQuan;
     private javax.swing.JButton btn_Save;
+    private javax.swing.JComboBox<String> cb_ChucDanh;
+    private javax.swing.JComboBox<String> cb_CoQuan;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -686,9 +780,6 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -711,8 +802,8 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
     private javax.swing.JTable tbl_CoQuan;
     private javax.swing.JTable tbl_NhaKhoaHoc;
     private javax.swing.JTextField txt_DiaChi;
-    private javax.swing.JTextField txt_Ten;
+    private javax.swing.JTextField txt_Scientist_Name;
+    private javax.swing.JTextField txt_TenChucDanh;
     private javax.swing.JTextField txt_TenCoQuan;
-    private javax.swing.JTextField txt_User;
     // End of variables declaration//GEN-END:variables
 }
