@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultComboBoxModel;
@@ -18,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import quanlibaocaokhoahoc.Controller.BaocaoJpaController;
 import quanlibaocaokhoahoc.Controller.LinhvucJpaController;
 import quanlibaocaokhoahoc.Controller.LoaibaocaoJpaController;
+import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 import quanlibaocaokhoahoc.Model.Baocao;
 import quanlibaocaokhoahoc.Model.Linhvuc;
 import quanlibaocaokhoahoc.Model.Loaibaocao;
@@ -82,7 +85,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btn_Insert_FieldName = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btn_EditFieldName = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txt_FieldName = new javax.swing.JTextField();
@@ -181,7 +184,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Close_MangeThesis);
-        btn_Close_MangeThesis.setBounds(730, 490, 80, 23);
+        btn_Close_MangeThesis.setBounds(850, 500, 80, 23);
 
         jLabel5.setText("Time");
         jPanel1.add(jLabel5);
@@ -237,10 +240,15 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Thesises.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_ThesisesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl_Thesises);
 
         jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(10, 70, 810, 150);
+        jScrollPane3.setBounds(10, 70, 930, 150);
 
         btn_AttachFile.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
         btn_AttachFile.setText("Attach file...");
@@ -296,11 +304,16 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel4.add(btn_Insert_FieldName);
         btn_Insert_FieldName.setBounds(30, 20, 70, 23);
 
-        jButton5.setText("Edit");
-        jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel4.add(jButton5);
-        jButton5.setBounds(30, 70, 73, 23);
+        btn_EditFieldName.setText("Edit");
+        btn_EditFieldName.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_EditFieldName.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btn_EditFieldName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EditFieldNameActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btn_EditFieldName);
+        btn_EditFieldName.setBounds(30, 70, 73, 23);
 
         jButton6.setText("Delete");
         jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
@@ -334,6 +347,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
             }
         ));
+        tbl_Field.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_FieldMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_Field);
 
         jPanel2.add(jScrollPane1);
@@ -412,7 +430,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(131, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -438,7 +456,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jTabbedPane1.addTab("Type", jPanel3);
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(0, 0, 840, 560);
+        jTabbedPane1.setBounds(0, 0, 950, 560);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -509,7 +527,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             baocao.setIDLinhVuc(linhvuc);
             baocao.setIDLoai(loaibaocao);
             if (txt_Name_Thesises.getText().equals("") || txt_Url.getText().equals("")
-                    || txa_Resume.getText().equals("")||linhvuc.equals("")||loaibaocao.equals("")) {
+                    || txa_Resume.getText().equals("") || linhvuc.equals("") || loaibaocao.equals("")) {
                 JOptionPane.showMessageDialog(rootPane, "Missing Field blank");
             } else {
 
@@ -570,12 +588,12 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         String Type = "";
 
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new Object[]{"Ten Bao Cao", "Tom Tat", "Thoi Gian",
+        model.setColumnIdentifiers(new Object[]{"ID", "Ten Bao Cao", "Tom Tat", "Thoi Gian",
             "Url", "Url data", "Linh Vuc", "Loai"});
         for (Baocao baocao : baocaos) {
-            Field = baocao.getIDLinhVuc().getTen();
-            Type = baocao.getIDLoai().getLoaiBaoCao();
-            model.addRow(new Object[]{baocao.getTen(), baocao.getTomTat(), baocao.getThoiGian(),
+            Field = baocao.getIDLinhVuc().getTen();// lay ve ten cua linh vuc  bao cao theo id
+            Type = baocao.getIDLoai().getLoaiBaoCao();//lay ve ten cua loai bao cao theo id
+            model.addRow(new Object[]{baocao.getId(), baocao.getTen(), baocao.getTomTat(), baocao.getThoiGian(),
                 baocao.getUrl(), baocao.getUrlData(), Field, Type});
         }
         tbl_Thesises.setModel(model);
@@ -590,6 +608,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         model.setColumnIdentifiers(new Object[]{"ID", "Ten Linh Vuc"});
         for (Linhvuc linhvuc : linhvucs) {
             model.addRow(new Object[]{linhvuc.getId(), linhvuc.getTen()});
+
         }
         tbl_Field.setModel(model);
 
@@ -700,13 +719,66 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_UrlDataActionPerformed
 
+    private void tbl_ThesisesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ThesisesMouseClicked
+        // TODO add your handling code here:
+//        int rowNum = tbl_Thesises.getSelectedRow();
+//        int selectedThesisID = Integer.parseInt(tbl_Thesises.getValueAt(rowNum, 0).toString());
+//        
+
+    }//GEN-LAST:event_tbl_ThesisesMouseClicked
+
+    private void btn_EditFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditFieldNameActionPerformed
+        // TODO add your handling code here:
+        if (txt_FieldName.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Nothing to edit! please choose a row");
+        } else {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+            LinhvucJpaController controller = new LinhvucJpaController(emf);
+
+            Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
+            linhvuc.setTen(txt_FieldName.getText());
+
+            try {
+
+                controller.edit(linhvuc);
+                JOptionPane.showMessageDialog(rootPane, "Updated successfully");
+
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            selectedFieldID = -1;
+            clearField();
+            binCBboxField();
+            bindField();
+        }
+    }//GEN-LAST:event_btn_EditFieldNameActionPerformed
+
+    private void tbl_FieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_FieldMouseClicked
+        // TODO add your handling code here:
+        try {
+            int rowNum = tbl_Field.getSelectedRow();
+            selectedFieldID = Integer.parseInt(tbl_Field.getValueAt(rowNum, 0).toString());
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+            LinhvucJpaController controller = new LinhvucJpaController(emf);
+            Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
+
+            txt_FieldName.setText(linhvuc.getTen());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }//GEN-LAST:event_tbl_FieldMouseClicked
+
     /**
      * @param args the command line arguments
      */
     public void createAndShow() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        this.setSize(870, 585);
+        this.setSize(960, 585);
         this.setLocationRelativeTo(null);
 
     }
@@ -757,6 +829,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JButton btn_AttachFileData;
     javax.swing.JButton btn_Close_MangeThesis;
     javax.swing.JButton btn_Delete;
+    javax.swing.JButton btn_EditFieldName;
     javax.swing.JButton btn_Insert_FieldName;
     javax.swing.JButton btn_Insert_TypeName;
     javax.swing.JButton btn_Save;
@@ -767,7 +840,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JButton jButton11;
     javax.swing.JButton jButton12;
     javax.swing.JButton jButton2;
-    javax.swing.JButton jButton5;
     javax.swing.JButton jButton6;
     javax.swing.JButton jButton7;
     javax.swing.JButton jButton9;
@@ -803,6 +875,8 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JTextField txt_Url;
     javax.swing.JTextField txt_UrlData;
     // End of variables declaration//GEN-END:variables
+    int selectedTypeID;
+    int selectedFieldID;
 
     private static class ActionListenerImpl implements ActionListener {
 
