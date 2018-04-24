@@ -7,6 +7,17 @@ package quanlibaocaokhoahoc.View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import quanlibaocaokhoahoc.Controller.LinhvucJpaController;
+import quanlibaocaokhoahoc.Controller.LoaibaocaoJpaController;
+import quanlibaocaokhoahoc.Model.Linhvuc;
+import quanlibaocaokhoahoc.Model.Loaibaocao;
 
 /**
  *
@@ -17,12 +28,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     /**
      * Creates new form Form_Manage
      */
-  
-
     public Form_Manager_Thesis() {
         initComponents();
         createAndShow();
-      
+        bindField();
+        bindType();
 
     }
 
@@ -36,10 +46,10 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        btn_Add = new javax.swing.JButton();
+        btn_Add_Thesises = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txt_User = new javax.swing.JTextField();
-        txt_password = new javax.swing.JTextField();
+        txt_Name_Thesises = new javax.swing.JTextField();
+        txt_Url = new javax.swing.JTextField();
         btn_Save = new javax.swing.JButton();
         btn_Delete = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -57,13 +67,14 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        btn_AttachFile = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
+        btn_Insert_FieldName = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_FieldName = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Field = new javax.swing.JTable();
@@ -71,7 +82,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
+        btn_Insert_TypeName = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -79,7 +90,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tbl_Type = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -89,28 +100,30 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List Thesises", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
         jPanel1.setLayout(null);
 
-        btn_Add.setText("Add Thesis");
-        btn_Add.addActionListener(new java.awt.event.ActionListener() {
+        btn_Add_Thesises.setText("Add Thesis");
+        btn_Add_Thesises.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AddActionPerformed(evt);
+                btn_Add_ThesisesActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Add);
-        btn_Add.setBounds(570, 250, 110, 40);
+        jPanel1.add(btn_Add_Thesises);
+        btn_Add_Thesises.setBounds(570, 250, 110, 40);
 
         jLabel3.setText("Name");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(0, 250, 60, 14);
 
-        txt_User.addActionListener(new java.awt.event.ActionListener() {
+        txt_Name_Thesises.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_UserActionPerformed(evt);
+                txt_Name_ThesisesActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_User);
-        txt_User.setBounds(20, 280, 310, 30);
-        jPanel1.add(txt_password);
-        txt_password.setBounds(370, 340, 170, 60);
+        jPanel1.add(txt_Name_Thesises);
+        txt_Name_Thesises.setBounds(20, 280, 310, 30);
+
+        txt_Url.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jPanel1.add(txt_Url);
+        txt_Url.setBounds(370, 340, 170, 40);
 
         btn_Save.setText("Save");
         btn_Save.addActionListener(new java.awt.event.ActionListener() {
@@ -210,6 +223,18 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.add(jScrollPane3);
         jScrollPane3.setBounds(10, 70, 810, 170);
 
+        btn_AttachFile.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
+        btn_AttachFile.setText("Attach file...");
+        btn_AttachFile.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_AttachFile.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btn_AttachFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AttachFileActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_AttachFile);
+        btn_AttachFile.setBounds(370, 390, 120, 25);
+
         jTabbedPane1.addTab("Thesis", jPanel1);
 
         jPanel2.setLayout(null);
@@ -218,16 +243,16 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Field", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
         jPanel4.setLayout(null);
 
-        jButton4.setText("Insert");
-        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btn_Insert_FieldName.setText("Insert");
+        btn_Insert_FieldName.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_Insert_FieldName.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btn_Insert_FieldName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btn_Insert_FieldNameActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton4);
-        jButton4.setBounds(30, 20, 70, 23);
+        jPanel4.add(btn_Insert_FieldName);
+        btn_Insert_FieldName.setBounds(30, 20, 70, 23);
 
         jButton5.setText("Edit");
         jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
@@ -249,8 +274,8 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel10.setText("Field Name");
         jPanel4.add(jLabel10);
         jLabel10.setBounds(170, 14, 110, 20);
-        jPanel4.add(jTextField1);
-        jTextField1.setBounds(170, 30, 180, 80);
+        jPanel4.add(txt_FieldName);
+        txt_FieldName.setBounds(170, 30, 180, 80);
 
         jButton7.setText("Close");
         jPanel4.add(jButton7);
@@ -289,9 +314,14 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
         jPanel5.setLayout(null);
 
-        jButton8.setText("Insert");
-        jPanel5.add(jButton8);
-        jButton8.setBounds(20, 30, 70, 23);
+        btn_Insert_TypeName.setText("Insert");
+        btn_Insert_TypeName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Insert_TypeNameActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btn_Insert_TypeName);
+        btn_Insert_TypeName.setBounds(20, 30, 70, 23);
 
         jButton9.setText("Edit");
         jPanel5.add(jButton9);
@@ -320,7 +350,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel5.add(jButton12);
         jButton12.setBounds(239, 160, 90, 23);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Type.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -328,7 +358,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane4.setViewportView(jTable3);
+        jScrollPane4.setViewportView(tbl_Type);
 
         jLabel8.setBackground(new java.awt.Color(0, 51, 51));
         jLabel8.setFont(new java.awt.Font("Trebuchet MS", 3, 33)); // NOI18N
@@ -381,7 +411,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 //
 //    }
 
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -392,44 +421,44 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
         //        if (flag == 2) {
-            //            setEnabled(true);
-            //            flag = 1;
-            //        } else {
-            //            setEnabled(false);
-            //        }
+        //            setEnabled(true);
+        //            flag = 1;
+        //        } else {
+        //            setEnabled(false);
+        //        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_SaveActionPerformed
 
-    private void txt_UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UserActionPerformed
+    private void txt_Name_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_Name_ThesisesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_UserActionPerformed
+    }//GEN-LAST:event_txt_Name_ThesisesActionPerformed
 
-    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
+    private void btn_Add_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Add_ThesisesActionPerformed
         // TODO add your handling code here:
         //
         //        Nguoidung n = new Nguoidung();
         //
         //        if(txt_User.getText().equals("")||txt_password.getText().equals("")||txt_right.getText().equals("") ){
-            //            JOptionPane.showMessageDialog(rootPane, "Please fill all before ");
-            //
-            //        }else{
-            //             //n.getId(); when connection with dtb
-            //        n.setUsername(txt_User.getText());
-            //        n.setPassword(txt_password.getText());
-            //        n.setQuyenHan(Integer.parseInt(txt_right.getText()));
-            //         list.add(n);
-            //        showResult();
-            //        }
+        //            JOptionPane.showMessageDialog(rootPane, "Please fill all before ");
+        //
+        //        }else{
+        //             //n.getId(); when connection with dtb
+        //        n.setUsername(txt_User.getText());
+        //        n.setPassword(txt_password.getText());
+        //        n.setQuyenHan(Integer.parseInt(txt_right.getText()));
+        //         list.add(n);
+        //        showResult();
+        //        }
 
         //        if (flag == 1) {
-            //            btn_Add.setEnabled(true);
-            //            flag = 2;
-            //
-            //        } else {
-            //            btn_Add.setEnabled(false);
-            //        }
-    }//GEN-LAST:event_btn_AddActionPerformed
+        //            btn_Add.setEnabled(true);
+        //            flag = 2;
+        //
+        //        } else {
+        //            btn_Add.setEnabled(false);
+        //        }
+    }//GEN-LAST:event_btn_Add_ThesisesActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         // TODO add your handling code here:
@@ -443,10 +472,54 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btn_Insert_FieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_FieldNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        
+        try {
+            Linhvuc linhvuc = new Linhvuc(); // khai bao object linh vuc
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");// ket noi voi database ten lay file persistent.xml META INF
+            LinhvucJpaController controller = new LinhvucJpaController(emf);// tao ra viec commit transaction
 
+            linhvuc.setTen(txt_FieldName.getText());// truyen vao object linh vuc ten tu ban phim
+            if (txt_FieldName.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Missing Field Name!");
+
+            } else {
+                controller.create(linhvuc);// them linh vuc xuong database
+                bindField();
+                JOptionPane.showMessageDialog(rootPane, "Added successfully");
+            }
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_btn_Insert_FieldNameActionPerformed
+    private void bindField() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        LinhvucJpaController controller = new LinhvucJpaController(emf);
+        List<Linhvuc> linhvucs = controller.findLinhvucEntities();// tao ra 1 danh sach cac linh vuc co trong bo nho
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[]{"ID", "Ten Linh Vuc"});
+        for (Linhvuc linhvuc : linhvucs) {
+            model.addRow(new Object[]{linhvuc.getId(), linhvuc.getTen()});
+        }
+        tbl_Field.setModel(model);
+
+    }
+
+    private void bindType() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        LoaibaocaoJpaController controller = new LoaibaocaoJpaController(emf);
+        List<Loaibaocao> loaibaocaos = controller.findLoaibaocaoEntities();
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[]{"ID", "Loai Bao Cao"});
+        for (Loaibaocao loaibaocao : loaibaocaos) {
+            model.addRow(new Object[]{loaibaocao.getId(), loaibaocao.getLoaiBaoCao()});
+        }
+        tbl_Type.setModel(model);
+
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -454,12 +527,47 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         fh.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void btn_Insert_TypeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_TypeNameActionPerformed
+        // TODO add your handling code here:
+        try {
+                 Loaibaocao loaibaocao = new Loaibaocao();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        LoaibaocaoJpaController controller = new LoaibaocaoJpaController(emf);
+
+        loaibaocao.setLoaiBaoCao(txt_FieldName.getText());
+        if (txt_FieldName.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Missing Type Name");
+        } else {
+            controller.create(loaibaocao);// luu object bao cao xuong database
+            bindType();
+            JOptionPane.showMessageDialog(rootPane, "Added successfully");
+        }
+
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_btn_Insert_TypeNameActionPerformed
+
+    private void btn_AttachFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileActionPerformed
+        // TODO add your handling code here:
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.showOpenDialog(null);
+
+            File file = chooser.getSelectedFile();
+            String fileName = file.getAbsolutePath();
+            txt_Url.setText(fileName);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Missing Url");
+        }
+    }//GEN-LAST:event_btn_AttachFileActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public void createAndShow() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
         this.setSize(840, 590);
         this.setLocationRelativeTo(null);
 
@@ -505,8 +613,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JButton btn_Add;
+    javax.swing.JButton btn_Add_Thesises;
+    javax.swing.JButton btn_AttachFile;
     javax.swing.JButton btn_Delete;
+    javax.swing.JButton btn_Insert_FieldName;
+    javax.swing.JButton btn_Insert_TypeName;
     javax.swing.JButton btn_Save;
     javax.swing.JButton jButton1;
     javax.swing.JButton jButton10;
@@ -514,11 +625,9 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JButton jButton12;
     javax.swing.JButton jButton2;
     javax.swing.JButton jButton3;
-    javax.swing.JButton jButton4;
     javax.swing.JButton jButton5;
     javax.swing.JButton jButton6;
     javax.swing.JButton jButton7;
-    javax.swing.JButton jButton8;
     javax.swing.JButton jButton9;
     javax.swing.JComboBox<String> jComboBox1;
     javax.swing.JComboBox<String> jComboBox3;
@@ -545,13 +654,13 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JScrollPane jScrollPane4;
     javax.swing.JTabbedPane jTabbedPane1;
     javax.swing.JTable jTable2;
-    javax.swing.JTable jTable3;
     javax.swing.JTextArea jTextArea1;
-    javax.swing.JTextField jTextField1;
     javax.swing.JTextField jTextField2;
     javax.swing.JTable tbl_Field;
-    javax.swing.JTextField txt_User;
-    javax.swing.JTextField txt_password;
+    javax.swing.JTable tbl_Type;
+    javax.swing.JTextField txt_FieldName;
+    javax.swing.JTextField txt_Name_Thesises;
+    javax.swing.JTextField txt_Url;
     // End of variables declaration//GEN-END:variables
 
     private static class ActionListenerImpl implements ActionListener {
