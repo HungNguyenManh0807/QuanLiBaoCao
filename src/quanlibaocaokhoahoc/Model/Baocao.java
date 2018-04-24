@@ -47,21 +47,32 @@ public class Baocao implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
+
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String ten;
+
     @Basic(optional = false)
     @Lob
     @Column(nullable = false, length = 65535)
     private String tomTat;
+    
     @Basic(optional = false)
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date thoiGian;
+    
     @Basic(optional = false)
     @Lob
     @Column(nullable = false, length = 65535)
     private String url;
+    
+   @Basic(optional = false)
+    @Lob
+    @Column(nullable = false, length = 65535)
+    private String urlData;
+    
+    
     @JoinColumn(name = "IDLinhVuc", referencedColumnName = "ID", nullable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Linhvuc iDLinhVuc;
@@ -82,6 +93,15 @@ public class Baocao implements Serializable {
         this.tomTat = tomTat;
         this.thoiGian = thoiGian;
         this.url = url;
+        this.urlData = urlData;
+    }
+
+    public String getUrlData() {
+        return urlData;
+    }
+
+    public void setUrlData(String urlData) {
+        this.urlData = urlData;
     }
 
     public Integer getId() {
@@ -162,7 +182,7 @@ public class Baocao implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Baocao[ id=" + id + " ]";
+        return ten;
     }
-    
+
 }

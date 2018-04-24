@@ -66,8 +66,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbl_Thesises = new javax.swing.JTable();
         btn_AttachFile = new javax.swing.JButton();
+        btn_AttachFileData = new javax.swing.JButton();
+        txt_UrlData = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btn_Insert_FieldName = new javax.swing.JButton();
@@ -107,11 +110,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Add_Thesises);
-        btn_Add_Thesises.setBounds(570, 250, 110, 40);
+        btn_Add_Thesises.setBounds(700, 250, 110, 40);
 
         jLabel3.setText("Name");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(0, 250, 60, 14);
+        jLabel3.setBounds(10, 250, 60, 14);
 
         txt_Name_Thesises.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,11 +122,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txt_Name_Thesises);
-        txt_Name_Thesises.setBounds(20, 280, 310, 30);
+        txt_Name_Thesises.setBounds(20, 280, 270, 30);
 
         txt_Url.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jPanel1.add(txt_Url);
-        txt_Url.setBounds(370, 340, 170, 40);
+        txt_Url.setBounds(370, 340, 290, 30);
 
         btn_Save.setText("Save");
         btn_Save.addActionListener(new java.awt.event.ActionListener() {
@@ -132,11 +135,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Save);
-        btn_Save.setBounds(570, 320, 110, 30);
+        btn_Save.setBounds(700, 310, 110, 30);
 
         btn_Delete.setText("Delete");
         jPanel1.add(btn_Delete);
-        btn_Delete.setBounds(570, 380, 110, 30);
+        btn_Delete.setBounds(700, 370, 110, 30);
 
         jLabel4.setText("Resume");
         jPanel1.add(jLabel4);
@@ -162,17 +165,17 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton3);
-        jButton3.setBounds(700, 440, 80, 23);
+        jButton3.setBounds(730, 490, 80, 23);
 
         jLabel5.setText("Time");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(380, 240, 40, 50);
+        jLabel5.setBounds(350, 240, 40, 50);
 
         jLabel6.setText("Url");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(370, 320, 30, 20);
+        jLabel6.setBounds(350, 320, 40, 20);
         jPanel1.add(jDateChooser1);
-        jDateChooser1.setBounds(370, 280, 170, 30);
+        jDateChooser1.setBounds(370, 270, 140, 30);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khoa hoc ki thuat", "Van Hoa", "Triet hoc" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -181,7 +184,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(120, 420, 220, 20);
+        jComboBox1.setBounds(50, 440, 240, 20);
 
         jLabel2.setText("Type");
         jPanel1.add(jLabel2);
@@ -194,7 +197,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jComboBox3);
-        jComboBox3.setBounds(120, 460, 220, 20);
+        jComboBox3.setBounds(50, 490, 240, 20);
 
         jLabel7.setText("Field");
         jPanel1.add(jLabel7);
@@ -205,9 +208,9 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea1);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(20, 340, 320, 60);
+        jScrollPane2.setBounds(20, 340, 270, 60);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Thesises.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -218,10 +221,10 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(tbl_Thesises);
 
         jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(10, 70, 810, 170);
+        jScrollPane3.setBounds(10, 70, 810, 150);
 
         btn_AttachFile.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
         btn_AttachFile.setText("Attach file...");
@@ -233,7 +236,24 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_AttachFile);
-        btn_AttachFile.setBounds(370, 390, 120, 25);
+        btn_AttachFile.setBounds(370, 380, 120, 25);
+
+        btn_AttachFileData.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
+        btn_AttachFileData.setText("Attach file data");
+        btn_AttachFileData.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btn_AttachFileData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AttachFileDataActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_AttachFileData);
+        btn_AttachFileData.setBounds(370, 485, 120, 25);
+        jPanel1.add(txt_UrlData);
+        txt_UrlData.setBounds(370, 440, 300, 30);
+
+        jLabel12.setText("Url data");
+        jPanel1.add(jLabel12);
+        jLabel12.setBounds(350, 420, 100, 14);
 
         jTabbedPane1.addTab("Thesis", jPanel1);
 
@@ -370,7 +390,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,7 +408,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -396,7 +416,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jTabbedPane1.addTab("Type", jPanel3);
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(0, 0, 830, 530);
+        jTabbedPane1.setBounds(0, 0, 840, 560);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -474,7 +494,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     private void btn_Insert_FieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_FieldNameActionPerformed
         // TODO add your handling code here:
-        
+
         try {
             Linhvuc linhvuc = new Linhvuc(); // khai bao object linh vuc
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");// ket noi voi database ten lay file persistent.xml META INF
@@ -530,18 +550,18 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     private void btn_Insert_TypeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_TypeNameActionPerformed
         // TODO add your handling code here:
         try {
-                 Loaibaocao loaibaocao = new Loaibaocao();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
-        LoaibaocaoJpaController controller = new LoaibaocaoJpaController(emf);
+            Loaibaocao loaibaocao = new Loaibaocao();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+            LoaibaocaoJpaController controller = new LoaibaocaoJpaController(emf);
 
-        loaibaocao.setLoaiBaoCao(txt_FieldName.getText());
-        if (txt_FieldName.getText().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Missing Type Name");
-        } else {
-            controller.create(loaibaocao);// luu object bao cao xuong database
-            bindType();
-            JOptionPane.showMessageDialog(rootPane, "Added successfully");
-        }
+            loaibaocao.setLoaiBaoCao(txt_FieldName.getText());
+            if (txt_FieldName.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Missing Type Name");
+            } else {
+                controller.create(loaibaocao);// luu object bao cao xuong database
+                bindType();
+                JOptionPane.showMessageDialog(rootPane, "Added successfully");
+            }
 
         } catch (Exception e) {
         }
@@ -562,13 +582,27 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_AttachFileActionPerformed
 
+    private void btn_AttachFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileDataActionPerformed
+        // TODO add your handling code here:
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.showOpenDialog(null);
+
+            File file = chooser.getSelectedFile();
+            String fileDataName = file.getAbsolutePath();
+            txt_UrlData.setText(fileDataName);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane,  "Missing Url Data");
+        }
+    }//GEN-LAST:event_btn_AttachFileDataActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public void createAndShow() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        this.setSize(840, 590);
+        this.setSize(870, 585);
         this.setLocationRelativeTo(null);
 
     }
@@ -615,6 +649,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton btn_Add_Thesises;
     javax.swing.JButton btn_AttachFile;
+    javax.swing.JButton btn_AttachFileData;
     javax.swing.JButton btn_Delete;
     javax.swing.JButton btn_Insert_FieldName;
     javax.swing.JButton btn_Insert_TypeName;
@@ -635,6 +670,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel10;
     javax.swing.JLabel jLabel11;
+    javax.swing.JLabel jLabel12;
     javax.swing.JLabel jLabel2;
     javax.swing.JLabel jLabel3;
     javax.swing.JLabel jLabel4;
@@ -653,14 +689,15 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JScrollPane jScrollPane3;
     javax.swing.JScrollPane jScrollPane4;
     javax.swing.JTabbedPane jTabbedPane1;
-    javax.swing.JTable jTable2;
     javax.swing.JTextArea jTextArea1;
     javax.swing.JTextField jTextField2;
     javax.swing.JTable tbl_Field;
+    javax.swing.JTable tbl_Thesises;
     javax.swing.JTable tbl_Type;
     javax.swing.JTextField txt_FieldName;
     javax.swing.JTextField txt_Name_Thesises;
     javax.swing.JTextField txt_Url;
+    javax.swing.JTextField txt_UrlData;
     // End of variables declaration//GEN-END:variables
 
     private static class ActionListenerImpl implements ActionListener {
