@@ -103,7 +103,7 @@ public class Loaibaocao implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Loaibaocao[ id=" + id + " ]";
+        return loaiBaoCao;
     }
     
 }

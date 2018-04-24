@@ -21,6 +21,7 @@
     <class>quanlibaocaokhoahoc.Model.Nhanghiencuu</class>
     <class>quanlibaocaokhoahoc.Model.NhanghiencuuBaocao</class>
     <class>quanlibaocaokhoahoc.Model.Vaitro</class>
+    <class>quanlibaocaokhoahoc.View.Nguoidung_1</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/quanlibaocao?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

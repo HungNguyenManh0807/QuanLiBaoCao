@@ -585,9 +585,9 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
 
         } else {
 
-            JOptionPane.showMessageDialog(rootPane, "Added successfully");
             controller.create(nhanghiencuu);
             bindScientist();
+            JOptionPane.showMessageDialog(rootPane, "Added successfully");
         }
 
 
@@ -712,9 +712,9 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         ChucdanhJpaController controller = new ChucdanhJpaController(emf);
         List<Chucdanh> list = controller.findChucdanhEntities();
 
-        Object[] AddressArray = list.toArray();
-        DefaultComboBoxModel boxModel = new DefaultComboBoxModel(AddressArray);
-        cb_ChucDanh.setModel(boxModel);
+        Object[] AddressArray = list.toArray();// tao ra object chua mang cac dia chi
+        DefaultComboBoxModel boxModel = new DefaultComboBoxModel(AddressArray);// truyen ca object vao boxmodel
+        cb_ChucDanh.setModel(boxModel);// set boxModel cho cb chuc danh
 
     }
 

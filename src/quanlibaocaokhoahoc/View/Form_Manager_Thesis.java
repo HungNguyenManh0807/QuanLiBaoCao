@@ -11,11 +11,14 @@ import java.io.File;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import quanlibaocaokhoahoc.Controller.BaocaoJpaController;
 import quanlibaocaokhoahoc.Controller.LinhvucJpaController;
 import quanlibaocaokhoahoc.Controller.LoaibaocaoJpaController;
+import quanlibaocaokhoahoc.Model.Baocao;
 import quanlibaocaokhoahoc.Model.Linhvuc;
 import quanlibaocaokhoahoc.Model.Loaibaocao;
 
@@ -33,6 +36,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         createAndShow();
         bindField();
         bindType();
+        bindThesises();
+        bindCBboxType();
+        binCBboxField();
+        txt_Url.setEditable(false);
+        txt_UrlData.setEditable(false);
 
     }
 
@@ -55,16 +63,16 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btn_Close_MangeThesis = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        Date_ChooserThesises = new com.toedter.calendar.JDateChooser();
+        cb_Field = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cb_Type = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txa_Resume = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbl_Thesises = new javax.swing.JTable();
         btn_AttachFile = new javax.swing.JButton();
@@ -89,7 +97,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txt_Type = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -97,7 +105,10 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Mange Thesises");
         getContentPane().setLayout(null);
+
+        jTabbedPane1.setFont(new java.awt.Font("Lucida Console", 0, 13)); // NOI18N
 
         jPanel1.setBackground(java.awt.Color.lightGray);
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List Thesises", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
@@ -114,7 +125,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         jLabel3.setText("Name");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(10, 250, 60, 14);
+        jLabel3.setBounds(11, 250, 60, 14);
 
         txt_Name_Thesises.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,6 +136,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         txt_Name_Thesises.setBounds(20, 280, 270, 30);
 
         txt_Url.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txt_Url.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_UrlActionPerformed(evt);
+            }
+        });
         jPanel1.add(txt_Url);
         txt_Url.setBounds(370, 340, 290, 30);
 
@@ -143,7 +159,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         jLabel4.setText("Resume");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(10, 320, 50, 20);
+        jLabel4.setBounds(11, 320, 50, 20);
 
         jButton1.setText("print");
         jPanel1.add(jButton1);
@@ -158,14 +174,14 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.add(jButton2);
         jButton2.setBounds(590, 40, 110, 23);
 
-        jButton3.setText("close");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_Close_MangeThesis.setText("close");
+        btn_Close_MangeThesis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_Close_MangeThesisActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3);
-        jButton3.setBounds(730, 490, 80, 23);
+        jPanel1.add(btn_Close_MangeThesis);
+        btn_Close_MangeThesis.setBounds(730, 490, 80, 23);
 
         jLabel5.setText("Time");
         jPanel1.add(jLabel5);
@@ -174,38 +190,38 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel6.setText("Url");
         jPanel1.add(jLabel6);
         jLabel6.setBounds(350, 320, 40, 20);
-        jPanel1.add(jDateChooser1);
-        jDateChooser1.setBounds(370, 270, 140, 30);
+        jPanel1.add(Date_ChooserThesises);
+        Date_ChooserThesises.setBounds(370, 270, 140, 30);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khoa hoc ki thuat", "Van Hoa", "Triet hoc" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cb_Field.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Khoa hoc ki thuat", "Van Hoa", "Triet hoc" }));
+        cb_Field.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cb_FieldActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(50, 440, 240, 20);
+        jPanel1.add(cb_Field);
+        cb_Field.setBounds(50, 440, 240, 20);
 
         jLabel2.setText("Type");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(20, 470, 60, 14);
+        jLabel2.setBounds(11, 470, 60, 14);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Luan an tien si", "Luan van thac si", "Do an tot nghiep" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        cb_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Luan an tien si", "Luan van thac si", "Do an tot nghiep" }));
+        cb_Type.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                cb_TypeActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox3);
-        jComboBox3.setBounds(50, 490, 240, 20);
+        jPanel1.add(cb_Type);
+        cb_Type.setBounds(50, 490, 240, 20);
 
         jLabel7.setText("Field");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(20, 430, 60, 14);
+        jLabel7.setBounds(11, 430, 60, 14);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txa_Resume.setColumns(20);
+        txa_Resume.setRows(5);
+        jScrollPane2.setViewportView(txa_Resume);
 
         jPanel1.add(jScrollPane2);
         jScrollPane2.setBounds(20, 340, 270, 60);
@@ -248,6 +264,12 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         });
         jPanel1.add(btn_AttachFileData);
         btn_AttachFileData.setBounds(370, 485, 120, 25);
+
+        txt_UrlData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_UrlDataActionPerformed(evt);
+            }
+        });
         jPanel1.add(txt_UrlData);
         txt_UrlData.setBounds(370, 440, 300, 30);
 
@@ -359,8 +381,8 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel11.setText("Type Name");
         jPanel5.add(jLabel11);
         jLabel11.setBounds(170, 14, 110, 20);
-        jPanel5.add(jTextField2);
-        jTextField2.setBounds(170, 30, 180, 80);
+        jPanel5.add(txt_Type);
+        txt_Type.setBounds(170, 30, 180, 80);
 
         jButton11.setText("close");
         jPanel5.add(jButton11);
@@ -430,10 +452,25 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 //        });
 //
 //    }
+    private void clearThesises() {
+        txt_Name_Thesises.setText("");
+        txt_Url.setText("");
+        txt_UrlData.setText("");
+        txa_Resume.setText("");
+        Date_ChooserThesises.setCalendar(null);// cho ngay ve null
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    }
+
+    private void clearField() {
+        txt_FieldName.setText("");
+    }
+
+    private void clearType() {
+        txt_Type.setText("");
+    }
+    private void cb_FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_FieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cb_FieldActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -456,33 +493,42 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     private void btn_Add_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Add_ThesisesActionPerformed
         // TODO add your handling code here:
-        //
-        //        Nguoidung n = new Nguoidung();
-        //
-        //        if(txt_User.getText().equals("")||txt_password.getText().equals("")||txt_right.getText().equals("") ){
-        //            JOptionPane.showMessageDialog(rootPane, "Please fill all before ");
-        //
-        //        }else{
-        //             //n.getId(); when connection with dtb
-        //        n.setUsername(txt_User.getText());
-        //        n.setPassword(txt_password.getText());
-        //        n.setQuyenHan(Integer.parseInt(txt_right.getText()));
-        //         list.add(n);
-        //        showResult();
-        //        }
+        try {
+            Baocao baocao = new Baocao();// khai bao object bao cao
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+            BaocaoJpaController controller = new BaocaoJpaController(emf);
 
-        //        if (flag == 1) {
-        //            btn_Add.setEnabled(true);
-        //            flag = 2;
-        //
-        //        } else {
-        //            btn_Add.setEnabled(false);
-        //        }
+            Linhvuc linhvuc = (Linhvuc) cb_Field.getSelectedItem();
+            Loaibaocao loaibaocao = (Loaibaocao) cb_Type.getSelectedItem();
+
+            baocao.setTen(txt_Name_Thesises.getText());
+            baocao.setTomTat(txa_Resume.getText());
+            baocao.setThoiGian(Date_ChooserThesises.getDate());
+            baocao.setUrl(txt_Url.getText());
+            baocao.setUrlData(txt_UrlData.getText());
+            baocao.setIDLinhVuc(linhvuc);
+            baocao.setIDLoai(loaibaocao);
+            if (txt_Name_Thesises.getText().equals("") || txt_Url.getText().equals("")
+                    || txa_Resume.getText().equals("")||linhvuc.equals("")||loaibaocao.equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Missing Field blank");
+            } else {
+
+                controller.create(baocao);
+                bindThesises();
+                clearThesises();
+                JOptionPane.showMessageDialog(rootPane, "Added successfully");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }//GEN-LAST:event_btn_Add_ThesisesActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void cb_TypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_TypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_cb_TypeActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -507,12 +553,34 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             } else {
                 controller.create(linhvuc);// them linh vuc xuong database
                 bindField();
+                clearField();
+                binCBboxField();
                 JOptionPane.showMessageDialog(rootPane, "Added successfully");
             }
         } catch (Exception e) {
         }
 
     }//GEN-LAST:event_btn_Insert_FieldNameActionPerformed
+    private void bindThesises() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        BaocaoJpaController controller = new BaocaoJpaController(emf);
+        List<Baocao> baocaos = controller.findBaocaoEntities();
+
+        String Field = "";
+        String Type = "";
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[]{"Ten Bao Cao", "Tom Tat", "Thoi Gian",
+            "Url", "Url data", "Linh Vuc", "Loai"});
+        for (Baocao baocao : baocaos) {
+            Field = baocao.getIDLinhVuc().getTen();
+            Type = baocao.getIDLoai().getLoaiBaoCao();
+            model.addRow(new Object[]{baocao.getTen(), baocao.getTomTat(), baocao.getThoiGian(),
+                baocao.getUrl(), baocao.getUrlData(), Field, Type});
+        }
+        tbl_Thesises.setModel(model);
+    }
+
     private void bindField() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
         LinhvucJpaController controller = new LinhvucJpaController(emf);
@@ -540,12 +608,36 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         tbl_Type.setModel(model);
 
     }
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+    private void bindCBboxType() {
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        LoaibaocaoJpaController controller = new LoaibaocaoJpaController(emf);// ket noi voi tang controller va xu li qua tang controler ma k xu li truc tiep
+        List<Loaibaocao> loaibaocaos = controller.findLoaibaocaoEntities();// khoi tao danh sach cac loai bao cao
+
+        Object[] loaiBaoCaoArray = loaibaocaos.toArray();// return an array contain all elements from first to last
+        DefaultComboBoxModel model = new DefaultComboBoxModel(loaiBaoCaoArray);// set model default
+        cb_Type.setModel(model);//
+
+    }
+
+    private void binCBboxField() {
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        LinhvucJpaController controller = new LinhvucJpaController(emf);
+        List<Linhvuc> linhvucs = controller.findLinhvucEntities();// tim kiem thuc the linh vuc trong class linhvucJPAcontroller
+
+        Object[] linhVucArray = linhvucs.toArray();// tra ve 1 mang cac linh vuc tu dau den cuoi
+        DefaultComboBoxModel model = new DefaultComboBoxModel(linhVucArray);
+        cb_Field.setModel(model);
+
+    }
+    private void btn_Close_MangeThesisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Close_MangeThesisActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         Form_Home fh = new Form_Home();
         fh.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btn_Close_MangeThesisActionPerformed
 
     private void btn_Insert_TypeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_TypeNameActionPerformed
         // TODO add your handling code here:
@@ -554,16 +646,19 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
             LoaibaocaoJpaController controller = new LoaibaocaoJpaController(emf);
 
-            loaibaocao.setLoaiBaoCao(txt_FieldName.getText());
-            if (txt_FieldName.getText().equals("")) {
+            loaibaocao.setLoaiBaoCao(txt_Type.getText());
+            if (txt_Type.getText().equals("")) {
                 JOptionPane.showMessageDialog(rootPane, "Missing Type Name");
             } else {
                 controller.create(loaibaocao);// luu object bao cao xuong database
                 bindType();
+                clearType();
+                bindCBboxType();
                 JOptionPane.showMessageDialog(rootPane, "Added successfully");
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_btn_Insert_TypeNameActionPerformed
@@ -592,9 +687,18 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             String fileDataName = file.getAbsolutePath();
             txt_UrlData.setText(fileDataName);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane,  "Missing Url Data");
+            JOptionPane.showMessageDialog(rootPane, "Missing Url Data");
         }
     }//GEN-LAST:event_btn_AttachFileDataActionPerformed
+
+    private void txt_UrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UrlActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txt_UrlActionPerformed
+
+    private void txt_UrlDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UrlDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_UrlDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -647,26 +751,26 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    com.toedter.calendar.JDateChooser Date_ChooserThesises;
     javax.swing.JButton btn_Add_Thesises;
     javax.swing.JButton btn_AttachFile;
     javax.swing.JButton btn_AttachFileData;
+    javax.swing.JButton btn_Close_MangeThesis;
     javax.swing.JButton btn_Delete;
     javax.swing.JButton btn_Insert_FieldName;
     javax.swing.JButton btn_Insert_TypeName;
     javax.swing.JButton btn_Save;
+    javax.swing.JComboBox<String> cb_Field;
+    javax.swing.JComboBox<String> cb_Type;
     javax.swing.JButton jButton1;
     javax.swing.JButton jButton10;
     javax.swing.JButton jButton11;
     javax.swing.JButton jButton12;
     javax.swing.JButton jButton2;
-    javax.swing.JButton jButton3;
     javax.swing.JButton jButton5;
     javax.swing.JButton jButton6;
     javax.swing.JButton jButton7;
     javax.swing.JButton jButton9;
-    javax.swing.JComboBox<String> jComboBox1;
-    javax.swing.JComboBox<String> jComboBox3;
-    com.toedter.calendar.JDateChooser jDateChooser1;
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel10;
     javax.swing.JLabel jLabel11;
@@ -689,13 +793,13 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JScrollPane jScrollPane3;
     javax.swing.JScrollPane jScrollPane4;
     javax.swing.JTabbedPane jTabbedPane1;
-    javax.swing.JTextArea jTextArea1;
-    javax.swing.JTextField jTextField2;
     javax.swing.JTable tbl_Field;
     javax.swing.JTable tbl_Thesises;
     javax.swing.JTable tbl_Type;
+    javax.swing.JTextArea txa_Resume;
     javax.swing.JTextField txt_FieldName;
     javax.swing.JTextField txt_Name_Thesises;
+    javax.swing.JTextField txt_Type;
     javax.swing.JTextField txt_Url;
     javax.swing.JTextField txt_UrlData;
     // End of variables declaration//GEN-END:variables
