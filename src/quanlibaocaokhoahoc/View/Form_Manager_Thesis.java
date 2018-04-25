@@ -8,7 +8,11 @@ package quanlibaocaokhoahoc.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -17,6 +21,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import quanlibaocaokhoahoc.Controller.BaocaoJpaController;
 import quanlibaocaokhoahoc.Controller.LinhvucJpaController;
 import quanlibaocaokhoahoc.Controller.LoaibaocaoJpaController;
@@ -37,13 +49,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     public Form_Manager_Thesis() {
         initComponents();
         createAndShow();
-        bindField();
-        bindType();
-        bindThesises();
-        bindCBboxType();
-        binCBboxField();
-        txt_Url.setEditable(false);
-        txt_UrlData.setEditable(false);
 
     }
 
@@ -64,8 +69,8 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         btn_Save = new javax.swing.JButton();
         btn_Delete = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_Print = new javax.swing.JButton();
+        btn_Export_To_Excel = new javax.swing.JButton();
         btn_Close_MangeThesis = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -164,18 +169,18 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(11, 320, 50, 20);
 
-        jButton1.setText("print");
-        jPanel1.add(jButton1);
-        jButton1.setBounds(760, 40, 55, 23);
+        btn_Print.setText("Print");
+        jPanel1.add(btn_Print);
+        btn_Print.setBounds(870, 40, 55, 23);
 
-        jButton2.setText("Export to Excel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_Export_To_Excel.setText("Export to Excel");
+        btn_Export_To_Excel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_Export_To_ExcelActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2);
-        jButton2.setBounds(590, 40, 110, 23);
+        jPanel1.add(btn_Export_To_Excel);
+        btn_Export_To_Excel.setBounds(710, 40, 110, 23);
 
         btn_Close_MangeThesis.setText("close");
         btn_Close_MangeThesis.addActionListener(new java.awt.event.ActionListener() {
@@ -253,25 +258,26 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         btn_AttachFile.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
         btn_AttachFile.setText("Attach file...");
         btn_AttachFile.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btn_AttachFile.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btn_AttachFile.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btn_AttachFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AttachFileActionPerformed(evt);
             }
         });
         jPanel1.add(btn_AttachFile);
-        btn_AttachFile.setBounds(370, 380, 120, 25);
+        btn_AttachFile.setBounds(370, 380, 140, 25);
 
         btn_AttachFileData.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
         btn_AttachFileData.setText("Attach file data");
-        btn_AttachFileData.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btn_AttachFileData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_AttachFileData.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btn_AttachFileData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AttachFileDataActionPerformed(evt);
             }
         });
         jPanel1.add(btn_AttachFileData);
-        btn_AttachFileData.setBounds(370, 485, 120, 25);
+        btn_AttachFileData.setBounds(370, 485, 140, 30);
 
         txt_UrlData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,7 +361,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_Field);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(392, 10, 430, 200);
+        jScrollPane1.setBounds(392, 10, 550, 200);
 
         jLabel1.setBackground(new java.awt.Color(0, 51, 51));
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 3, 33)); // NOI18N
@@ -430,14 +436,15 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(131, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 317, Short.MAX_VALUE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(108, 108, 108))))
         );
@@ -460,16 +467,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    int i = 1;
 
-//    public void showResult() {
-//        Nguoidung n = list.get(list.size() - 1);
-//        model.addRow(new Object[]{
-//            i++, n.getUsername(), n.getPassword(), n.getQuyenHan()
-//
-//        });
-//
-//    }
     private void clearThesises() {
         txt_Name_Thesises.setText("");
         txt_Url.setText("");
@@ -486,23 +484,113 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     private void clearType() {
         txt_Type.setText("");
     }
+
+
     private void cb_FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_FieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_FieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private String getCellValue(int x, int y) {
+
+        return bindThesises().getValueAt(x, y).toString();
+
+    }
+
+    private void writeToExcel() throws IOException {
+
+        Workbook workbook = new XSSFWorkbook();// create object workbook
+
+        // create a font for styling header cells
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 14);
+        headerFont.setColor(IndexedColors.RED.getIndex());
+
+        Sheet sheet = workbook.createSheet("Thesises");
+
+        //load data to TREEMAP
+        TreeMap<String, Object[]> data = new TreeMap<>();
+
+        //add Header column
+        data.put("-1", new Object[]{bindThesises().getColumnName(0), bindThesises().getColumnName(1),
+            bindThesises().getColumnName(2), bindThesises().getColumnName(5),
+            bindThesises().getColumnName(3), bindThesises().getColumnName(4),
+            bindThesises().getColumnName(6), bindThesises().getColumnName(7)});
+
+        Row headeRow = sheet.createRow(0);
+
+// create  a CellStyle with the font
+        CellStyle headCellStyle = workbook.createCellStyle();
+        headCellStyle.setFont(headerFont);
+
+// create cellsHeader
+        for (int i = 0; i < bindThesises().getColumnCount(); i++) {
+            Cell cell = headeRow.createCell(i);
+            cell.setCellValue(bindThesises().getColumnName(i));
+            cell.setCellStyle(headCellStyle);
+
+        }
+        //add Rows and Cells    
+        for (int i = 0; i < bindThesises().getRowCount(); i++) {
+            data.put(Integer.toString(i), new Object[]{bindThesises().getValueAt(i, 0),
+                bindThesises().getValueAt(i, 1), bindThesises().getValueAt(i, 2),
+                bindThesises().getValueAt(i, 3), bindThesises().getValueAt(i, 4),
+                bindThesises().getValueAt(i, 5), bindThesises().getValueAt(i, 6), bindThesises().getValueAt(i, 7)});
+        }
+
+        //write to excel
+        Set<String> ids = data.keySet();
+        Row row;
+        int rowID = 1;
+
+        for (String id : ids) {
+
+            row = sheet.createRow(rowID++);
+            Object[] values = data.get(id);
+
+            int cellID = 0;
+            for (Object value : values) {
+                org.apache.poi.ss.usermodel.Cell cell = row.createCell(cellID++);
+                cell.setCellValue(value.toString());
+            }
+        }
+        // resize all columns to fit the content size
+        for (int i = 0; i < bindThesises().getColumnCount(); i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+//        wrrite to file system
+        try {
+
+            FileOutputStream fos = new FileOutputStream(new File("E:/QuanLiBaoCaoTestExport/Thesises.xlsx"));
+            workbook.write(fos);
+            fos.close();
+            JOptionPane.showMessageDialog(rootPane, "Thanh cong roi do");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, "Co loi xay ra");
+
+        } finally {
+
+            workbook.close();
+        }
+
+    }
+    private void btn_Export_To_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Export_To_ExcelActionPerformed
+        try {
+            // TODO add your handling code here:
+            writeToExcel();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, "Co loi xay ra");
+            Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_btn_Export_To_ExcelActionPerformed
 
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
-        //        if (flag == 2) {
-        //            setEnabled(true);
-        //            flag = 1;
-        //        } else {
-        //            setEnabled(false);
-        //        }
 
-        // TODO add your handling code here:
     }//GEN-LAST:event_btn_SaveActionPerformed
 
     private void txt_Name_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_Name_ThesisesActionPerformed
@@ -516,7 +604,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
             BaocaoJpaController controller = new BaocaoJpaController(emf);
 
-            Linhvuc linhvuc = (Linhvuc) cb_Field.getSelectedItem();
+            Linhvuc linhvuc = (Linhvuc) cb_Field.getSelectedItem();// ep kieu object sang kieu linh vuc
             Loaibaocao loaibaocao = (Loaibaocao) cb_Type.getSelectedItem();
 
             baocao.setTen(txt_Name_Thesises.getText());
@@ -579,7 +667,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btn_Insert_FieldNameActionPerformed
-    private void bindThesises() {
+    private DefaultTableModel bindThesises() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
         BaocaoJpaController controller = new BaocaoJpaController(emf);
         List<Baocao> baocaos = controller.findBaocaoEntities();
@@ -597,6 +685,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 baocao.getUrl(), baocao.getUrlData(), Field, Type});
         }
         tbl_Thesises.setModel(model);
+        return model;
     }
 
     private void bindField() {
@@ -607,7 +696,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[]{"ID", "Ten Linh Vuc"});
         for (Linhvuc linhvuc : linhvucs) {
-            model.addRow(new Object[]{linhvuc.getId(), linhvuc.getTen()});
+            model.addRow(new Object[]{linhvuc.getId(), linhvuc.getTen()});// them vao 1 hang gom co ten linh vuc ma linh vuc
 
         }
         tbl_Field.setModel(model);
@@ -663,7 +752,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         try {
             Loaibaocao loaibaocao = new Loaibaocao();
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
-            LoaibaocaoJpaController controller = new LoaibaocaoJpaController(emf);
+            LoaibaocaoJpaController controller = new LoaibaocaoJpaController(emf);// tao ket noi xu li qua tang controller
 
             loaibaocao.setLoaiBaoCao(txt_Type.getText());
             if (txt_Type.getText().equals("")) {
@@ -685,12 +774,12 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     private void btn_AttachFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileActionPerformed
         // TODO add your handling code here:
         try {
-            JFileChooser chooser = new JFileChooser();
+            JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
             chooser.showOpenDialog(null);
 
-            File file = chooser.getSelectedFile();
-            String fileName = file.getAbsolutePath();
-            txt_Url.setText(fileName);
+            File file = chooser.getSelectedFile();//lay ve file duoc chon
+            String fileName = file.getAbsolutePath();// truyen  duong dan truc tiep cho bien string file name
+            txt_Url.setText(fileName);// gan string file name cho text field url
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Missing Url");
         }
@@ -737,6 +826,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
             Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
             linhvuc.setTen(txt_FieldName.getText());
+            linhvuc.setId(linhvuc.getId());
 
             try {
 
@@ -744,6 +834,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Updated successfully");
 
             } catch (NonexistentEntityException ex) {
+
                 Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
                 Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
@@ -777,8 +868,14 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
      */
     public void createAndShow() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        this.setSize(960, 585);
+        bindField();
+        bindType();
+        bindThesises();
+        bindCBboxType();
+        binCBboxField();
+        txt_Url.setEditable(false);
+        txt_UrlData.setEditable(false);
+        this.setSize(965, 595);
         this.setLocationRelativeTo(null);
 
     }
@@ -830,16 +927,16 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JButton btn_Close_MangeThesis;
     javax.swing.JButton btn_Delete;
     javax.swing.JButton btn_EditFieldName;
+    javax.swing.JButton btn_Export_To_Excel;
     javax.swing.JButton btn_Insert_FieldName;
     javax.swing.JButton btn_Insert_TypeName;
+    javax.swing.JButton btn_Print;
     javax.swing.JButton btn_Save;
     javax.swing.JComboBox<String> cb_Field;
     javax.swing.JComboBox<String> cb_Type;
-    javax.swing.JButton jButton1;
     javax.swing.JButton jButton10;
     javax.swing.JButton jButton11;
     javax.swing.JButton jButton12;
-    javax.swing.JButton jButton2;
     javax.swing.JButton jButton6;
     javax.swing.JButton jButton7;
     javax.swing.JButton jButton9;

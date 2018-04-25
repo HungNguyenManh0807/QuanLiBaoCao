@@ -76,6 +76,7 @@ public class Baocao implements Serializable {
     @JoinColumn(name = "IDLinhVuc", referencedColumnName = "ID", nullable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Linhvuc iDLinhVuc;
+    
     @JoinColumn(name = "IDLoai", referencedColumnName = "ID", nullable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Loaibaocao iDLoai;
