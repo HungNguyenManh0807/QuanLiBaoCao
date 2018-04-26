@@ -39,7 +39,7 @@ public class Form_Home extends javax.swing.JFrame {
         btn_LinkToManagement_User = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btn_LinkToMaagenment_Scientist = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btn_LinkToManagement_Thesises = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -95,17 +95,17 @@ public class Form_Home extends javax.swing.JFrame {
         getContentPane().add(btn_LinkToMaagenment_Scientist);
         btn_LinkToMaagenment_Scientist.setBounds(20, 210, 160, 90);
 
-        jButton4.setBackground(new java.awt.Color(51, 51, 255));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Play-Books-icon.png")); // NOI18N
-        jButton4.setText("Manage Thesis");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btn_LinkToManagement_Thesises.setBackground(new java.awt.Color(51, 51, 255));
+        btn_LinkToManagement_Thesises.setForeground(new java.awt.Color(255, 255, 255));
+        btn_LinkToManagement_Thesises.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Play-Books-icon.png")); // NOI18N
+        btn_LinkToManagement_Thesises.setText("Manage Thesis");
+        btn_LinkToManagement_Thesises.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btn_LinkToManagement_ThesisesActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4);
-        jButton4.setBounds(240, 110, 160, 90);
+        getContentPane().add(btn_LinkToManagement_Thesises);
+        btn_LinkToManagement_Thesises.setBounds(240, 110, 160, 90);
 
         jButton5.setBackground(new java.awt.Color(51, 51, 255));
         jButton5.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
@@ -246,9 +246,12 @@ public class Form_Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_exitActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btn_LinkToManagement_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LinkToManagement_ThesisesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        this.setVisible(false);
+        Form_Manager_Thesis fmt = new Form_Manager_Thesis();
+        fmt.setVisible(true);
+    }//GEN-LAST:event_btn_LinkToManagement_ThesisesActionPerformed
 
     private void btn_LinkToMaagenment_ScientistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LinkToMaagenment_ScientistActionPerformed
         // TODO add your handling code here:
@@ -323,11 +326,11 @@ public class Form_Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel WhiteLine;
     private javax.swing.JButton btn_LinkToMaagenment_Scientist;
+    private javax.swing.JButton btn_LinkToManagement_Thesises;
     private javax.swing.JButton btn_LinkToManagement_User;
     private javax.swing.JButton btn_exit;
     private javax.swing.JLabel dateLab;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

@@ -103,7 +103,7 @@ public class Linhvuc implements Serializable {
 
     @Override
     public String toString() {
-        return ten;
+        return ten ;
     }
     
 }

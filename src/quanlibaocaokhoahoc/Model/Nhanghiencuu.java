@@ -53,6 +53,7 @@ public class Nhanghiencuu implements Serializable {
     @JoinColumn(name = "IDChucDanh", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Chucdanh iDChucDanh;
+    
     @JoinColumn(name = "IDCoQuan", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Coquan iDCoQuan;

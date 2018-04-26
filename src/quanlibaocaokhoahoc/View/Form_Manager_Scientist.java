@@ -575,8 +575,10 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
 
         Chucdanh chucDanh = (Chucdanh) cb_ChucDanh.getSelectedItem();
         Coquan coQuan = (Coquan) cb_CoQuan.getSelectedItem();
+        
         nhanghiencuu.setTen(txt_Scientist_Name.getText());
         nhanghiencuu.setNgaySinh(DateChose_Scientist.getDate());
+        
         nhanghiencuu.setIDChucDanh(chucDanh);
         nhanghiencuu.setIDCoQuan(coQuan);
         if (txt_Scientist_Name.getText().equals("") || DateChose_Scientist.getCalendar().equals(null)) {
@@ -586,8 +588,9 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         } else {
 
             controller.create(nhanghiencuu);
-            bindScientist();
+            
             JOptionPane.showMessageDialog(rootPane, "Added successfully");
+            bindScientist();
         }
 
 
@@ -702,7 +705,7 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
             TenCoQuan = nhanghiencuu.getIDCoQuan().getTen();
             TenChucDanh = nhanghiencuu.getIDChucDanh().getTen();
             model.addRow(new Object[]{nhanghiencuu.getTen(), nhanghiencuu.getNgaySinh(),
-                TenChucDanh, TenCoQuan});
+            TenChucDanh, TenCoQuan});
         }
         tbl_NhaKhoaHoc.setModel(model);
     }
@@ -736,7 +739,7 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         List<Coquan> list = controller.findCoquanEntities();
 
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"ID", "Ten Co Quan", "Dia Chi"});
+        model.setColumnIdentifiers(new String[]{ "Ten Co Quan", "Dia Chi"});
         for (Coquan coquan : list) {
             model.addRow(new Object[]{coquan.getTen(), coquan.getDiaChi()});
         }
@@ -749,10 +752,10 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         ChucdanhJpaController controller = new ChucdanhJpaController(emf);
         List<Chucdanh> chucDanhList = controller.findChucdanhEntities();
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"ID", "Ten Chuc Danh", "Ngay Cap"});
+        model.setColumnIdentifiers(new String[]{ "Ten Chuc Danh", "Ngay Cap"});
 
         for (Chucdanh chucdanh : chucDanhList) {
-            model.addRow(new Object[]{chucdanh.getId(), chucdanh.getTen(), chucdanh.getNgayCap()});
+            model.addRow(new Object[]{ chucdanh.getTen(), chucdanh.getNgayCap()});
         }
         tbl_ChucDanh.setModel(model);
 

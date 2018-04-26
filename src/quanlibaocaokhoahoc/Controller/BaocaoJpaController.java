@@ -36,30 +36,30 @@ public class BaocaoJpaController implements Serializable {
     }
 
     public void create(Baocao baocao) throws IllegalOrphanException {
-        List<String> illegalOrphanMessages = null;
-        Linhvuc IDLinhVucOrphanCheck = baocao.getIDLinhVuc();
-        if (IDLinhVucOrphanCheck != null) {
-            Baocao oldBaocaoOfIDLinhVuc = IDLinhVucOrphanCheck.getBaocao();
-            if (oldBaocaoOfIDLinhVuc != null) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("The Linhvuc " + IDLinhVucOrphanCheck + " already has an item of type Baocao whose IDLinhVuc column cannot be null. Please make another selection for the IDLinhVuc field.");
-            }
-        }
-        Loaibaocao IDLoaiOrphanCheck = baocao.getIDLoai();
-        if (IDLoaiOrphanCheck != null) {
-            Baocao oldBaocaoOfIDLoai = IDLoaiOrphanCheck.getBaocao();
-            if (oldBaocaoOfIDLoai != null) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("The Loaibaocao " + IDLoaiOrphanCheck + " already has an item of type Baocao whose IDLoai column cannot be null. Please make another selection for the IDLoai field.");
-            }
-        }
-        if (illegalOrphanMessages != null) {
-            throw new IllegalOrphanException(illegalOrphanMessages);
-        }
+//        List<String> illegalOrphanMessages = null;
+//        Linhvuc IDLinhVucOrphanCheck = baocao.getIDLinhVuc();
+//        if (IDLinhVucOrphanCheck != null) {
+//            Baocao oldBaocaoOfIDLinhVuc = IDLinhVucOrphanCheck.getBaocao();
+//            if (oldBaocaoOfIDLinhVuc != null) {
+//                if (illegalOrphanMessages == null) {
+//                    illegalOrphanMessages = new ArrayList<String>();
+//                }
+//                illegalOrphanMessages.add("The Linhvuc " + IDLinhVucOrphanCheck + " already has an item of type Baocao whose IDLinhVuc column cannot be null. Please make another selection for the IDLinhVuc field.");
+//            }
+//        }
+//        Loaibaocao IDLoaiOrphanCheck = baocao.getIDLoai();
+//        if (IDLoaiOrphanCheck != null) {
+//            Baocao oldBaocaoOfIDLoai = IDLoaiOrphanCheck.getBaocao();
+//            if (oldBaocaoOfIDLoai != null) {
+//                if (illegalOrphanMessages == null) {
+//                    illegalOrphanMessages = new ArrayList<String>();
+//                }
+//                illegalOrphanMessages.add("The Loaibaocao " + IDLoaiOrphanCheck + " already has an item of type Baocao whose IDLoai column cannot be null. Please make another selection for the IDLoai field.");
+//            }
+//        }
+//        if (illegalOrphanMessages != null) {
+//            throw new IllegalOrphanException(illegalOrphanMessages);
+//        }
         EntityManager em = null;
         try {
             em = getEntityManager();

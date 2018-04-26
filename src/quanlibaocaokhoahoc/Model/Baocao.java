@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -30,9 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"IDLoai"})
-    , @UniqueConstraint(columnNames = {"IDLinhVuc"})})
+@Table(catalog = "quanlibaocao", schema = "" )
+  
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Baocao.findAll", query = "SELECT b FROM Baocao b")
@@ -185,5 +185,6 @@ public class Baocao implements Serializable {
     public String toString() {
         return ten;
     }
+
 
 }

@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/View/Form_ManageUser.java</file>
-            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/Controller/VaitroJpaController.java</file>
             <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/Controller/BaocaoJpaController.java</file>
-            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/Model/Nhanghiencuu.java</file>
             <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/View/Form_Manager_Scientist.java</file>
             <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/Model/Baocao.java</file>
-            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/Model/Nguoidung.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/Controller/ChucdanhJpaController.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/Model/Linhvuc.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/View/Form_Home.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/View/Form_SetUp.java</file>
             <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/View/Form_Manager_Thesis.java</file>
+            <file>file:/C:/Users/Hung%20Nguyen/OneDrive/QuanLiBaoCao/src/quanlibaocaokhoahoc/Model/Coquan.java</file>
         </group>
     </open-files>
 </project-private>
