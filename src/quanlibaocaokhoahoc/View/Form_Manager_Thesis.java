@@ -33,6 +33,7 @@ import quanlibaocaokhoahoc.Controller.BaocaoJpaController;
 import quanlibaocaokhoahoc.Controller.LinhvucJpaController;
 import quanlibaocaokhoahoc.Controller.LoaibaocaoJpaController;
 import quanlibaocaokhoahoc.Controller.exceptions.IllegalOrphanException;
+import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 import quanlibaocaokhoahoc.Model.Baocao;
 import quanlibaocaokhoahoc.Model.Linhvuc;
 import quanlibaocaokhoahoc.Model.Loaibaocao;
@@ -49,13 +50,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     public Form_Manager_Thesis() {
         initComponents();
         createAndShow();
-        bindThesises();
-        txt_Url.setEditable(false);
-        txt_UrlData.setEditable(false);
-        bindCBboxType();
-        binCBboxField();
-        bindField();
-        bindType();
 
     }
 
@@ -98,7 +92,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         btn_Insert_FieldName = new javax.swing.JButton();
         btn_EditFieldName = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btn_DeleteFieldName = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txt_FieldName = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
@@ -180,7 +174,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.add(txt_Url);
         txt_Url.setBounds(370, 340, 290, 30);
 
-        btn_Save.setText("Save");
+        btn_Save.setText("Edit");
         btn_Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_SaveActionPerformed(evt);
@@ -343,15 +337,15 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel4.add(btn_EditFieldName);
         btn_EditFieldName.setBounds(20, 70, 73, 23);
 
-        jButton6.setText("Delete");
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btn_DeleteFieldName.setText("Delete");
+        btn_DeleteFieldName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_DeleteFieldName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btn_DeleteFieldNameActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton6);
-        jButton6.setBounds(20, 120, 70, 23);
+        jPanel4.add(btn_DeleteFieldName);
+        btn_DeleteFieldName.setBounds(20, 120, 70, 23);
 
         jLabel10.setText("Field Name");
         jPanel4.add(jLabel10);
@@ -779,10 +773,18 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 //        wrrite to file system
         try {
 
-            FileOutputStream fos = new FileOutputStream(new File("E:/QuanLiBaoCaoTestExport/Thesises.xlsx"));
+            JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.showSaveDialog(null);
+            File file = chooser.getCurrentDirectory();//lay ve file duoc chon
+            String fileName = file.getCanonicalPath();// truyen  duong dan truc tiep cho bien string file name
+         
+
+            FileOutputStream fos = new FileOutputStream(new File(fileName + "Thesis.xlsx"));
+            btn_Export_To_Excel.setEnabled(false);
             workbook.write(fos);
             fos.close();
-            JOptionPane.showMessageDialog(rootPane, "Thanh cong roi do");
+            JOptionPane.showMessageDialog(rootPane, "Saved successfully");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(rootPane, "Co loi xay ra");
@@ -791,6 +793,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
             workbook.close();
         }
+        btn_Export_To_Excel.setEnabled(true);
 
     }
     private void btn_Export_To_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Export_To_ExcelActionPerformed
@@ -836,27 +839,20 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 || txa_Resume.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Missing Field blank");
         } else {
-            try {
-                controller.create(baocao);
-                JOptionPane.showMessageDialog(rootPane, "Added successfully!");
-                bindCBboxType();
-                binCBboxField();
-                clearThesises();
-
-            } catch (IllegalOrphanException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Added fail!");
-                ex.printStackTrace();
-                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            controller.create(baocao);
+            JOptionPane.showMessageDialog(rootPane, "Added successfully!");
+            bindCBboxType();
+            binCBboxField();
+            clearThesises();
         }
         bindThesises();
 
 
     }//GEN-LAST:event_btn_Add_ThesisesActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btn_DeleteFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteFieldNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btn_DeleteFieldNameActionPerformed
 
     private void btn_DeleteTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteTypeActionPerformed
         // TODO add your handling code here:
@@ -1039,47 +1035,50 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     private void btn_EditFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditFieldNameActionPerformed
 //        // TODO add your handling code here:
-//        if (txt_FieldName.getText().equals("")) {
-//            JOptionPane.showMessageDialog(rootPane, "Nothing to edit! please choose a row");
-//        } else {
-//            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
-//            LinhvucJpaController controller = new LinhvucJpaController(emf);
-//
-//            Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
-//            linhvuc.setTen(txt_FieldName.getText());
-//
-//            try {
-//
-//                controller.edit(linhvuc);
-//                JOptionPane.showMessageDialog(rootPane, "Updated successfully");
-//
-//            } catch (NonexistentEntityException ex) {
-//
-//                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (Exception ex) {
-//                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            clearField();
-//            binCBboxField();
-//            bindField();
-//            selectedFieldID = -1;
-//        }
+        if (txt_FieldName.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Nothing to edit! please choose a row");
+        } else {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+            LinhvucJpaController controller = new LinhvucJpaController(emf);
+
+            Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
+            linhvuc.setTen(txt_FieldName.getText());
+
+            try {
+                btn_EditFieldName.setEnabled(false);
+                controller.edit(linhvuc);
+                JOptionPane.showMessageDialog(rootPane, "Updated successfully");
+
+            } catch (NonexistentEntityException ex) {
+
+                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            clearField();
+            binCBboxField();
+            bindField();
+            bindThesises();
+            btn_EditFieldName.setEnabled(false);
+            selectedFieldID = -1;
+        }
     }//GEN-LAST:event_btn_EditFieldNameActionPerformed
 
     private void tbl_FieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_FieldMouseClicked
         // TODO add your handling code here:
-//        try {
-//            int rowNum = tbl_Field.getSelectedRow();
-//            selectedFieldID = Integer.parseInt(tbl_Field.getValueAt(rowNum, 0).toString());
-//            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
-//            LinhvucJpaController controller = new LinhvucJpaController(emf);
-//            Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
-//
-//            txt_FieldName.setText(linhvuc.getTen());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            int rowNum = tbl_Field.getSelectedRow();
+            selectedFieldID = Integer.parseInt(tbl_Field.getValueAt(rowNum, 0).toString());
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+            LinhvucJpaController controller = new LinhvucJpaController(emf);
+            Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
+
+            txt_FieldName.setText(linhvuc.getTen());
+            btn_EditFieldName.setEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }//GEN-LAST:event_tbl_FieldMouseClicked
@@ -1096,6 +1095,14 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         this.setSize(965, 595);
         this.setLocationRelativeTo(null);
+        bindThesises();
+        txt_Url.setEditable(false);
+        txt_UrlData.setEditable(false);
+        bindCBboxType();
+        binCBboxField();
+        bindField();
+        bindType();
+        btn_EditFieldName.setEnabled(false);
 
     }
 
@@ -1145,6 +1152,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JButton btn_AttachFileData;
     javax.swing.JButton btn_Close_MangeThesis;
     javax.swing.JButton btn_Delete;
+    javax.swing.JButton btn_DeleteFieldName;
     javax.swing.JButton btn_DeleteType;
     javax.swing.JButton btn_EditFieldName;
     javax.swing.JButton btn_Export_To_Excel;
@@ -1161,7 +1169,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JButton jButton3;
     javax.swing.JButton jButton4;
     javax.swing.JButton jButton5;
-    javax.swing.JButton jButton6;
     javax.swing.JButton jButton7;
     javax.swing.JButton jButton8;
     javax.swing.JButton jButton9;

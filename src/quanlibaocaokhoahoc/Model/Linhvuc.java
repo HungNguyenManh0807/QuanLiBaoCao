@@ -6,6 +6,7 @@
 package quanlibaocaokhoahoc.Model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,9 +17,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,8 +44,8 @@ public class Linhvuc implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String ten;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "iDLinhVuc", fetch = FetchType.LAZY)
-    private Baocao baocao;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDLinhVuc", fetch = FetchType.LAZY)
+    private List<Baocao> baocaoList;
 
     public Linhvuc() {
     }
@@ -73,12 +75,13 @@ public class Linhvuc implements Serializable {
         this.ten = ten;
     }
 
-    public Baocao getBaocao() {
-        return baocao;
+    @XmlTransient
+    public List<Baocao> getBaocaoList() {
+        return baocaoList;
     }
 
-    public void setBaocao(Baocao baocao) {
-        this.baocao = baocao;
+    public void setBaocaoList(List<Baocao> baocaoList) {
+        this.baocaoList = baocaoList;
     }
 
     @Override
@@ -103,7 +106,7 @@ public class Linhvuc implements Serializable {
 
     @Override
     public String toString() {
-        return ten ;
+        return ten;
     }
     
 }

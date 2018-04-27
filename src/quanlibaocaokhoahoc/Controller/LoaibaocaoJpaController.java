@@ -35,24 +35,28 @@ public class LoaibaocaoJpaController implements Serializable {
     }
 
     public void create(Loaibaocao loaibaocao) {
+        if (loaibaocao.getBaocaoList() == null) {
+            loaibaocao.setBaocaoList(new ArrayList<Baocao>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Baocao baocao = loaibaocao.getBaocao();
-            if (baocao != null) {
-                baocao = em.getReference(baocao.getClass(), baocao.getId());
-                loaibaocao.setBaocao(baocao);
+            List<Baocao> attachedBaocaoList = new ArrayList<Baocao>();
+            for (Baocao baocaoListBaocaoToAttach : loaibaocao.getBaocaoList()) {
+                baocaoListBaocaoToAttach = em.getReference(baocaoListBaocaoToAttach.getClass(), baocaoListBaocaoToAttach.getId());
+                attachedBaocaoList.add(baocaoListBaocaoToAttach);
             }
+            loaibaocao.setBaocaoList(attachedBaocaoList);
             em.persist(loaibaocao);
-            if (baocao != null) {
-                Loaibaocao oldIDLoaiOfBaocao = baocao.getIDLoai();
-                if (oldIDLoaiOfBaocao != null) {
-                    oldIDLoaiOfBaocao.setBaocao(null);
-                    oldIDLoaiOfBaocao = em.merge(oldIDLoaiOfBaocao);
+            for (Baocao baocaoListBaocao : loaibaocao.getBaocaoList()) {
+                Loaibaocao oldIDLoaiOfBaocaoListBaocao = baocaoListBaocao.getIDLoai();
+                baocaoListBaocao.setIDLoai(loaibaocao);
+                baocaoListBaocao = em.merge(baocaoListBaocao);
+                if (oldIDLoaiOfBaocaoListBaocao != null) {
+                    oldIDLoaiOfBaocaoListBaocao.getBaocaoList().remove(baocaoListBaocao);
+                    oldIDLoaiOfBaocaoListBaocao = em.merge(oldIDLoaiOfBaocaoListBaocao);
                 }
-                baocao.setIDLoai(loaibaocao);
-                baocao = em.merge(baocao);
             }
             em.getTransaction().commit();
         } finally {
@@ -68,31 +72,38 @@ public class LoaibaocaoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Loaibaocao persistentLoaibaocao = em.find(Loaibaocao.class, loaibaocao.getId());
-            Baocao baocaoOld = persistentLoaibaocao.getBaocao();
-            Baocao baocaoNew = loaibaocao.getBaocao();
+            List<Baocao> baocaoListOld = persistentLoaibaocao.getBaocaoList();
+            List<Baocao> baocaoListNew = loaibaocao.getBaocaoList();
             List<String> illegalOrphanMessages = null;
-            if (baocaoOld != null && !baocaoOld.equals(baocaoNew)) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
+            for (Baocao baocaoListOldBaocao : baocaoListOld) {
+                if (!baocaoListNew.contains(baocaoListOldBaocao)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Baocao " + baocaoListOldBaocao + " since its IDLoai field is not nullable.");
                 }
-                illegalOrphanMessages.add("You must retain Baocao " + baocaoOld + " since its IDLoai field is not nullable.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (baocaoNew != null) {
-                baocaoNew = em.getReference(baocaoNew.getClass(), baocaoNew.getId());
-                loaibaocao.setBaocao(baocaoNew);
+            List<Baocao> attachedBaocaoListNew = new ArrayList<Baocao>();
+            for (Baocao baocaoListNewBaocaoToAttach : baocaoListNew) {
+                baocaoListNewBaocaoToAttach = em.getReference(baocaoListNewBaocaoToAttach.getClass(), baocaoListNewBaocaoToAttach.getId());
+                attachedBaocaoListNew.add(baocaoListNewBaocaoToAttach);
             }
+            baocaoListNew = attachedBaocaoListNew;
+            loaibaocao.setBaocaoList(baocaoListNew);
             loaibaocao = em.merge(loaibaocao);
-            if (baocaoNew != null && !baocaoNew.equals(baocaoOld)) {
-                Loaibaocao oldIDLoaiOfBaocao = baocaoNew.getIDLoai();
-                if (oldIDLoaiOfBaocao != null) {
-                    oldIDLoaiOfBaocao.setBaocao(null);
-                    oldIDLoaiOfBaocao = em.merge(oldIDLoaiOfBaocao);
+            for (Baocao baocaoListNewBaocao : baocaoListNew) {
+                if (!baocaoListOld.contains(baocaoListNewBaocao)) {
+                    Loaibaocao oldIDLoaiOfBaocaoListNewBaocao = baocaoListNewBaocao.getIDLoai();
+                    baocaoListNewBaocao.setIDLoai(loaibaocao);
+                    baocaoListNewBaocao = em.merge(baocaoListNewBaocao);
+                    if (oldIDLoaiOfBaocaoListNewBaocao != null && !oldIDLoaiOfBaocaoListNewBaocao.equals(loaibaocao)) {
+                        oldIDLoaiOfBaocaoListNewBaocao.getBaocaoList().remove(baocaoListNewBaocao);
+                        oldIDLoaiOfBaocaoListNewBaocao = em.merge(oldIDLoaiOfBaocaoListNewBaocao);
+                    }
                 }
-                baocaoNew.setIDLoai(loaibaocao);
-                baocaoNew = em.merge(baocaoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -124,12 +135,12 @@ public class LoaibaocaoJpaController implements Serializable {
                 throw new NonexistentEntityException("The loaibaocao with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Baocao baocaoOrphanCheck = loaibaocao.getBaocao();
-            if (baocaoOrphanCheck != null) {
+            List<Baocao> baocaoListOrphanCheck = loaibaocao.getBaocaoList();
+            for (Baocao baocaoListOrphanCheckBaocao : baocaoListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Loaibaocao (" + loaibaocao + ") cannot be destroyed since the Baocao " + baocaoOrphanCheck + " in its baocao field has a non-nullable IDLoai field.");
+                illegalOrphanMessages.add("This Loaibaocao (" + loaibaocao + ") cannot be destroyed since the Baocao " + baocaoListOrphanCheckBaocao + " in its baocaoList field has a non-nullable IDLoai field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

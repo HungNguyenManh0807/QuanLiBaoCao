@@ -12,7 +12,6 @@
     <class>quanlibaocaokhoahoc.View.Nhanghiencuu</class>
     <class>quanlibaocaokhoahoc.View.NhanghiencuuBaocao</class>
     <class>quanlibaocaokhoahoc.View.Vaitro</class>
-    <class>quanlibaocaokhoahoc.Model.Baocao</class>
     <class>quanlibaocaokhoahoc.Model.Chucdanh</class>
     <class>quanlibaocaokhoahoc.Model.Coquan</class>
     <class>quanlibaocaokhoahoc.Model.Linhvuc</class>
@@ -21,7 +20,7 @@
     <class>quanlibaocaokhoahoc.Model.Nhanghiencuu</class>
     <class>quanlibaocaokhoahoc.Model.NhanghiencuuBaocao</class>
     <class>quanlibaocaokhoahoc.Model.Vaitro</class>
-    <class>quanlibaocaokhoahoc.View.Nguoidung_1</class>
+    <class>quanlibaocaokhoahoc.Model.Baocao</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/QuanLiBaoCao?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

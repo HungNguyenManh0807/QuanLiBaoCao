@@ -19,11 +19,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,8 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "" )
-  
+@Table(catalog = "quanlibaocao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Baocao.findAll", query = "SELECT b FROM Baocao b")
@@ -47,38 +44,30 @@ public class Baocao implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
-
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String ten;
-
     @Basic(optional = false)
     @Lob
     @Column(nullable = false, length = 65535)
     private String tomTat;
-    
     @Basic(optional = false)
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date thoiGian;
-    
     @Basic(optional = false)
     @Lob
     @Column(nullable = false, length = 65535)
     private String url;
-    
-   @Basic(optional = false)
+    @Basic(optional = false)
     @Lob
     @Column(nullable = false, length = 65535)
     private String urlData;
-    
-    
     @JoinColumn(name = "IDLinhVuc", referencedColumnName = "ID", nullable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Linhvuc iDLinhVuc;
-    
     @JoinColumn(name = "IDLoai", referencedColumnName = "ID", nullable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Loaibaocao iDLoai;
 
     public Baocao() {
@@ -88,20 +77,12 @@ public class Baocao implements Serializable {
         this.id = id;
     }
 
-    public Baocao(Integer id, String ten, String tomTat, Date thoiGian, String url) {
+    public Baocao(Integer id, String ten, String tomTat, Date thoiGian, String url, String urlData) {
         this.id = id;
         this.ten = ten;
         this.tomTat = tomTat;
         this.thoiGian = thoiGian;
         this.url = url;
-        this.urlData = urlData;
-    }
-
-    public String getUrlData() {
-        return urlData;
-    }
-
-    public void setUrlData(String urlData) {
         this.urlData = urlData;
     }
 
@@ -145,6 +126,14 @@ public class Baocao implements Serializable {
         this.url = url;
     }
 
+    public String getUrlData() {
+        return urlData;
+    }
+
+    public void setUrlData(String urlData) {
+        this.urlData = urlData;
+    }
+
     public Linhvuc getIDLinhVuc() {
         return iDLinhVuc;
     }
@@ -183,8 +172,7 @@ public class Baocao implements Serializable {
 
     @Override
     public String toString() {
-        return ten;
+        return "quanlibaocaokhoahoc.Model.Baocao[ id=" + id + " ]";
     }
-
-
+    
 }

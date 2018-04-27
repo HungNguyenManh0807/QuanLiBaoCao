@@ -35,24 +35,28 @@ public class LinhvucJpaController implements Serializable {
     }
 
     public void create(Linhvuc linhvuc) {
+        if (linhvuc.getBaocaoList() == null) {
+            linhvuc.setBaocaoList(new ArrayList<Baocao>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Baocao baocao = linhvuc.getBaocao();
-            if (baocao != null) {
-                baocao = em.getReference(baocao.getClass(), baocao.getId());
-                linhvuc.setBaocao(baocao);
+            List<Baocao> attachedBaocaoList = new ArrayList<Baocao>();
+            for (Baocao baocaoListBaocaoToAttach : linhvuc.getBaocaoList()) {
+                baocaoListBaocaoToAttach = em.getReference(baocaoListBaocaoToAttach.getClass(), baocaoListBaocaoToAttach.getId());
+                attachedBaocaoList.add(baocaoListBaocaoToAttach);
             }
+            linhvuc.setBaocaoList(attachedBaocaoList);
             em.persist(linhvuc);
-            if (baocao != null) {
-                Linhvuc oldIDLinhVucOfBaocao = baocao.getIDLinhVuc();
-                if (oldIDLinhVucOfBaocao != null) {
-                    oldIDLinhVucOfBaocao.setBaocao(null);
-                    oldIDLinhVucOfBaocao = em.merge(oldIDLinhVucOfBaocao);
+            for (Baocao baocaoListBaocao : linhvuc.getBaocaoList()) {
+                Linhvuc oldIDLinhVucOfBaocaoListBaocao = baocaoListBaocao.getIDLinhVuc();
+                baocaoListBaocao.setIDLinhVuc(linhvuc);
+                baocaoListBaocao = em.merge(baocaoListBaocao);
+                if (oldIDLinhVucOfBaocaoListBaocao != null) {
+                    oldIDLinhVucOfBaocaoListBaocao.getBaocaoList().remove(baocaoListBaocao);
+                    oldIDLinhVucOfBaocaoListBaocao = em.merge(oldIDLinhVucOfBaocaoListBaocao);
                 }
-                baocao.setIDLinhVuc(linhvuc);
-                baocao = em.merge(baocao);
             }
             em.getTransaction().commit();
         } finally {
@@ -68,31 +72,38 @@ public class LinhvucJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Linhvuc persistentLinhvuc = em.find(Linhvuc.class, linhvuc.getId());
-            Baocao baocaoOld = persistentLinhvuc.getBaocao();
-            Baocao baocaoNew = linhvuc.getBaocao();
+            List<Baocao> baocaoListOld = persistentLinhvuc.getBaocaoList();
+            List<Baocao> baocaoListNew = linhvuc.getBaocaoList();
             List<String> illegalOrphanMessages = null;
-            if (baocaoOld != null && !baocaoOld.equals(baocaoNew)) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
+            for (Baocao baocaoListOldBaocao : baocaoListOld) {
+                if (!baocaoListNew.contains(baocaoListOldBaocao)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Baocao " + baocaoListOldBaocao + " since its IDLinhVuc field is not nullable.");
                 }
-                illegalOrphanMessages.add("You must retain Baocao " + baocaoOld + " since its IDLinhVuc field is not nullable.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (baocaoNew != null) {
-                baocaoNew = em.getReference(baocaoNew.getClass(), baocaoNew.getId());
-                linhvuc.setBaocao(baocaoNew);
+            List<Baocao> attachedBaocaoListNew = new ArrayList<Baocao>();
+            for (Baocao baocaoListNewBaocaoToAttach : baocaoListNew) {
+                baocaoListNewBaocaoToAttach = em.getReference(baocaoListNewBaocaoToAttach.getClass(), baocaoListNewBaocaoToAttach.getId());
+                attachedBaocaoListNew.add(baocaoListNewBaocaoToAttach);
             }
+            baocaoListNew = attachedBaocaoListNew;
+            linhvuc.setBaocaoList(baocaoListNew);
             linhvuc = em.merge(linhvuc);
-            if (baocaoNew != null && !baocaoNew.equals(baocaoOld)) {
-                Linhvuc oldIDLinhVucOfBaocao = baocaoNew.getIDLinhVuc();
-                if (oldIDLinhVucOfBaocao != null) {
-                    oldIDLinhVucOfBaocao.setBaocao(null);
-                    oldIDLinhVucOfBaocao = em.merge(oldIDLinhVucOfBaocao);
+            for (Baocao baocaoListNewBaocao : baocaoListNew) {
+                if (!baocaoListOld.contains(baocaoListNewBaocao)) {
+                    Linhvuc oldIDLinhVucOfBaocaoListNewBaocao = baocaoListNewBaocao.getIDLinhVuc();
+                    baocaoListNewBaocao.setIDLinhVuc(linhvuc);
+                    baocaoListNewBaocao = em.merge(baocaoListNewBaocao);
+                    if (oldIDLinhVucOfBaocaoListNewBaocao != null && !oldIDLinhVucOfBaocaoListNewBaocao.equals(linhvuc)) {
+                        oldIDLinhVucOfBaocaoListNewBaocao.getBaocaoList().remove(baocaoListNewBaocao);
+                        oldIDLinhVucOfBaocaoListNewBaocao = em.merge(oldIDLinhVucOfBaocaoListNewBaocao);
+                    }
                 }
-                baocaoNew.setIDLinhVuc(linhvuc);
-                baocaoNew = em.merge(baocaoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -124,12 +135,12 @@ public class LinhvucJpaController implements Serializable {
                 throw new NonexistentEntityException("The linhvuc with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Baocao baocaoOrphanCheck = linhvuc.getBaocao();
-            if (baocaoOrphanCheck != null) {
+            List<Baocao> baocaoListOrphanCheck = linhvuc.getBaocaoList();
+            for (Baocao baocaoListOrphanCheckBaocao : baocaoListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Linhvuc (" + linhvuc + ") cannot be destroyed since the Baocao " + baocaoOrphanCheck + " in its baocao field has a non-nullable IDLinhVuc field.");
+                illegalOrphanMessages.add("This Linhvuc (" + linhvuc + ") cannot be destroyed since the Baocao " + baocaoListOrphanCheckBaocao + " in its baocaoList field has a non-nullable IDLinhVuc field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

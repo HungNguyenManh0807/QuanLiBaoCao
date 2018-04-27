@@ -6,19 +6,17 @@
 package quanlibaocaokhoahoc.Controller;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import quanlibaocaokhoahoc.Model.Linhvuc;
-import quanlibaocaokhoahoc.Model.Loaibaocao;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import quanlibaocaokhoahoc.Controller.exceptions.IllegalOrphanException;
 import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 import quanlibaocaokhoahoc.Model.Baocao;
+import quanlibaocaokhoahoc.Model.Linhvuc;
+import quanlibaocaokhoahoc.Model.Loaibaocao;
 
 /**
  *
@@ -35,31 +33,7 @@ public class BaocaoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Baocao baocao) throws IllegalOrphanException {
-//        List<String> illegalOrphanMessages = null;
-//        Linhvuc IDLinhVucOrphanCheck = baocao.getIDLinhVuc();
-//        if (IDLinhVucOrphanCheck != null) {
-//            Baocao oldBaocaoOfIDLinhVuc = IDLinhVucOrphanCheck.getBaocao();
-//            if (oldBaocaoOfIDLinhVuc != null) {
-//                if (illegalOrphanMessages == null) {
-//                    illegalOrphanMessages = new ArrayList<String>();
-//                }
-//                illegalOrphanMessages.add("The Linhvuc " + IDLinhVucOrphanCheck + " already has an item of type Baocao whose IDLinhVuc column cannot be null. Please make another selection for the IDLinhVuc field.");
-//            }
-//        }
-//        Loaibaocao IDLoaiOrphanCheck = baocao.getIDLoai();
-//        if (IDLoaiOrphanCheck != null) {
-//            Baocao oldBaocaoOfIDLoai = IDLoaiOrphanCheck.getBaocao();
-//            if (oldBaocaoOfIDLoai != null) {
-//                if (illegalOrphanMessages == null) {
-//                    illegalOrphanMessages = new ArrayList<String>();
-//                }
-//                illegalOrphanMessages.add("The Loaibaocao " + IDLoaiOrphanCheck + " already has an item of type Baocao whose IDLoai column cannot be null. Please make another selection for the IDLoai field.");
-//            }
-//        }
-//        if (illegalOrphanMessages != null) {
-//            throw new IllegalOrphanException(illegalOrphanMessages);
-//        }
+    public void create(Baocao baocao) {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -76,11 +50,11 @@ public class BaocaoJpaController implements Serializable {
             }
             em.persist(baocao);
             if (IDLinhVuc != null) {
-                IDLinhVuc.setBaocao(baocao);
+                IDLinhVuc.getBaocaoList().add(baocao);
                 IDLinhVuc = em.merge(IDLinhVuc);
             }
             if (IDLoai != null) {
-                IDLoai.setBaocao(baocao);
+                IDLoai.getBaocaoList().add(baocao);
                 IDLoai = em.merge(IDLoai);
             }
             em.getTransaction().commit();
@@ -91,7 +65,7 @@ public class BaocaoJpaController implements Serializable {
         }
     }
 
-    public void edit(Baocao baocao) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Baocao baocao) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -101,28 +75,6 @@ public class BaocaoJpaController implements Serializable {
             Linhvuc IDLinhVucNew = baocao.getIDLinhVuc();
             Loaibaocao IDLoaiOld = persistentBaocao.getIDLoai();
             Loaibaocao IDLoaiNew = baocao.getIDLoai();
-            List<String> illegalOrphanMessages = null;
-            if (IDLinhVucNew != null && !IDLinhVucNew.equals(IDLinhVucOld)) {
-                Baocao oldBaocaoOfIDLinhVuc = IDLinhVucNew.getBaocao();
-                if (oldBaocaoOfIDLinhVuc != null) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("The Linhvuc " + IDLinhVucNew + " already has an item of type Baocao whose IDLinhVuc column cannot be null. Please make another selection for the IDLinhVuc field.");
-                }
-            }
-            if (IDLoaiNew != null && !IDLoaiNew.equals(IDLoaiOld)) {
-                Baocao oldBaocaoOfIDLoai = IDLoaiNew.getBaocao();
-                if (oldBaocaoOfIDLoai != null) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("The Loaibaocao " + IDLoaiNew + " already has an item of type Baocao whose IDLoai column cannot be null. Please make another selection for the IDLoai field.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             if (IDLinhVucNew != null) {
                 IDLinhVucNew = em.getReference(IDLinhVucNew.getClass(), IDLinhVucNew.getId());
                 baocao.setIDLinhVuc(IDLinhVucNew);
@@ -133,19 +85,19 @@ public class BaocaoJpaController implements Serializable {
             }
             baocao = em.merge(baocao);
             if (IDLinhVucOld != null && !IDLinhVucOld.equals(IDLinhVucNew)) {
-                IDLinhVucOld.setBaocao(null);
+                IDLinhVucOld.getBaocaoList().remove(baocao);
                 IDLinhVucOld = em.merge(IDLinhVucOld);
             }
             if (IDLinhVucNew != null && !IDLinhVucNew.equals(IDLinhVucOld)) {
-                IDLinhVucNew.setBaocao(baocao);
+                IDLinhVucNew.getBaocaoList().add(baocao);
                 IDLinhVucNew = em.merge(IDLinhVucNew);
             }
             if (IDLoaiOld != null && !IDLoaiOld.equals(IDLoaiNew)) {
-                IDLoaiOld.setBaocao(null);
+                IDLoaiOld.getBaocaoList().remove(baocao);
                 IDLoaiOld = em.merge(IDLoaiOld);
             }
             if (IDLoaiNew != null && !IDLoaiNew.equals(IDLoaiOld)) {
-                IDLoaiNew.setBaocao(baocao);
+                IDLoaiNew.getBaocaoList().add(baocao);
                 IDLoaiNew = em.merge(IDLoaiNew);
             }
             em.getTransaction().commit();
@@ -179,12 +131,12 @@ public class BaocaoJpaController implements Serializable {
             }
             Linhvuc IDLinhVuc = baocao.getIDLinhVuc();
             if (IDLinhVuc != null) {
-                IDLinhVuc.setBaocao(null);
+                IDLinhVuc.getBaocaoList().remove(baocao);
                 IDLinhVuc = em.merge(IDLinhVuc);
             }
             Loaibaocao IDLoai = baocao.getIDLoai();
             if (IDLoai != null) {
-                IDLoai.setBaocao(null);
+                IDLoai.getBaocaoList().remove(baocao);
                 IDLoai = em.merge(IDLoai);
             }
             em.remove(baocao);
