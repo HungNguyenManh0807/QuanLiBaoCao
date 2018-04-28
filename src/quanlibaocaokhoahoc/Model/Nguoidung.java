@@ -117,7 +117,7 @@ public class Nguoidung implements Serializable {
 
     @Override
     public String toString() {
-        return username;
+        return "quanlibaocaokhoahoc.Model.Nguoidung[ id=" + id + " ]";
     }
     
 }

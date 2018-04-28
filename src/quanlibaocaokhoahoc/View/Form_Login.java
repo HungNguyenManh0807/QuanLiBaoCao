@@ -182,6 +182,7 @@ public class Form_Login extends javax.swing.JFrame {
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // TODO add your handling code here:
+        btn_login.setEnabled(false);
 
         Nguoidung nguoidung = new Nguoidung();
         if (txt_user.getText().equals("") || txt_pass.getPassword().equals("")) {
@@ -216,7 +217,6 @@ public class Form_Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_loginMouseClicked
     public int checkLogIn() {
-        btn_login.setEnabled(false);
 
         Nguoidung nguoidung = new Nguoidung();
 

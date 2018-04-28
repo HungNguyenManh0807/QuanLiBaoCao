@@ -45,8 +45,6 @@ public class Form_ManageUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        QuanLiBaoCaoKhoaHocPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU").createEntityManager();
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("QuanLiBaoCao?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_User = new javax.swing.JTable();
@@ -291,12 +289,10 @@ public class Form_ManageUser extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.persistence.EntityManager QuanLiBaoCaoKhoaHocPUEntityManager;
     private javax.swing.JButton btn_Add;
     private javax.swing.JButton btn_Delete;
     private javax.swing.JButton btn_Save;
     private javax.swing.JComboBox<String> cb_role;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
