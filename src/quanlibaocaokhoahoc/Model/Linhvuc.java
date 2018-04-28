@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "")
+@Table(catalog = "QuanLiBaoCao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Linhvuc.findAll", query = "SELECT l FROM Linhvuc l")
@@ -106,7 +106,7 @@ public class Linhvuc implements Serializable {
 
     @Override
     public String toString() {
-        return ten;
+        return "quanlibaocaokhoahoc.Model.Linhvuc[ id=" + id + " ]";
     }
     
 }

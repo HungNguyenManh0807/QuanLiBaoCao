@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "")
+@Table(catalog = "QuanLiBaoCao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Chucdanh.findAll", query = "SELECT c FROM Chucdanh c")
@@ -123,7 +123,7 @@ public class Chucdanh implements Serializable {
 
     @Override
     public String toString() {
-        return  ten +"-- "+ ngayCap ;
+        return "quanlibaocaokhoahoc.Model.Chucdanh[ id=" + id + " ]";
     }
     
 }

@@ -23,11 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "")
+@Table(catalog = "QuanLiBaoCao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Nguoidung.findAll", query = "SELECT n FROM Nguoidung n")
-    , @NamedQuery(name = "Nguoidung.checkLogin", query = "SELECT n FROM Nguoidung n WHERE n.username = :id AND n.password = :ps")
+    , @NamedQuery(name = "Nguoidung.findById", query = "SELECT n FROM Nguoidung n WHERE n.id = :id")
     , @NamedQuery(name = "Nguoidung.findByPassword", query = "SELECT n FROM Nguoidung n WHERE n.password = :password")
     , @NamedQuery(name = "Nguoidung.findByQuyenHan", query = "SELECT n FROM Nguoidung n WHERE n.quyenHan = :quyenHan")})
 public class Nguoidung implements Serializable {
@@ -42,11 +42,9 @@ public class Nguoidung implements Serializable {
     @Lob
     @Column(nullable = false, length = 65535)
     private String username;
-    
     @Basic(optional = false)
     @Column(nullable = false, length = 20)
     private String password;
-    
     @Basic(optional = false)
     @Column(nullable = false)
     private int quyenHan;

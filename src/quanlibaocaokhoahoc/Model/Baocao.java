@@ -7,7 +7,9 @@ package quanlibaocaokhoahoc.Model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,17 +21,19 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "")
+@Table(catalog = "QuanLiBaoCao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Baocao.findAll", query = "SELECT b FROM Baocao b")
@@ -69,6 +73,8 @@ public class Baocao implements Serializable {
     @JoinColumn(name = "IDLoai", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Loaibaocao iDLoai;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "baocao", fetch = FetchType.LAZY)
+    private List<NhanghiencuuBaocao> nhanghiencuuBaocaoList;
 
     public Baocao() {
     }
@@ -148,6 +154,15 @@ public class Baocao implements Serializable {
 
     public void setIDLoai(Loaibaocao iDLoai) {
         this.iDLoai = iDLoai;
+    }
+
+    @XmlTransient
+    public List<NhanghiencuuBaocao> getNhanghiencuuBaocaoList() {
+        return nhanghiencuuBaocaoList;
+    }
+
+    public void setNhanghiencuuBaocaoList(List<NhanghiencuuBaocao> nhanghiencuuBaocaoList) {
+        this.nhanghiencuuBaocaoList = nhanghiencuuBaocaoList;
     }
 
     @Override

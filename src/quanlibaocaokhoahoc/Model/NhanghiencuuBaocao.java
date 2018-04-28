@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Hung Nguyen
  */
 @Entity
-@Table(name = "nhanghiencuu_baocao", catalog = "quanlibaocao", schema = "")
+@Table(name = "nhanghiencuu_baocao", catalog = "QuanLiBaoCao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "NhanghiencuuBaocao.findAll", query = "SELECT n FROM NhanghiencuuBaocao n")
@@ -32,6 +32,12 @@ public class NhanghiencuuBaocao implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected NhanghiencuuBaocaoPK nhanghiencuuBaocaoPK;
+    @JoinColumn(name = "IDBaoCao", referencedColumnName = "ID", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Baocao baocao;
+    @JoinColumn(name = "IDNguoiNghienCuu", referencedColumnName = "ID", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Nhanghiencuu nhanghiencuu;
     @JoinColumn(name = "IDVaiTro", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Vaitro iDVaiTro;
@@ -53,6 +59,22 @@ public class NhanghiencuuBaocao implements Serializable {
 
     public void setNhanghiencuuBaocaoPK(NhanghiencuuBaocaoPK nhanghiencuuBaocaoPK) {
         this.nhanghiencuuBaocaoPK = nhanghiencuuBaocaoPK;
+    }
+
+    public Baocao getBaocao() {
+        return baocao;
+    }
+
+    public void setBaocao(Baocao baocao) {
+        this.baocao = baocao;
+    }
+
+    public Nhanghiencuu getNhanghiencuu() {
+        return nhanghiencuu;
+    }
+
+    public void setNhanghiencuu(Nhanghiencuu nhanghiencuu) {
+        this.nhanghiencuu = nhanghiencuu;
     }
 
     public Vaitro getIDVaiTro() {

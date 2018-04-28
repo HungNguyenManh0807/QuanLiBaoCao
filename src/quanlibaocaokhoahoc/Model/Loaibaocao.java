@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "")
+@Table(catalog = "QuanLiBaoCao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Loaibaocao.findAll", query = "SELECT l FROM Loaibaocao l")
@@ -106,7 +106,7 @@ public class Loaibaocao implements Serializable {
 
     @Override
     public String toString() {
-        return loaiBaoCao;
+        return "quanlibaocaokhoahoc.Model.Loaibaocao[ id=" + id + " ]";
     }
     
 }

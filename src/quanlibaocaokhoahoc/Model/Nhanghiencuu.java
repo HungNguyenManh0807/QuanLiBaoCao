@@ -7,7 +7,9 @@ package quanlibaocaokhoahoc.Model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,17 +20,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "")
+@Table(catalog = "QuanLiBaoCao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Nhanghiencuu.findAll", query = "SELECT n FROM Nhanghiencuu n")
@@ -53,10 +57,11 @@ public class Nhanghiencuu implements Serializable {
     @JoinColumn(name = "IDChucDanh", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Chucdanh iDChucDanh;
-    
     @JoinColumn(name = "IDCoQuan", referencedColumnName = "ID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Coquan iDCoQuan;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanghiencuu", fetch = FetchType.LAZY)
+    private List<NhanghiencuuBaocao> nhanghiencuuBaocaoList;
 
     public Nhanghiencuu() {
     }
@@ -111,6 +116,15 @@ public class Nhanghiencuu implements Serializable {
         this.iDCoQuan = iDCoQuan;
     }
 
+    @XmlTransient
+    public List<NhanghiencuuBaocao> getNhanghiencuuBaocaoList() {
+        return nhanghiencuuBaocaoList;
+    }
+
+    public void setNhanghiencuuBaocaoList(List<NhanghiencuuBaocao> nhanghiencuuBaocaoList) {
+        this.nhanghiencuuBaocaoList = nhanghiencuuBaocaoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -133,9 +147,7 @@ public class Nhanghiencuu implements Serializable {
 
     @Override
     public String toString() {
-        return ten;
+        return "quanlibaocaokhoahoc.Model.Nhanghiencuu[ id=" + id + " ]";
     }
-
-
     
 }

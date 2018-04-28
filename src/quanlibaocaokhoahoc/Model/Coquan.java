@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Hung Nguyen
  */
 @Entity
-@Table(catalog = "quanlibaocao", schema = "")
+@Table(catalog = "QuanLiBaoCao", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Coquan.findAll", query = "SELECT c FROM Coquan c")
@@ -119,7 +119,7 @@ public class Coquan implements Serializable {
 
     @Override
     public String toString() {
-        return ten+"--"+ diaChi;
+        return "quanlibaocaokhoahoc.Model.Coquan[ id=" + id + " ]";
     }
     
 }
