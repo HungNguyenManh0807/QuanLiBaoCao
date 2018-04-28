@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import quanlibaocaokhoahoc.Model.Baocao;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-28T15:29:26")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-28T17:03:18")
 @StaticMetamodel(Linhvuc.class)
 public class Linhvuc_ { 
 

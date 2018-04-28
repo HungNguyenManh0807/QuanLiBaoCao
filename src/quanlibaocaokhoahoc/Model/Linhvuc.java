@@ -106,7 +106,7 @@ public class Linhvuc implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Linhvuc[ id=" + id + " ]";
+        return ten;
     }
     
 }

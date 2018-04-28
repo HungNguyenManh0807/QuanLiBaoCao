@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Nguoidung.findAll", query = "SELECT n FROM Nguoidung n")
-    , @NamedQuery(name = "Nguoidung.findById", query = "SELECT n FROM Nguoidung n WHERE n.id = :id")
+    , @NamedQuery(name = "Nguoidung.checkLogin", query = "SELECT n FROM Nguoidung n WHERE n.username = :us AND n.password = :ps")
     , @NamedQuery(name = "Nguoidung.findByPassword", query = "SELECT n FROM Nguoidung n WHERE n.password = :password")
     , @NamedQuery(name = "Nguoidung.findByQuyenHan", query = "SELECT n FROM Nguoidung n WHERE n.quyenHan = :quyenHan")})
 public class Nguoidung implements Serializable {
@@ -117,7 +117,7 @@ public class Nguoidung implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Nguoidung[ id=" + id + " ]";
+        return username;
     }
     
 }

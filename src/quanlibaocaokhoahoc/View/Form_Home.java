@@ -231,9 +231,10 @@ public class Form_Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btn_LinkToManagement_UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LinkToManagement_UserActionPerformed
-        this.setVisible(false);
+        
         Form_ManageUser fmu = new Form_ManageUser();
         fmu.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btn_LinkToManagement_UserActionPerformed
 
     private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed

@@ -228,7 +228,7 @@ public class Form_Login extends javax.swing.JFrame {
         char[] password = txt_pass.getPassword();
 
         Query query = em.createNamedQuery("Nguoidung.checkLogin");
-        query.setParameter("id", new String(username));// ep kieu ve string cho dung format cua para
+        query.setParameter("us", new String(username));// ep kieu ve string cho dung format cua para
         query.setParameter("ps", new String(password));
         List<Nguoidung> list = query.getResultList();
         int numberOfUser = list.size();

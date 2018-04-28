@@ -103,7 +103,7 @@ public class Vaitro implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Vaitro[ id=" + id + " ]";
+        return ten;
     }
     
 }

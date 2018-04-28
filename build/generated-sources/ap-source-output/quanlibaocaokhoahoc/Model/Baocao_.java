@@ -9,7 +9,7 @@ import quanlibaocaokhoahoc.Model.Linhvuc;
 import quanlibaocaokhoahoc.Model.Loaibaocao;
 import quanlibaocaokhoahoc.Model.NhanghiencuuBaocao;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-28T15:29:26")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-28T17:03:18")
 @StaticMetamodel(Baocao.class)
 public class Baocao_ { 
 
