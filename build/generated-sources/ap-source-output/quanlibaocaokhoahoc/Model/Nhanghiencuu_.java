@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import quanlibaocaokhoahoc.Model.Chucdanh;
 import quanlibaocaokhoahoc.Model.Coquan;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-27T22:27:34")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-28T11:08:05")
 @StaticMetamodel(Nhanghiencuu.class)
 public class Nhanghiencuu_ { 
 

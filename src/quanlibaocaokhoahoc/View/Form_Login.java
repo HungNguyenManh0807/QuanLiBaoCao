@@ -6,7 +6,15 @@
 package quanlibaocaokhoahoc.View;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
+import quanlibaocaokhoahoc.Controller.NguoidungJpaController;
+import quanlibaocaokhoahoc.Model.Nguoidung;
 
 /**
  *
@@ -23,7 +31,6 @@ public class Form_Login extends javax.swing.JFrame {
 
         createAndShow();
         showpassword.setVisible(false);
-        
 
     }
 
@@ -175,29 +182,21 @@ public class Form_Login extends javax.swing.JFrame {
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // TODO add your handling code here:
-        // btn_login.
-        if(evt.getSource()== btn_login){
-        
-        String userName = txt_user.getText();
-            char[] passWord = txt_pass.getPassword();
-            if (userName.equals("admin") ||passWord.equals("admin")) {
-             this.setVisible(false);// neu ham check dung thi cho frame login an di va hien len frame home
-            new Form_Home().setVisible(true);   
-                
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Username or password was wrong. please try again!");
-            }
-        
+
+        Nguoidung nguoidung = new Nguoidung();
+        if (txt_user.getText().equals("") || txt_pass.getPassword().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Username and password must be filled!");
+        } else if (checkLogIn() >= 1) {
+
+            Form_Home fh = new Form_Home();
+            fh.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Username or password is wrong, please try again!");
         }
-//            if (txt_user.getText().equals("") || txt_pass.getPassword().equals("")) {
-//            JOptionPane.showMessageDialog(rootPane, "Please input both user and pass!");
-//
-//        }
-//        if (checkLogIn() == false) {
-//            
-//        } else {
-            
-//        }
+        btn_login.setEnabled(true);
+
+
     }//GEN-LAST:event_btn_loginActionPerformed
 
     private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
@@ -214,17 +213,26 @@ public class Form_Login extends javax.swing.JFrame {
 
     private void btn_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseClicked
         // TODO add your handling code here:
-    
-    }//GEN-LAST:event_btn_loginMouseClicked
-    public  boolean  checkLogIn() {
-        if (txt_user.getText().equals("admin") && txt_pass.getPassword().equals("admin")) {
-           
-            return true;
-            
-        } else {
-            return false;
-        }
 
+    }//GEN-LAST:event_btn_loginMouseClicked
+    public int checkLogIn() {
+        btn_login.setEnabled(false);
+
+        Nguoidung nguoidung = new Nguoidung();
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+
+        EntityManager em = emf.createEntityManager();
+
+        String username = txt_user.getText();
+        char[] password = txt_pass.getPassword();
+
+        Query query = em.createNamedQuery("Nguoidung.checkLogin");
+        query.setParameter("id", new String(username));// ep kieu ve string cho dung format cua para
+        query.setParameter("ps", new String(password));
+        List<Nguoidung> list = query.getResultList();
+        int numberOfUser = list.size();
+        return numberOfUser;
     }
 
     /**
