@@ -20,6 +20,7 @@ import javax.persistence.Persistence;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -710,102 +711,107 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     private void writeToExcel() throws IOException {
 
-        Workbook workbook = new XSSFWorkbook();// create object workbook
+        JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
+        chooser.setFileSelectionMode(JFileChooser.CUSTOM_DIALOG);
+        
+        int returnVal = chooser.showSaveDialog(null);
+        chooser.setDialogTitle("Choose a  directory to save your file:");
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-        // create a font for styling header cells
-        Font headerFont = workbook.createFont();
-        headerFont.setBold(true);
-        headerFont.setFontHeightInPoints((short) 14);
-        headerFont.setColor(IndexedColors.RED.getIndex());
+            File file = chooser.getSelectedFile().getAbsoluteFile();
+            FileOutputStream fos = new FileOutputStream(new File(file + "/Thesises.xlsx"));
 
-        Sheet sheet = workbook.createSheet("Thesises");
+            Workbook workbook = new XSSFWorkbook();// create object workbook
 
-        //load data to TREEMAP
-        TreeMap<String, Object[]> data = new TreeMap<>();
+            // create a font for styling header cells
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setFontHeightInPoints((short) 14);
+            headerFont.setColor(IndexedColors.RED.getIndex());
 
-        //add Header column
+            Sheet sheet = workbook.createSheet("Thesises");
+
+            //load data to TREEMAP
+            TreeMap<String, Object[]> data = new TreeMap<>();
+
+            //add Header column manual
 //        data.put("-1", new Object[]{bindThesises().getColumnName(0), bindThesises().getColumnName(1),
 //            bindThesises().getColumnName(2), bindThesises().getColumnName(5),
 //            bindThesises().getColumnName(3), bindThesises().getColumnName(4),
 //            bindThesises().getColumnName(6), bindThesises().getColumnName(7)});
-        Row headeRow = sheet.createRow(0);
+            Row headeRow = sheet.createRow(0);
 
 // create  a CellStyle with the font
-        CellStyle headCellStyle = workbook.createCellStyle();
-        headCellStyle.setFont(headerFont);
+            CellStyle headCellStyle = workbook.createCellStyle();
+            headCellStyle.setFont(headerFont);
 
-// create cellsHeader
-        for (int i = 0; i < bindThesises().getColumnCount(); i++) {
-            Cell cell = headeRow.createCell(i);
-            cell.setCellValue(bindThesises().getColumnName(i));
-            cell.setCellStyle(headCellStyle);
+// create cellsHeader auto
+            for (int i = 0; i < bindThesises().getColumnCount(); i++) {
+                Cell cell = headeRow.createCell(i);
+                cell.setCellValue(bindThesises().getColumnName(i));
+                cell.setCellStyle(headCellStyle);
 
-        }
-        //add Rows and Cells    
-        for (int i = 0; i < bindThesises().getRowCount(); i++) {
-            data.put(Integer.toString(i), new Object[]{bindThesises().getValueAt(i, 0),
-                bindThesises().getValueAt(i, 1), bindThesises().getValueAt(i, 2),
-                bindThesises().getValueAt(i, 3), bindThesises().getValueAt(i, 4),
-                bindThesises().getValueAt(i, 5), bindThesises().getValueAt(i, 6)});
-        }
-
-        //write to excel
-        Set<String> ids = data.keySet();
-        Row row;
-        int rowID = 1;
-
-        for (String id : ids) {
-
-            row = sheet.createRow(rowID++);
-            Object[] values = data.get(id);
-
-            int cellID = 0;
-            for (Object value : values) {
-                org.apache.poi.ss.usermodel.Cell cell = row.createCell(cellID++);
-                cell.setCellValue(value.toString());
             }
-        }
-        // resize all columns to fit the content size
-        for (int i = 0; i < bindThesises().getColumnCount(); i++) {
-            sheet.autoSizeColumn(i);
-        }
+            //add Rows and Cells    
+            for (int i = 0; i < bindThesises().getRowCount(); i++) {
+                data.put(Integer.toString(i), new Object[]{bindThesises().getValueAt(i, 0),
+                    bindThesises().getValueAt(i, 1), bindThesises().getValueAt(i, 2),
+                    bindThesises().getValueAt(i, 3), bindThesises().getValueAt(i, 4),
+                    bindThesises().getValueAt(i, 5), bindThesises().getValueAt(i, 6)});
+            }
+
+            //write to excel
+            Set<String> ids = data.keySet();
+            Row row;
+            int rowID = 1;
+
+            for (String id : ids) {
+
+                row = sheet.createRow(rowID++);
+                Object[] values = data.get(id);
+
+                int cellID = 0;
+                for (Object value : values) {
+                    org.apache.poi.ss.usermodel.Cell cell = row.createCell(cellID++);
+                    cell.setCellValue(value.toString());
+                }
+            }
+            // resize all columns to fit the content size
+            for (int i = 0; i < bindThesises().getColumnCount(); i++) {
+                sheet.autoSizeColumn(i);
+            }
 
 //        wrrite to file system
-        try {
+            try {
+                workbook.write(fos);
+                JOptionPane.showMessageDialog(rootPane, "Exported successfully to: "+ file);
+            } catch (Exception e) {
+                e.printStackTrace();
 
-            JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooser.showSaveDialog(null);
-            File file = chooser.getCurrentDirectory();//lay ve file duoc chon
-            String fileName = file.getCanonicalPath();// truyen  duong dan truc tiep cho bien string file name
-         
+            } finally {
+                fos.close();
+                workbook.close();
+            }
 
-            FileOutputStream fos = new FileOutputStream(new File(fileName + "Thesis.xlsx"));
-            btn_Export_To_Excel.setEnabled(false);
-            workbook.write(fos);
-            fos.close();
-            JOptionPane.showMessageDialog(rootPane, "Saved successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(rootPane, "Co loi xay ra");
-
-        } finally {
-
-            workbook.close();
         }
+
         btn_Export_To_Excel.setEnabled(true);
 
     }
+
+
     private void btn_Export_To_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Export_To_ExcelActionPerformed
+        btn_Export_To_Excel.setEnabled(false);
         try {
-            // TODO add your handling code here:
+
             writeToExcel();
         } catch (IOException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(rootPane, "Co loi xay ra");
+            JOptionPane.showMessageDialog(rootPane, "Co loi xay ra o trong ham  write to excel");
             Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        btn_Export_To_Excel.setEnabled(true);
 
     }//GEN-LAST:event_btn_Export_To_ExcelActionPerformed
 

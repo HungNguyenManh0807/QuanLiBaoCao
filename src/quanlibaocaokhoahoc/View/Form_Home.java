@@ -113,6 +113,11 @@ public class Form_Home extends javax.swing.JFrame {
         jButton5.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Other-Power-Log-Off-Metro-icon.png")); // NOI18N
         jButton5.setText("Log out");
         jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton5);
         jButton5.setBounds(430, 210, 130, 30);
 
@@ -261,6 +266,13 @@ public class Form_Home extends javax.swing.JFrame {
         fms.setVisible(true);
         
     }//GEN-LAST:event_btn_LinkToMaagenment_ScientistActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Form_Login form_Login = new Form_Login();
+        form_Login.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -32,7 +32,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="QuanLiNhaKhoaHoc" alignment="0" pref="441" max="32767" attributes="0"/>
+          <Component id="QuanLiNhaKhoaHoc" alignment="0" pref="453" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -112,12 +112,19 @@
                                           </Group>
                                           <EmptySpace pref="73" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="btn_Save" linkSize="3" max="32767" attributes="0"/>
-                                              <Component id="btn_AddScientist" linkSize="3" max="32767" attributes="0"/>
-                                              <Component id="btn_Delete" linkSize="3" alignment="0" pref="120" max="32767" attributes="0"/>
-                                              <Component id="jButton3" linkSize="3" alignment="0" max="32767" attributes="0"/>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="btn_Save" linkSize="3" max="32767" attributes="0"/>
+                                                      <Component id="btn_AddScientist" linkSize="3" max="32767" attributes="0"/>
+                                                      <Component id="btn_Delete" linkSize="3" alignment="0" pref="120" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Component id="jButton3" min="-2" pref="70" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -163,7 +170,7 @@
                           <Component id="btn_AddScientist" linkSize="4" min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace pref="44" max="32767" attributes="0"/>
+                                  <EmptySpace pref="39" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txt_Scientist_Name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="btn_Save" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -185,7 +192,7 @@
                                           <Component id="cb_CoQuan" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="28" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -195,10 +202,13 @@
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="DateChose_Scientist" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton3" linkSize="4" min="-2" max="-2" attributes="0"/>
                               <Component id="cb_ChucDanh" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                                  <Component id="jButton3" linkSize="4" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
