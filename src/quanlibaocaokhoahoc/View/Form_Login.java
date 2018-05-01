@@ -25,12 +25,13 @@ public class Form_Login extends javax.swing.JFrame {
     /**
      * Creates new form Form_Login
      */
+    private int checkPass = -1;
     public Form_Login() {
 
         initComponents();
 
         createAndShow();
-        showpassword.setVisible(false);
+        
 
     }
 
@@ -50,10 +51,9 @@ public class Form_Login extends javax.swing.JFrame {
         txt_pass = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        checkBox_ShowPw = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        showpassword = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -129,16 +129,16 @@ public class Form_Login extends javax.swing.JFrame {
         getContentPane().add(btn_cancel);
         btn_cancel.setBounds(190, 290, 120, 25);
 
-        jCheckBox1.setBackground(new java.awt.Color(0, 51, 51));
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 204));
-        jCheckBox1.setText("Show Password");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        checkBox_ShowPw.setBackground(new java.awt.Color(0, 51, 51));
+        checkBox_ShowPw.setForeground(new java.awt.Color(255, 255, 204));
+        checkBox_ShowPw.setText("Show Password");
+        checkBox_ShowPw.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                checkBox_ShowPwActionPerformed(evt);
             }
         });
-        getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(190, 230, 130, 23);
+        getContentPane().add(checkBox_ShowPw);
+        checkBox_ShowPw.setBounds(190, 230, 130, 23);
 
         jLabel1.setBackground(new java.awt.Color(153, 153, 255));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -153,8 +153,6 @@ public class Form_Login extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\elegant-blue-motion-background-animation-looped_7jtp8mml__F0000.png")); // NOI18N
         getContentPane().add(jLabel4);
         jLabel4.setBounds(-10, -10, 470, 360);
-        getContentPane().add(showpassword);
-        showpassword.setBounds(450, 100, 0, 0);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -163,19 +161,21 @@ public class Form_Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_userActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void checkBox_ShowPwActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBox_ShowPwActionPerformed
         // TODO add your handling code here:
 
-        if (showpassword.getText().equals("")) {
-            txt_pass.setEchoChar((char) 0);
-            showpassword.setText("Set");
+        if (checkPass == -1) {
+            txt_pass.setEchoChar((char)0);// set password into visible
+            
+            checkPass = 1;
 
         } else {
-            txt_pass.setEchoChar('*');
-            showpassword.setText("");
+            txt_pass.setEchoChar('*');// set password into encrypt
+           
+           checkPass = -1;
         }
 
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_checkBox_ShowPwActionPerformed
 
     private void txt_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passActionPerformed
         // TODO add your handling code here:
@@ -188,7 +188,7 @@ public class Form_Login extends javax.swing.JFrame {
         Nguoidung nguoidung = new Nguoidung();
         if (txt_user.getText().equals("") || txt_pass.getPassword().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Username and password must be filled!");
-        } else if (checkLogIn() >= 1) {
+        } else if (checkLogIn() >= 1) {// ton tai nguoi dung trong cau truy van select database
 
             Form_Home fh = new Form_Home();
             fh.setVisible(true);
@@ -283,16 +283,15 @@ public class Form_Login extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_login;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox checkBox_ShowPw;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel showpassword;
     private javax.swing.JPasswordField txt_pass;
     private javax.swing.JTextField txt_user;
     // End of variables declaration//GEN-END:variables

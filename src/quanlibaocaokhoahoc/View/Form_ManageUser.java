@@ -291,6 +291,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
     private void btn_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteActionPerformed
         // TODO add your handling code here:
         btn_Edit.setEnabled(false);
+        btn_Save.setEnabled(false);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
         NguoidungJpaController controller = new NguoidungJpaController(emf);
         try {
@@ -347,6 +348,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
                 Logger.getLogger(Form_ManageUser.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        btn_Save.setEnabled(false);
         btn_Delete.setEnabled(false);
         clearUser();
         bindUserTable();

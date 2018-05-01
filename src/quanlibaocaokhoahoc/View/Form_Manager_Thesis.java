@@ -33,11 +33,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import quanlibaocaokhoahoc.Controller.BaocaoJpaController;
 import quanlibaocaokhoahoc.Controller.LinhvucJpaController;
 import quanlibaocaokhoahoc.Controller.LoaibaocaoJpaController;
+import quanlibaocaokhoahoc.Controller.VaitroJpaController;
 import quanlibaocaokhoahoc.Controller.exceptions.IllegalOrphanException;
 import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 import quanlibaocaokhoahoc.Model.Baocao;
 import quanlibaocaokhoahoc.Model.Linhvuc;
 import quanlibaocaokhoahoc.Model.Loaibaocao;
+import quanlibaocaokhoahoc.Model.Vaitro;
 
 /**
  *
@@ -73,7 +75,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btn_Print = new javax.swing.JButton();
         btn_Export_To_Excel = new javax.swing.JButton();
-        btn_Close_MangeThesis = new javax.swing.JButton();
+        btn_Close_Thesis = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         Date_ChooserThesises = new com.toedter.calendar.JDateChooser();
@@ -96,7 +98,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         btn_DeleteFieldName = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txt_FieldName = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
+        btn_Close_Field = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Field = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -104,34 +106,36 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btn_Insert_TypeName = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        Edit_TypeName = new javax.swing.JButton();
         btn_DeleteType = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txt_Type = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        btn_Close_Type = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbl_Type = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_TOS = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        btn_Insert_TOS = new javax.swing.JButton();
+        btn_Delete_TOS = new javax.swing.JButton();
+        btn_Close_TOS = new javax.swing.JButton();
+        cb_Thesis_TOS = new javax.swing.JComboBox<>();
+        cb_Scientist_TOS = new javax.swing.JComboBox<>();
+        cb_Role_TOS = new javax.swing.JComboBox<>();
+        btn_Edit_TOS = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbl_Role = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btn_Insert_ROS = new javax.swing.JButton();
+        btn_Delete_Role = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txt_Role = new javax.swing.JTextField();
+        btn_Edit_Role = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -205,14 +209,14 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.add(btn_Export_To_Excel);
         btn_Export_To_Excel.setBounds(740, 20, 110, 23);
 
-        btn_Close_MangeThesis.setText("close");
-        btn_Close_MangeThesis.addActionListener(new java.awt.event.ActionListener() {
+        btn_Close_Thesis.setText("Close");
+        btn_Close_Thesis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_Close_MangeThesisActionPerformed(evt);
+                btn_Close_ThesisActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Close_MangeThesis);
-        btn_Close_MangeThesis.setBounds(850, 500, 80, 23);
+        jPanel1.add(btn_Close_Thesis);
+        btn_Close_Thesis.setBounds(850, 500, 80, 23);
 
         jLabel5.setText("Time");
         jPanel1.add(jLabel5);
@@ -354,9 +358,9 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel4.add(txt_FieldName);
         txt_FieldName.setBounds(170, 30, 180, 80);
 
-        jButton7.setText("Close");
-        jPanel4.add(jButton7);
-        jButton7.setBounds(239, 160, 90, 23);
+        btn_Close_Field.setText("Close");
+        jPanel4.add(btn_Close_Field);
+        btn_Close_Field.setBounds(239, 160, 90, 23);
 
         jPanel2.add(jPanel4);
         jPanel4.setBounds(10, 10, 387, 212);
@@ -405,9 +409,9 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel5.add(btn_Insert_TypeName);
         btn_Insert_TypeName.setBounds(20, 30, 70, 23);
 
-        jButton9.setText("Edit");
-        jPanel5.add(jButton9);
-        jButton9.setBounds(20, 80, 73, 23);
+        Edit_TypeName.setText("Edit");
+        jPanel5.add(Edit_TypeName);
+        Edit_TypeName.setBounds(20, 80, 73, 23);
 
         btn_DeleteType.setText("Delete");
         btn_DeleteType.addActionListener(new java.awt.event.ActionListener() {
@@ -428,9 +432,9 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel5.add(jButton11);
         jButton11.setBounds(280, 210, 57, 23);
 
-        jButton12.setText("Close");
-        jPanel5.add(jButton12);
-        jButton12.setBounds(239, 160, 90, 23);
+        btn_Close_Type.setText("Close");
+        jPanel5.add(btn_Close_Type);
+        btn_Close_Type.setBounds(239, 160, 90, 23);
 
         tbl_Type.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -477,7 +481,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Type", jPanel3);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_TOS.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -488,27 +492,29 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane5.setViewportView(jTable1);
+        jScrollPane5.setViewportView(tbl_TOS);
 
         jPanel7.setBackground(java.awt.Color.lightGray);
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thesises of scientists", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
 
-        jButton1.setText("Insert");
+        btn_Insert_TOS.setText("Insert");
 
-        jButton2.setText("Delete");
+        btn_Delete_TOS.setText("Delete");
 
-        jButton8.setText("Close");
+        btn_Close_TOS.setText("Close");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_Thesis_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_Scientist_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        cb_Role_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_Role_TOS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                cb_Role_TOSActionPerformed(evt);
             }
         });
+
+        btn_Edit_TOS.setText("Edit");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -517,20 +523,20 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton8)
+                        .addComponent(btn_Close_TOS)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btn_Insert_TOS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_Edit_TOS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_Delete_TOS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cb_Thesis_TOS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cb_Scientist_TOS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cb_Role_TOS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18))))
         );
         jPanel7Layout.setVerticalGroup(
@@ -539,17 +545,22 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton1)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton2))
+                        .addComponent(btn_Insert_TOS)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_Edit_TOS))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cb_Thesis_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(5, 5, 5)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jButton8)
+                        .addComponent(cb_Scientist_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(cb_Role_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(btn_Delete_TOS)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(btn_Close_TOS)
                 .addContainerGap())
         );
 
@@ -587,7 +598,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Thesises of scientist", jPanel6);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Role.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -598,16 +609,29 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane6.setViewportView(jTable2);
+        jScrollPane6.setViewportView(tbl_Role);
 
         jPanel9.setBackground(java.awt.Color.lightGray);
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Role", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
 
-        jButton3.setText("Insert");
+        btn_Insert_ROS.setText("Insert");
+        btn_Insert_ROS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Insert_ROSActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Delete");
+        btn_Delete_Role.setText("Delete");
 
         jButton5.setText("Close");
+
+        txt_Role.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_RoleActionPerformed(evt);
+            }
+        });
+
+        btn_Edit_Role.setText("Edit");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -618,25 +642,31 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 .addComponent(jButton5)
                 .addGap(20, 20, 20))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(30, 30, 30)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_Edit_Role, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_Insert_ROS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_Delete_Role, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                .addComponent(txt_Role, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton4))
-                    .addComponent(jTextField1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addComponent(btn_Insert_ROS)
+                        .addGap(26, 26, 26)
+                        .addComponent(btn_Edit_Role)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addComponent(btn_Delete_Role))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txt_Role, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(23, 23, 23)
                 .addComponent(jButton5)
                 .addContainerGap())
         );
@@ -652,14 +682,14 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(203, 203, 203)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -668,9 +698,9 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(56, 56, 56)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Role of scientist", jPanel8);
@@ -696,6 +726,10 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     private void clearType() {
         txt_Type.setText("");
+    }
+
+    private void clearRole() {
+        txt_Role.setText("");
     }
 
 
@@ -889,6 +923,8 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btn_Insert_FieldNameActionPerformed
+    // return a model to get value at column in write_to_excel module
+
     private DefaultTableModel bindThesises() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
         BaocaoJpaController controller = new BaocaoJpaController(emf);
@@ -922,6 +958,8 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         }
         tbl_Field.setModel(model);
+        tbl_Field.getColumnModel().getColumn(0).setMinWidth(0);// hide the column ID
+        tbl_Field.getColumnModel().getColumn(0).setMaxWidth(0);// hide the column ID
 
     }
 
@@ -936,6 +974,26 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             model.addRow(new String[]{loaibaocao.getId().toString(), loaibaocao.getLoaiBaoCao()});
         }
         tbl_Type.setModel(model);
+        tbl_Type.getColumnModel().getColumn(0).setMinWidth(0);
+        tbl_Type.getColumnModel().getColumn(0).setMaxWidth(0);
+
+    }
+
+    private void bindRole() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        VaitroJpaController controller = new VaitroJpaController(emf);
+        List<Vaitro> vaitros = controller.findVaitroEntities();
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"ID", " Vai Tro"});
+        for (Vaitro vaitro : vaitros) {
+
+            model.addRow(new String[]{vaitro.getId().toString(), vaitro.getTen()});
+
+        }
+        tbl_Role.setModel(model);
+        tbl_Role.getColumnModel().getColumn(0).setMinWidth(0);
+        tbl_Role.getColumnModel().getColumn(0).setMaxWidth(0);
 
     }
 
@@ -962,12 +1020,12 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         cb_Field.setModel(model);
 
     }
-    private void btn_Close_MangeThesisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Close_MangeThesisActionPerformed
+    private void btn_Close_ThesisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Close_ThesisActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         Form_Home fh = new Form_Home();
         fh.setVisible(true);
-    }//GEN-LAST:event_btn_Close_MangeThesisActionPerformed
+    }//GEN-LAST:event_btn_Close_ThesisActionPerformed
 
     private void btn_Insert_TypeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_TypeNameActionPerformed
         // TODO add your handling code here:
@@ -1089,9 +1147,38 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tbl_FieldMouseClicked
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void cb_Role_TOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_Role_TOSActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_cb_Role_TOSActionPerformed
+
+    private void txt_RoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_RoleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_RoleActionPerformed
+
+    private void btn_Insert_ROSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_ROSActionPerformed
+        // TODO add your handling code here:
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        VaitroJpaController controller = new VaitroJpaController(emf);
+
+        Vaitro vaitro = new Vaitro();
+        vaitro.setTen(txt_Role.getText());
+
+        if (txt_Role.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Missing field blank");
+        } else {
+            try {
+                controller.create(vaitro);
+                
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Co Loi");
+                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        bindRole();
+        clearRole();
+    }//GEN-LAST:event_btn_Insert_ROSActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1108,7 +1195,8 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         binCBboxField();
         bindField();
         bindType();
-        btn_EditFieldName.setEnabled(false);
+        bindRole();
+        
 
     }
 
@@ -1153,34 +1241,36 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     com.toedter.calendar.JDateChooser Date_ChooserThesises;
+    javax.swing.JButton Edit_TypeName;
     javax.swing.JButton btn_Add_Thesises;
     javax.swing.JButton btn_AttachFile;
     javax.swing.JButton btn_AttachFileData;
-    javax.swing.JButton btn_Close_MangeThesis;
+    javax.swing.JButton btn_Close_Field;
+    javax.swing.JButton btn_Close_TOS;
+    javax.swing.JButton btn_Close_Thesis;
+    javax.swing.JButton btn_Close_Type;
     javax.swing.JButton btn_Delete;
     javax.swing.JButton btn_DeleteFieldName;
     javax.swing.JButton btn_DeleteType;
+    javax.swing.JButton btn_Delete_Role;
+    javax.swing.JButton btn_Delete_TOS;
     javax.swing.JButton btn_EditFieldName;
+    javax.swing.JButton btn_Edit_Role;
+    javax.swing.JButton btn_Edit_TOS;
     javax.swing.JButton btn_Export_To_Excel;
     javax.swing.JButton btn_Insert_FieldName;
+    javax.swing.JButton btn_Insert_ROS;
+    javax.swing.JButton btn_Insert_TOS;
     javax.swing.JButton btn_Insert_TypeName;
     javax.swing.JButton btn_Print;
     javax.swing.JButton btn_Save;
     javax.swing.JComboBox<String> cb_Field;
+    javax.swing.JComboBox<String> cb_Role_TOS;
+    javax.swing.JComboBox<String> cb_Scientist_TOS;
+    javax.swing.JComboBox<String> cb_Thesis_TOS;
     javax.swing.JComboBox<String> cb_Type;
-    javax.swing.JButton jButton1;
     javax.swing.JButton jButton11;
-    javax.swing.JButton jButton12;
-    javax.swing.JButton jButton2;
-    javax.swing.JButton jButton3;
-    javax.swing.JButton jButton4;
     javax.swing.JButton jButton5;
-    javax.swing.JButton jButton7;
-    javax.swing.JButton jButton8;
-    javax.swing.JButton jButton9;
-    javax.swing.JComboBox<String> jComboBox1;
-    javax.swing.JComboBox<String> jComboBox2;
-    javax.swing.JComboBox<String> jComboBox3;
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel10;
     javax.swing.JLabel jLabel11;
@@ -1211,15 +1301,15 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JScrollPane jScrollPane5;
     javax.swing.JScrollPane jScrollPane6;
     javax.swing.JTabbedPane jTabbedPane1;
-    javax.swing.JTable jTable1;
-    javax.swing.JTable jTable2;
-    javax.swing.JTextField jTextField1;
     javax.swing.JTable tbl_Field;
+    javax.swing.JTable tbl_Role;
+    javax.swing.JTable tbl_TOS;
     javax.swing.JTable tbl_Thesises;
     javax.swing.JTable tbl_Type;
     javax.swing.JTextArea txa_Resume;
     javax.swing.JTextField txt_FieldName;
     javax.swing.JTextField txt_Name_Thesises;
+    javax.swing.JTextField txt_Role;
     javax.swing.JTextField txt_Type;
     javax.swing.JTextField txt_Url;
     javax.swing.JTextField txt_UrlData;

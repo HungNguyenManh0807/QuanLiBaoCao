@@ -187,7 +187,7 @@ public class Baocao implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Baocao[ id=" + id + " ]";
+        return ten;
     }
     
 }
