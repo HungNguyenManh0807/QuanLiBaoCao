@@ -8,7 +8,7 @@ import quanlibaocaokhoahoc.Model.Nhanghiencuu;
 import quanlibaocaokhoahoc.Model.NhanghiencuuBaocaoPK;
 import quanlibaocaokhoahoc.Model.Vaitro;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-28T18:50:43")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-30T22:44:25")
 @StaticMetamodel(NhanghiencuuBaocao.class)
 public class NhanghiencuuBaocao_ { 
 

@@ -9,7 +9,7 @@ import quanlibaocaokhoahoc.Model.Chucdanh;
 import quanlibaocaokhoahoc.Model.Coquan;
 import quanlibaocaokhoahoc.Model.NhanghiencuuBaocao;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-28T18:50:43")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-30T22:44:25")
 @StaticMetamodel(Nhanghiencuu.class)
 public class Nhanghiencuu_ { 
 

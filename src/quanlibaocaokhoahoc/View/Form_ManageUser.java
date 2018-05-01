@@ -8,12 +8,15 @@ package quanlibaocaokhoahoc.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import quanlibaocaokhoahoc.Model.Nguoidung;
 import quanlibaocaokhoahoc.Controller.NguoidungJpaController;
+import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 
 /**
  *
@@ -31,10 +34,7 @@ public class Form_ManageUser extends javax.swing.JFrame {
     public Form_ManageUser() {
         initComponents();
         createAndShow();
-       bindUserTable();
-       btn_Save.setEnabled(false);
-       btn_Delete.setEnabled(false);
-
+        
     }
 
     /**
@@ -45,27 +45,116 @@ public class Form_ManageUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        cb_role = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        txt_password = new javax.swing.JTextField();
+        txt_User = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btn_Save = new javax.swing.JButton();
+        btn_Edit = new javax.swing.JButton();
+        btn_Delete = new javax.swing.JButton();
+        btn_Close = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_User = new javax.swing.JTable();
         btn_Add = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txt_User = new javax.swing.JTextField();
-        txt_password = new javax.swing.JTextField();
-        btn_Save = new javax.swing.JButton();
-        btn_Delete = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        cb_role = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setTitle("User Management");
         setBackground(java.awt.Color.lightGray);
         getContentPane().setLayout(null);
 
-        jLabel1.setText("Lists username");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(280, 30, 120, 60);
+        jPanel1.setBackground(java.awt.Color.lightGray);
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setLayout(null);
+
+        cb_role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User", " " }));
+        cb_role.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_roleActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cb_role);
+        cb_role.setBounds(100, 150, 100, 20);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Role");
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(10, 150, 50, 20);
+
+        txt_password.setMinimumSize(new java.awt.Dimension(4, 20));
+        jPanel1.add(txt_password);
+        txt_password.setBounds(100, 100, 180, 30);
+
+        txt_User.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_UserActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_User);
+        txt_User.setBounds(100, 30, 180, 30);
+
+        jLabel2.setBackground(java.awt.Color.lightGray);
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Username");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(10, 20, 110, 17);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Password");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(10, 80, 60, 17);
+
+        btn_Save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quanlibaocaokhoahoc/View/Save-icon green.png"))); // NOI18N
+        btn_Save.setText("Save");
+        btn_Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SaveActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Save);
+        btn_Save.setBounds(340, 10, 100, 30);
+
+        btn_Edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quanlibaocaokhoahoc/View/edit-icon.png"))); // NOI18N
+        btn_Edit.setText("Edit");
+        btn_Edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EditActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Edit);
+        btn_Edit.setBounds(340, 60, 100, 30);
+
+        btn_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quanlibaocaokhoahoc/View/Delete-icon.png"))); // NOI18N
+        btn_Delete.setText("Delete");
+        btn_Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_DeleteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Delete);
+        btn_Delete.setBounds(340, 110, 100, 30);
+
+        btn_Close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/quanlibaocaokhoahoc/View/Button-Close-icon 16.png"))); // NOI18N
+        btn_Close.setText("Close");
+        btn_Close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CloseActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Close);
+        btn_Close.setBounds(450, 160, 90, 33);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(3, 250, 550, 200);
+
+        jPanel2.setBackground(java.awt.Color.lightGray);
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setLayout(null);
 
         tbl_User.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,6 +165,11 @@ public class Form_ManageUser extends javax.swing.JFrame {
             }
         ));
         tbl_User.getTableHeader().setReorderingAllowed(false);
+        tbl_User.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_UserMouseClicked(evt);
+            }
+        });
         tbl_User.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tbl_UserPropertyChange(evt);
@@ -83,72 +177,41 @@ public class Form_ManageUser extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_User);
 
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 70, 590, 140);
+        jPanel2.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 80, 340, 150);
 
+        btn_Add.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\users-add-icon.png")); // NOI18N
         btn_Add.setText("New user");
+        btn_Add.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AddActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Add);
-        btn_Add.setBounds(10, 0, 110, 60);
+        jPanel2.add(btn_Add);
+        btn_Add.setBounds(10, 20, 120, 40);
 
-        jLabel2.setText("Username");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 240, 60, 14);
+        jLabel5.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\mmeo.jpg")); // NOI18N
+        jPanel2.add(jLabel5);
+        jLabel5.setBounds(380, 80, 150, 120);
 
-        jLabel3.setText("Password");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 280, 60, 14);
-
-        txt_User.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
+        jButton2.setText("Attach image");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_UserActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_User);
-        txt_User.setBounds(160, 240, 180, 30);
+        jPanel2.add(jButton2);
+        jButton2.setBounds(390, 210, 120, 20);
 
-        txt_password.setMinimumSize(new java.awt.Dimension(4, 20));
-        getContentPane().add(txt_password);
-        txt_password.setBounds(160, 280, 180, 30);
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Lists username");
+        jPanel2.add(jLabel1);
+        jLabel1.setBounds(150, 40, 90, 40);
 
-        btn_Save.setText("Save");
-        btn_Save.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_SaveActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btn_Save);
-        btn_Save.setBounds(160, 360, 80, 23);
-
-        btn_Delete.setText("Delete");
-        getContentPane().add(btn_Delete);
-        btn_Delete.setBounds(260, 360, 80, 23);
-
-        jLabel4.setText("Role");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 320, 50, 20);
-
-        jButton3.setText("Close");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3);
-        jButton3.setBounds(510, 360, 73, 23);
-
-        cb_role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User", " " }));
-        cb_role.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_roleActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cb_role);
-        cb_role.setBounds(160, 320, 100, 20);
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(3, 0, 550, 240);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -157,20 +220,15 @@ public class Form_ManageUser extends javax.swing.JFrame {
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
         // TODO add your handling code here:
         btn_Save.setEnabled(true);
-        btn_Delete.setEnabled(true);
+        txt_User.setEditable(true);
+        txt_password.setEditable(true);
+        
 
-//        if (flag == 1) {
-//            btn_Add.setEnabled(true);
-//            flag = 2;
-//           
-//        } else {
-//            btn_Add.setEnabled(false);
-//        }
     }//GEN-LAST:event_btn_AddActionPerformed
 
     private void txt_UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UserActionPerformed
         // TODO add your handling code here:
-        txt_User.setEnabled(false);
+
     }//GEN-LAST:event_txt_UserActionPerformed
     
     private void clearUser() {
@@ -178,10 +236,11 @@ public class Form_ManageUser extends javax.swing.JFrame {
         txt_password.setText("");
         
     }
-
+    
     @SuppressWarnings({"unchecked", "unchecked"})
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
-        
+        btn_Edit.setEnabled(false);
+        btn_Delete.setEnabled(false);
         try {
             Nguoidung nguoidung = new Nguoidung();
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");//dung de ket noi voi database ten lay o file persistence.xml
@@ -198,12 +257,15 @@ public class Form_ManageUser extends javax.swing.JFrame {
                 
                 controller.create(nguoidung);//store into database
                 JOptionPane.showMessageDialog(rootPane, "Added successfully");
+                btn_Save.setEnabled(false);
+                txt_User.setEditable(false);
+                txt_password.setEditable(false);
+                
                 bindUserTable();
                 clearUser();
                 
             }
         } catch (Exception e) {
-            
             e.printStackTrace();
         }
         
@@ -219,30 +281,98 @@ public class Form_ManageUser extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tbl_UserPropertyChange
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btn_CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CloseActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         Form_Home fh = new Form_Home();
         fh.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
-    int i = 1;
+    }//GEN-LAST:event_btn_CloseActionPerformed
 
-//    public void showResult() {
-//        Nguoidung n = list.get(list.size() - 1);// insert 
-//        model.addRow(new Object[]{
-//            i++, n.getUsername(), n.getPassword(), n.getQuyenHan()
-//
-//        });
-//
-//    }
+    private void btn_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteActionPerformed
+        // TODO add your handling code here:
+        btn_Edit.setEnabled(false);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NguoidungJpaController controller = new NguoidungJpaController(emf);
+        try {
+            controller.destroy(selectedUserID);
+            JOptionPane.showMessageDialog(rootPane, "Deleted successfully!");
+            btn_Delete.setEnabled(false);
+        } catch (NonexistentEntityException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(Form_ManageUser.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        clearUser();
+        bindUserTable();
+        txt_User.setEditable(false);
+        txt_password.setEditable(false);
+        selectedUserID = -1;
+    }//GEN-LAST:event_btn_DeleteActionPerformed
+
+    private void tbl_UserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_UserMouseClicked
+        // TODO add your handling code here:
+        btn_Delete.setEnabled(true);
+        btn_Edit.setEnabled(true);
+        txt_User.setEditable(true);
+        txt_password.setEditable(true);
+        int row = tbl_User.getSelectedRow();
+        selectedUserID = Integer.parseInt(tbl_User.getValueAt(row, 0).toString());
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NguoidungJpaController controller = new NguoidungJpaController(emf);
+        Nguoidung nguoidung = controller.findNguoidung(selectedUserID);
+        txt_User.setText(nguoidung.getUsername());
+        txt_password.setText(nguoidung.getPassword());
+
+    }//GEN-LAST:event_tbl_UserMouseClicked
+
+    private void btn_EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditActionPerformed
+        // TODO add your handling code here:
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NguoidungJpaController controller = new NguoidungJpaController(emf);
+        Nguoidung nguoidung = controller.findNguoidung(selectedUserID);
+        
+        nguoidung.setUsername(txt_User.getText());
+        nguoidung.setPassword(txt_password.getText());
+        nguoidung.setQuyenHan(cb_role.getSelectedIndex());
+        if (txt_User.getText().equals("") || txt_password.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Missing field sername or password!");
+        } else {
+            try {
+                controller.edit(nguoidung);
+                JOptionPane.showMessageDialog(rootPane, "Updated successfully!");
+                btn_Edit.setEnabled(false);
+                
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Logger.getLogger(Form_ManageUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        btn_Delete.setEnabled(false);
+        clearUser();
+        bindUserTable();
+        txt_User.setEditable(false);
+        txt_password.setEditable(false);
+        
+
+    }//GEN-LAST:event_btn_EditActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public void createAndShow() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
-        this.setSize(630, 450);
+        this.setSize(580, 493);
         this.setLocationRelativeTo(null);
+        bindUserTable();
+        btn_Save.setEnabled(false);
+        btn_Delete.setEnabled(false);
+        btn_Edit.setEnabled(false);
+        txt_User.setEditable(false);
+        txt_password.setEditable(false);
         
     }
     
@@ -279,25 +409,33 @@ public class Form_ManageUser extends javax.swing.JFrame {
         List<Nguoidung> nguoiDung = controller.findNguoidungEntities();
         
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Username", "Password", "Quyen han"});
+        model.setColumnIdentifiers(new String[]{"ID", "Username", "Password", "Quyen han"});
         for (Nguoidung nguoidung : nguoiDung) {
-            model.addRow(new Object[]{nguoidung.getUsername(), nguoidung.getPassword(), nguoidung.getQuyenHan()});
+            model.addRow(new Object[]{nguoidung.getId(), nguoidung.getUsername(), nguoidung.getPassword(), nguoidung.getQuyenHan()});
         }
+        
         tbl_User.setModel(model);
+        tbl_User.getColumnModel().getColumn(0).setMinWidth(0);
+        tbl_User.getColumnModel().getColumn(0).setMaxWidth(0);
         
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_Close;
     private javax.swing.JButton btn_Delete;
+    private javax.swing.JButton btn_Edit;
     private javax.swing.JButton btn_Save;
     private javax.swing.JComboBox<String> cb_role;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_User;
     private javax.swing.JTextField txt_User;
@@ -315,5 +453,5 @@ public class Form_ManageUser extends javax.swing.JFrame {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
-    
+    int selectedUserID;
 }

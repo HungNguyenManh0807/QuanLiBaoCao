@@ -56,6 +56,7 @@ public class Form_Login extends javax.swing.JFrame {
         showpassword = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
         setBackground(new java.awt.Color(153, 153, 255));
         setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         setForeground(new java.awt.Color(204, 204, 255));
@@ -151,7 +152,7 @@ public class Form_Login extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\elegant-blue-motion-background-animation-looped_7jtp8mml__F0000.png")); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(-10, -10, 460, 350);
+        jLabel4.setBounds(-10, -10, 470, 360);
         getContentPane().add(showpassword);
         showpassword.setBounds(450, 100, 0, 0);
 
@@ -242,9 +243,10 @@ public class Form_Login extends javax.swing.JFrame {
      */
     public void createAndShow() {
 
-        this.setSize(465, 380);
+        this.setSize(460, 372);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setResizable(false);
 
     }
 

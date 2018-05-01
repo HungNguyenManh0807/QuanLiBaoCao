@@ -713,10 +713,10 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
         chooser.setFileSelectionMode(JFileChooser.CUSTOM_DIALOG);
-        
+
         int returnVal = chooser.showSaveDialog(null);
         chooser.setDialogTitle("Choose a  directory to save your file:");
-        
+
         if (returnVal == JFileChooser.APPROVE_OPTION) {
 
             File file = chooser.getSelectedFile().getAbsoluteFile();
@@ -785,7 +785,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 //        wrrite to file system
             try {
                 workbook.write(fos);
-                JOptionPane.showMessageDialog(rootPane, "Exported successfully to: "+ file);
+                JOptionPane.showMessageDialog(rootPane, "Exported successfully to: " + file);
             } catch (Exception e) {
                 e.printStackTrace();
 
@@ -996,29 +996,29 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     private void btn_AttachFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileActionPerformed
         // TODO add your handling code here:
-        try {
-            JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
-            chooser.showOpenDialog(null);
 
+        JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            chooser.setDialogTitle("Choose a file");
             File file = chooser.getSelectedFile();//lay ve file duoc chon
             String fileName = file.getAbsolutePath();// truyen  duong dan truc tiep cho bien string file name
             txt_Url.setText(fileName);// gan string file name cho text field url
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Missing Url");
         }
+
+
     }//GEN-LAST:event_btn_AttachFileActionPerformed
 
     private void btn_AttachFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileDataActionPerformed
         // TODO add your handling code here:
-        try {
-            JFileChooser chooser = new JFileChooser();
-            chooser.showOpenDialog(null);
+
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
 
             File file = chooser.getSelectedFile();
             String fileDataName = file.getAbsolutePath();
             txt_UrlData.setText(fileDataName);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Missing Url Data");
         }
     }//GEN-LAST:event_btn_AttachFileDataActionPerformed
 
