@@ -43,7 +43,7 @@ public class Form_Home extends javax.swing.JFrame {
         btn_Logout = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btn_About = new javax.swing.JButton();
         btn_exit = new javax.swing.JButton();
         WhiteLine = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -115,9 +115,10 @@ public class Form_Home extends javax.swing.JFrame {
         btn_Logout.setBackground(new java.awt.Color(51, 51, 255));
         btn_Logout.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btn_Logout.setForeground(new java.awt.Color(255, 255, 255));
-        btn_Logout.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Other-Power-Log-Off-Metro-icon.png")); // NOI18N
+        btn_Logout.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\system-log-out-icon.png")); // NOI18N
         btn_Logout.setText("Log out");
-        btn_Logout.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_Logout.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_Logout.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btn_Logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_LogoutActionPerformed(evt);
@@ -147,28 +148,34 @@ public class Form_Home extends javax.swing.JFrame {
         getContentPane().add(jButton7);
         jButton7.setBounds(190, 210, 210, 90);
 
-        jButton8.setBackground(new java.awt.Color(51, 51, 255));
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Actions-help-about-icon (1).png")); // NOI18N
-        jButton8.setText("About");
-        jButton8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        getContentPane().add(jButton8);
-        jButton8.setBounds(460, 310, 100, 20);
+        btn_About.setBackground(new java.awt.Color(51, 51, 255));
+        btn_About.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_About.setForeground(new java.awt.Color(255, 255, 255));
+        btn_About.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Actions-help-about-icon (1).png")); // NOI18N
+        btn_About.setText("About");
+        btn_About.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_About.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AboutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_About);
+        btn_About.setBounds(460, 310, 100, 20);
 
         btn_exit.setBackground(new java.awt.Color(51, 51, 255));
         btn_exit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btn_exit.setForeground(new java.awt.Color(255, 255, 255));
-        btn_exit.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Shut-Down-icon.png")); // NOI18N
+        btn_exit.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Button-Shutdown-icon.png")); // NOI18N
         btn_exit.setText("Exit");
-        btn_exit.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_exit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_exit.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btn_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_exitActionPerformed(evt);
             }
         });
         getContentPane().add(btn_exit);
-        btn_exit.setBounds(430, 250, 130, 50);
+        btn_exit.setBounds(430, 250, 130, 40);
 
         WhiteLine.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\White--------.png")); // NOI18N
         getContentPane().add(WhiteLine);
@@ -286,8 +293,18 @@ public class Form_Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_LogoutActionPerformed
 
+    private void btn_AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AboutActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Form_About about = new Form_About();
+        about.setVisible(true);
+        
+        
+        
+    }//GEN-LAST:event_btn_AboutActionPerformed
+
     /**
-     * @param args the command line arguments
+     * 
      */
     public void showDate() {
         Date d = new Date();
@@ -353,6 +370,7 @@ public class Form_Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel WhiteLine;
+    private javax.swing.JButton btn_About;
     private javax.swing.JButton btn_LinkToMaagenment_Scientist;
     private javax.swing.JButton btn_LinkToManagement_Thesises;
     private javax.swing.JButton btn_LinkToManagement_User;
@@ -362,7 +380,6 @@ public class Form_Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

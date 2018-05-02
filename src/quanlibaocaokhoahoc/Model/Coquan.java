@@ -119,7 +119,7 @@ public class Coquan implements Serializable {
 
     @Override
     public String toString() {
-        return ten+ "-- "+ diaChi;
+        return ten + "--" +diaChi;
     }
     
 }

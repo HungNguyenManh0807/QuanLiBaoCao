@@ -48,6 +48,12 @@ public class Nguoidung implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private int quyenHan;
+    
+    
+    @Basic(optional = false)
+    @Column(nullable = false)
+    private  String avatar;
+    
 
     public Nguoidung() {
     }
@@ -56,13 +62,24 @@ public class Nguoidung implements Serializable {
         this.id = id;
     }
 
-    public Nguoidung(Integer id, String username, String password, int quyenHan) {
+    public Nguoidung(Integer id, String username, String password, int quyenHan, String avatar) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.quyenHan = quyenHan;
+        this.avatar = avatar;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+
+    
     public Integer getId() {
         return id;
     }
@@ -117,7 +134,7 @@ public class Nguoidung implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.Nguoidung[ id=" + id + " ]";
+        return username;
     }
     
 }

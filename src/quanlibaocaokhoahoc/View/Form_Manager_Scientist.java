@@ -108,7 +108,6 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
         tbl_NhaKhoaHoc.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_NhaKhoaHoc);
 
-        btn_AddScientist.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         btn_AddScientist.setText("Add");
         btn_AddScientist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,7 +124,6 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
             }
         });
 
-        btn_Save.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         btn_Save.setText("Edit");
         btn_Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,13 +131,11 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
             }
         });
 
-        btn_Delete.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         btn_Delete.setText("Delete");
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jLabel4.setText("Name");
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jButton1.setText("print");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,7 +143,6 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jButton2.setText("Export to Excel");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,7 +150,6 @@ public class Form_Manager_Scientist extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jButton3.setText("close");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

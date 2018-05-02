@@ -6,18 +6,14 @@
 package quanlibaocaokhoahoc.Controller;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import quanlibaocaokhoahoc.Model.NhanghiencuuBaocao;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import quanlibaocaokhoahoc.Controller.exceptions.IllegalOrphanException;
 import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
-import quanlibaocaokhoahoc.Controller.exceptions.PreexistingEntityException;
 import quanlibaocaokhoahoc.Model.Vaitro;
 
 /**
@@ -35,36 +31,13 @@ public class VaitroJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Vaitro vaitro) throws PreexistingEntityException, Exception {
-        if (vaitro.getNhanghiencuuBaocaoList() == null) {
-            vaitro.setNhanghiencuuBaocaoList(new ArrayList<NhanghiencuuBaocao>());
-        }
+    public void create(Vaitro vaitro) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<NhanghiencuuBaocao> attachedNhanghiencuuBaocaoList = new ArrayList<NhanghiencuuBaocao>();
-            for (NhanghiencuuBaocao nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach : vaitro.getNhanghiencuuBaocaoList()) {
-                nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach = em.getReference(nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach.getClass(), nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach.getNhanghiencuuBaocaoPK());
-                attachedNhanghiencuuBaocaoList.add(nhanghiencuuBaocaoListNhanghiencuuBaocaoToAttach);
-            }
-            vaitro.setNhanghiencuuBaocaoList(attachedNhanghiencuuBaocaoList);
             em.persist(vaitro);
-            for (NhanghiencuuBaocao nhanghiencuuBaocaoListNhanghiencuuBaocao : vaitro.getNhanghiencuuBaocaoList()) {
-                Vaitro oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao = nhanghiencuuBaocaoListNhanghiencuuBaocao.getIDVaiTro();
-                nhanghiencuuBaocaoListNhanghiencuuBaocao.setIDVaiTro(vaitro);
-                nhanghiencuuBaocaoListNhanghiencuuBaocao = em.merge(nhanghiencuuBaocaoListNhanghiencuuBaocao);
-                if (oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao != null) {
-                    oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocaoListNhanghiencuuBaocao);
-                    oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao = em.merge(oldIDVaiTroOfNhanghiencuuBaocaoListNhanghiencuuBaocao);
-                }
-            }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findVaitro(vaitro.getId()) != null) {
-                throw new PreexistingEntityException("Vaitro " + vaitro + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -72,45 +45,12 @@ public class VaitroJpaController implements Serializable {
         }
     }
 
-    public void edit(Vaitro vaitro) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Vaitro vaitro) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Vaitro persistentVaitro = em.find(Vaitro.class, vaitro.getId());
-            List<NhanghiencuuBaocao> nhanghiencuuBaocaoListOld = persistentVaitro.getNhanghiencuuBaocaoList();
-            List<NhanghiencuuBaocao> nhanghiencuuBaocaoListNew = vaitro.getNhanghiencuuBaocaoList();
-            List<String> illegalOrphanMessages = null;
-            for (NhanghiencuuBaocao nhanghiencuuBaocaoListOldNhanghiencuuBaocao : nhanghiencuuBaocaoListOld) {
-                if (!nhanghiencuuBaocaoListNew.contains(nhanghiencuuBaocaoListOldNhanghiencuuBaocao)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain NhanghiencuuBaocao " + nhanghiencuuBaocaoListOldNhanghiencuuBaocao + " since its IDVaiTro field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            List<NhanghiencuuBaocao> attachedNhanghiencuuBaocaoListNew = new ArrayList<NhanghiencuuBaocao>();
-            for (NhanghiencuuBaocao nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach : nhanghiencuuBaocaoListNew) {
-                nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach = em.getReference(nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach.getClass(), nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach.getNhanghiencuuBaocaoPK());
-                attachedNhanghiencuuBaocaoListNew.add(nhanghiencuuBaocaoListNewNhanghiencuuBaocaoToAttach);
-            }
-            nhanghiencuuBaocaoListNew = attachedNhanghiencuuBaocaoListNew;
-            vaitro.setNhanghiencuuBaocaoList(nhanghiencuuBaocaoListNew);
             vaitro = em.merge(vaitro);
-            for (NhanghiencuuBaocao nhanghiencuuBaocaoListNewNhanghiencuuBaocao : nhanghiencuuBaocaoListNew) {
-                if (!nhanghiencuuBaocaoListOld.contains(nhanghiencuuBaocaoListNewNhanghiencuuBaocao)) {
-                    Vaitro oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao = nhanghiencuuBaocaoListNewNhanghiencuuBaocao.getIDVaiTro();
-                    nhanghiencuuBaocaoListNewNhanghiencuuBaocao.setIDVaiTro(vaitro);
-                    nhanghiencuuBaocaoListNewNhanghiencuuBaocao = em.merge(nhanghiencuuBaocaoListNewNhanghiencuuBaocao);
-                    if (oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao != null && !oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao.equals(vaitro)) {
-                        oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocaoListNewNhanghiencuuBaocao);
-                        oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao = em.merge(oldIDVaiTroOfNhanghiencuuBaocaoListNewNhanghiencuuBaocao);
-                    }
-                }
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -128,7 +68,7 @@ public class VaitroJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -139,17 +79,6 @@ public class VaitroJpaController implements Serializable {
                 vaitro.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The vaitro with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            List<NhanghiencuuBaocao> nhanghiencuuBaocaoListOrphanCheck = vaitro.getNhanghiencuuBaocaoList();
-            for (NhanghiencuuBaocao nhanghiencuuBaocaoListOrphanCheckNhanghiencuuBaocao : nhanghiencuuBaocaoListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Vaitro (" + vaitro + ") cannot be destroyed since the NhanghiencuuBaocao " + nhanghiencuuBaocaoListOrphanCheckNhanghiencuuBaocao + " in its nhanghiencuuBaocaoList field has a non-nullable IDVaiTro field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(vaitro);
             em.getTransaction().commit();

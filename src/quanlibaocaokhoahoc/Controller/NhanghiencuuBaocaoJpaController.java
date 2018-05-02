@@ -15,6 +15,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 import quanlibaocaokhoahoc.Controller.exceptions.PreexistingEntityException;
+import quanlibaocaokhoahoc.Model.Baocao;
+import quanlibaocaokhoahoc.Model.Nhanghiencuu;
 import quanlibaocaokhoahoc.Model.NhanghiencuuBaocao;
 import quanlibaocaokhoahoc.Model.NhanghiencuuBaocaoPK;
 import quanlibaocaokhoahoc.Model.Vaitro;
@@ -42,12 +44,30 @@ public class NhanghiencuuBaocaoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Baocao baocao = nhanghiencuuBaocao.getBaocao();
+            if (baocao != null) {
+                baocao = em.getReference(baocao.getClass(), baocao.getId());
+                nhanghiencuuBaocao.setBaocao(baocao);
+            }
+            Nhanghiencuu nhanghiencuu = nhanghiencuuBaocao.getNhanghiencuu();
+            if (nhanghiencuu != null) {
+                nhanghiencuu = em.getReference(nhanghiencuu.getClass(), nhanghiencuu.getId());
+                nhanghiencuuBaocao.setNhanghiencuu(nhanghiencuu);
+            }
             Vaitro IDVaiTro = nhanghiencuuBaocao.getIDVaiTro();
             if (IDVaiTro != null) {
                 IDVaiTro = em.getReference(IDVaiTro.getClass(), IDVaiTro.getId());
                 nhanghiencuuBaocao.setIDVaiTro(IDVaiTro);
             }
             em.persist(nhanghiencuuBaocao);
+            if (baocao != null) {
+                baocao.getNhanghiencuuBaocaoList().add(nhanghiencuuBaocao);
+                baocao = em.merge(baocao);
+            }
+            if (nhanghiencuu != null) {
+                nhanghiencuu.getNhanghiencuuBaocaoList().add(nhanghiencuuBaocao);
+                nhanghiencuu = em.merge(nhanghiencuu);
+            }
             if (IDVaiTro != null) {
                 IDVaiTro.getNhanghiencuuBaocaoList().add(nhanghiencuuBaocao);
                 IDVaiTro = em.merge(IDVaiTro);
@@ -71,13 +91,41 @@ public class NhanghiencuuBaocaoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             NhanghiencuuBaocao persistentNhanghiencuuBaocao = em.find(NhanghiencuuBaocao.class, nhanghiencuuBaocao.getNhanghiencuuBaocaoPK());
+            Baocao baocaoOld = persistentNhanghiencuuBaocao.getBaocao();
+            Baocao baocaoNew = nhanghiencuuBaocao.getBaocao();
+            Nhanghiencuu nhanghiencuuOld = persistentNhanghiencuuBaocao.getNhanghiencuu();
+            Nhanghiencuu nhanghiencuuNew = nhanghiencuuBaocao.getNhanghiencuu();
             Vaitro IDVaiTroOld = persistentNhanghiencuuBaocao.getIDVaiTro();
             Vaitro IDVaiTroNew = nhanghiencuuBaocao.getIDVaiTro();
+            if (baocaoNew != null) {
+                baocaoNew = em.getReference(baocaoNew.getClass(), baocaoNew.getId());
+                nhanghiencuuBaocao.setBaocao(baocaoNew);
+            }
+            if (nhanghiencuuNew != null) {
+                nhanghiencuuNew = em.getReference(nhanghiencuuNew.getClass(), nhanghiencuuNew.getId());
+                nhanghiencuuBaocao.setNhanghiencuu(nhanghiencuuNew);
+            }
             if (IDVaiTroNew != null) {
                 IDVaiTroNew = em.getReference(IDVaiTroNew.getClass(), IDVaiTroNew.getId());
                 nhanghiencuuBaocao.setIDVaiTro(IDVaiTroNew);
             }
             nhanghiencuuBaocao = em.merge(nhanghiencuuBaocao);
+            if (baocaoOld != null && !baocaoOld.equals(baocaoNew)) {
+                baocaoOld.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocao);
+                baocaoOld = em.merge(baocaoOld);
+            }
+            if (baocaoNew != null && !baocaoNew.equals(baocaoOld)) {
+                baocaoNew.getNhanghiencuuBaocaoList().add(nhanghiencuuBaocao);
+                baocaoNew = em.merge(baocaoNew);
+            }
+            if (nhanghiencuuOld != null && !nhanghiencuuOld.equals(nhanghiencuuNew)) {
+                nhanghiencuuOld.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocao);
+                nhanghiencuuOld = em.merge(nhanghiencuuOld);
+            }
+            if (nhanghiencuuNew != null && !nhanghiencuuNew.equals(nhanghiencuuOld)) {
+                nhanghiencuuNew.getNhanghiencuuBaocaoList().add(nhanghiencuuBaocao);
+                nhanghiencuuNew = em.merge(nhanghiencuuNew);
+            }
             if (IDVaiTroOld != null && !IDVaiTroOld.equals(IDVaiTroNew)) {
                 IDVaiTroOld.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocao);
                 IDVaiTroOld = em.merge(IDVaiTroOld);
@@ -114,6 +162,16 @@ public class NhanghiencuuBaocaoJpaController implements Serializable {
                 nhanghiencuuBaocao.getNhanghiencuuBaocaoPK();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The nhanghiencuuBaocao with id " + id + " no longer exists.", enfe);
+            }
+            Baocao baocao = nhanghiencuuBaocao.getBaocao();
+            if (baocao != null) {
+                baocao.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocao);
+                baocao = em.merge(baocao);
+            }
+            Nhanghiencuu nhanghiencuu = nhanghiencuuBaocao.getNhanghiencuu();
+            if (nhanghiencuu != null) {
+                nhanghiencuu.getNhanghiencuuBaocaoList().remove(nhanghiencuuBaocao);
+                nhanghiencuu = em.merge(nhanghiencuu);
             }
             Vaitro IDVaiTro = nhanghiencuuBaocao.getIDVaiTro();
             if (IDVaiTro != null) {

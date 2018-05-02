@@ -109,5 +109,9 @@ public class NhanghiencuuBaocao implements Serializable {
     public String toString() {
         return "quanlibaocaokhoahoc.Model.NhanghiencuuBaocao[ nhanghiencuuBaocaoPK=" + nhanghiencuuBaocaoPK + " ]";
     }
+
+    public Object setNhanghiencuuBaocaoPK() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

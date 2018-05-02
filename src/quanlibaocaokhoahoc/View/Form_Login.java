@@ -6,6 +6,7 @@
 package quanlibaocaokhoahoc.View;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,12 +27,12 @@ public class Form_Login extends javax.swing.JFrame {
      * Creates new form Form_Login
      */
     private int checkPass = -1;
+
     public Form_Login() {
 
         initComponents();
 
         createAndShow();
-        
 
     }
 
@@ -91,6 +92,11 @@ public class Form_Login extends javax.swing.JFrame {
                 txt_passActionPerformed(evt);
             }
         });
+        txt_pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_passKeyPressed(evt);
+            }
+        });
         getContentPane().add(txt_pass);
         txt_pass.setBounds(60, 230, 120, 25);
 
@@ -106,6 +112,11 @@ public class Form_Login extends javax.swing.JFrame {
         btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_loginActionPerformed(evt);
+            }
+        });
+        btn_login.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btn_loginKeyPressed(evt);
             }
         });
         getContentPane().add(btn_login);
@@ -165,14 +176,14 @@ public class Form_Login extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (checkPass == -1) {
-            txt_pass.setEchoChar((char)0);// set password into visible
-            
+            txt_pass.setEchoChar((char) 0);// set password into visible
+
             checkPass = 1;
 
         } else {
             txt_pass.setEchoChar('*');// set password into encrypt
-           
-           checkPass = -1;
+
+            checkPass = -1;
         }
 
     }//GEN-LAST:event_checkBox_ShowPwActionPerformed
@@ -193,10 +204,10 @@ public class Form_Login extends javax.swing.JFrame {
             Form_Home fh = new Form_Home();
             fh.setVisible(true);
             this.setVisible(false);
+            btn_login.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Username or password is wrong, please try again!");
         }
-        btn_login.setEnabled(true);
 
 
     }//GEN-LAST:event_btn_loginActionPerformed
@@ -217,6 +228,33 @@ public class Form_Login extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_btn_loginMouseClicked
+
+    private void btn_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_loginKeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btn_loginKeyPressed
+
+    private void txt_passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passKeyPressed
+        // TODO add your handling code here:
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            
+
+            Nguoidung nguoidung = new Nguoidung();
+            if (txt_user.getText().equals("") || txt_pass.getPassword().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Username and password must be filled!");
+            } else if (checkLogIn() >= 1) {// ton tai nguoi dung trong cau truy van select database
+                btn_login.setEnabled(false);
+                Form_Home fh = new Form_Home();
+                fh.setVisible(true);
+                this.setVisible(false);
+                btn_login.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Username or password is wrong, please try again!");
+            }
+
+        }
+    }//GEN-LAST:event_txt_passKeyPressed
     public int checkLogIn() {
 
         Nguoidung nguoidung = new Nguoidung();
@@ -237,7 +275,7 @@ public class Form_Login extends javax.swing.JFrame {
     }
 
     /**
-     * @param args the command line arguments
+     * 
      *
      *
      */
@@ -283,7 +321,7 @@ public class Form_Login extends javax.swing.JFrame {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_login;

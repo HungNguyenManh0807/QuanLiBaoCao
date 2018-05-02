@@ -226,9 +226,6 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btn_AddScientist">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Times New Roman" size="11" style="1"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="Add"/>
                   </Properties>
                   <Events>
@@ -250,9 +247,6 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_Save">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Times New Roman" size="11" style="1"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="Edit"/>
                   </Properties>
                   <Events>
@@ -261,9 +255,6 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_Delete">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Times New Roman" size="11" style="1"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="Delete"/>
                   </Properties>
                 </Component>
@@ -277,9 +268,6 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton1">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Times New Roman" size="11" style="1"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="print"/>
                   </Properties>
                   <Events>
@@ -288,9 +276,6 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton2">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Times New Roman" size="11" style="1"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="Export to Excel"/>
                   </Properties>
                   <Events>
@@ -299,9 +284,6 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton3">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Times New Roman" size="11" style="1"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="close"/>
                   </Properties>
                   <Events>

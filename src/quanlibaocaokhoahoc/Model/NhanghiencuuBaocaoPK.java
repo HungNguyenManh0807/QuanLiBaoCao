@@ -32,6 +32,8 @@ public class NhanghiencuuBaocaoPK implements Serializable {
         this.iDNguoiNghienCuu = iDNguoiNghienCuu;
     }
 
+
+
     public int getIDBaoCao() {
         return iDBaoCao;
     }
@@ -74,7 +76,9 @@ public class NhanghiencuuBaocaoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "quanlibaocaokhoahoc.Model.NhanghiencuuBaocaoPK[ iDBaoCao=" + iDBaoCao + ", iDNguoiNghienCuu=" + iDNguoiNghienCuu + " ]";
+        return  iDBaoCao + "--" + iDNguoiNghienCuu ;
     }
+
+   
     
 }

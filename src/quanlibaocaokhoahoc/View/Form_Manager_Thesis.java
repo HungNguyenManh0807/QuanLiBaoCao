@@ -33,12 +33,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import quanlibaocaokhoahoc.Controller.BaocaoJpaController;
 import quanlibaocaokhoahoc.Controller.LinhvucJpaController;
 import quanlibaocaokhoahoc.Controller.LoaibaocaoJpaController;
+import quanlibaocaokhoahoc.Controller.NhanghiencuuBaocaoJpaController;
+import quanlibaocaokhoahoc.Controller.NhanghiencuuJpaController;
 import quanlibaocaokhoahoc.Controller.VaitroJpaController;
 import quanlibaocaokhoahoc.Controller.exceptions.IllegalOrphanException;
 import quanlibaocaokhoahoc.Controller.exceptions.NonexistentEntityException;
 import quanlibaocaokhoahoc.Model.Baocao;
 import quanlibaocaokhoahoc.Model.Linhvuc;
 import quanlibaocaokhoahoc.Model.Loaibaocao;
+import quanlibaocaokhoahoc.Model.Nhanghiencuu;
+import quanlibaocaokhoahoc.Model.NhanghiencuuBaocao;
+import quanlibaocaokhoahoc.Model.NhanghiencuuBaocaoPK;
 import quanlibaocaokhoahoc.Model.Vaitro;
 
 /**
@@ -73,7 +78,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         btn_Save = new javax.swing.JButton();
         btn_Delete = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        btn_Print = new javax.swing.JButton();
         btn_Export_To_Excel = new javax.swing.JButton();
         btn_Close_Thesis = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -84,13 +88,15 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txa_Resume = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tbl_Thesises = new javax.swing.JTable();
         btn_AttachFile = new javax.swing.JButton();
         btn_AttachFileData = new javax.swing.JButton();
         txt_UrlData = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         cb_Type = new javax.swing.JComboBox<>();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tbl_Thesises = new javax.swing.JTable();
+        lb_bg3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btn_Insert_FieldName = new javax.swing.JButton();
@@ -99,10 +105,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txt_FieldName = new javax.swing.JTextField();
         btn_Close_Field = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Field = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lb_bg = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btn_Insert_TypeName = new javax.swing.JButton();
@@ -112,12 +119,12 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         txt_Type = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
         btn_Close_Type = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbl_Type = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tbl_TOS = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         btn_Insert_TOS = new javax.swing.JButton();
         btn_Delete_TOS = new javax.swing.JButton();
@@ -126,17 +133,27 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         cb_Scientist_TOS = new javax.swing.JComboBox<>();
         cb_Role_TOS = new javax.swing.JComboBox<>();
         btn_Edit_TOS = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tbl_TOS = new javax.swing.JTable();
+        lb_bg2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tbl_Role = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         btn_Insert_ROS = new javax.swing.JButton();
-        btn_Delete_Role = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        txt_Role = new javax.swing.JTextField();
         btn_Edit_Role = new javax.swing.JButton();
+        btn_Delete_Role = new javax.swing.JButton();
+        txt_Role = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tbl_Role = new javax.swing.JTable();
+        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mange Thesises");
@@ -146,7 +163,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jTabbedPane1.setFont(new java.awt.Font("Lucida Console", 0, 15)); // NOI18N
 
         jPanel1.setBackground(java.awt.Color.lightGray);
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List Thesises", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
         jPanel1.setLayout(null);
 
         btn_Add_Thesises.setText("Add Thesis");
@@ -158,9 +175,10 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.add(btn_Add_Thesises);
         btn_Add_Thesises.setBounds(760, 270, 110, 40);
 
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jLabel3.setText("Name");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(11, 250, 60, 14);
+        jLabel3.setBounds(7, 260, 40, 15);
 
         txt_Name_Thesises.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,13 +210,10 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.add(btn_Delete);
         btn_Delete.setBounds(760, 400, 110, 30);
 
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jLabel4.setText("Resume");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(11, 320, 50, 20);
-
-        btn_Print.setText("Print");
-        jPanel1.add(btn_Print);
-        btn_Print.setBounds(880, 20, 55, 23);
+        jLabel4.setBounds(7, 320, 50, 15);
 
         btn_Export_To_Excel.setText("Export to Excel");
         btn_Export_To_Excel.addActionListener(new java.awt.event.ActionListener() {
@@ -207,7 +222,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Export_To_Excel);
-        btn_Export_To_Excel.setBounds(740, 20, 110, 23);
+        btn_Export_To_Excel.setBounds(820, 30, 110, 23);
 
         btn_Close_Thesis.setText("Close");
         btn_Close_Thesis.addActionListener(new java.awt.event.ActionListener() {
@@ -218,13 +233,15 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         jPanel1.add(btn_Close_Thesis);
         btn_Close_Thesis.setBounds(850, 500, 80, 23);
 
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jLabel5.setText("Time");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(350, 240, 40, 50);
+        jLabel5.setBounds(350, 240, 50, 50);
 
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jLabel6.setText("Url");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(350, 320, 40, 20);
+        jLabel6.setBounds(350, 320, 50, 20);
         jPanel1.add(Date_ChooserThesises);
         Date_ChooserThesises.setBounds(370, 270, 140, 30);
 
@@ -235,15 +252,17 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cb_Field);
-        cb_Field.setBounds(50, 440, 240, 20);
+        cb_Field.setBounds(20, 450, 240, 20);
 
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jLabel2.setText("Type");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(11, 470, 60, 14);
+        jLabel2.setBounds(7, 480, 30, 15);
 
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jLabel7.setText("Field");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(11, 430, 60, 14);
+        jLabel7.setBounds(7, 430, 30, 15);
 
         txa_Resume.setColumns(20);
         txa_Resume.setRows(5);
@@ -251,6 +270,50 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2);
         jScrollPane2.setBounds(20, 340, 270, 60);
+
+        btn_AttachFile.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
+        btn_AttachFile.setText("Attach file...");
+        btn_AttachFile.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_AttachFile.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btn_AttachFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AttachFileActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_AttachFile);
+        btn_AttachFile.setBounds(370, 380, 130, 30);
+
+        btn_AttachFileData.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
+        btn_AttachFileData.setText("Attach file data");
+        btn_AttachFileData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_AttachFileData.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btn_AttachFileData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AttachFileDataActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_AttachFileData);
+        btn_AttachFileData.setBounds(370, 485, 130, 30);
+
+        txt_UrlData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_UrlDataActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_UrlData);
+        txt_UrlData.setBounds(370, 440, 300, 30);
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
+        jLabel12.setText("Url data");
+        jPanel1.add(jLabel12);
+        jLabel12.setBounds(350, 420, 110, 13);
+
+        cb_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cb_Type);
+        cb_Type.setBounds(20, 500, 240, 20);
+
+        jPanel10.setBackground(java.awt.Color.lightGray);
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List thesises", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
 
         tbl_Thesises.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -270,55 +333,33 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tbl_Thesises);
 
-        jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(10, 50, 930, 170);
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+        );
 
-        btn_AttachFile.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
-        btn_AttachFile.setText("Attach file...");
-        btn_AttachFile.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btn_AttachFile.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        btn_AttachFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AttachFileActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_AttachFile);
-        btn_AttachFile.setBounds(370, 380, 140, 25);
+        jPanel1.add(jPanel10);
+        jPanel10.setBounds(10, 60, 930, 190);
 
-        btn_AttachFileData.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\Documents-icon.png")); // NOI18N
-        btn_AttachFileData.setText("Attach file data");
-        btn_AttachFileData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btn_AttachFileData.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        btn_AttachFileData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AttachFileDataActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_AttachFileData);
-        btn_AttachFileData.setBounds(370, 485, 140, 30);
-
-        txt_UrlData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_UrlDataActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt_UrlData);
-        txt_UrlData.setBounds(370, 440, 300, 30);
-
-        jLabel12.setText("Url data");
-        jPanel1.add(jLabel12);
-        jLabel12.setBounds(350, 420, 100, 14);
-
-        cb_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cb_Type);
-        cb_Type.setBounds(50, 490, 240, 20);
+        lb_bg3.setBackground(new java.awt.Color(0, 102, 102));
+        lb_bg3.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\03_.jpg")); // NOI18N
+        lb_bg3.setMaximumSize(new java.awt.Dimension(890, 800));
+        lb_bg3.setMinimumSize(new java.awt.Dimension(850, 700));
+        jPanel1.add(lb_bg3);
+        lb_bg3.setBounds(0, 0, 950, 530);
 
         jTabbedPane1.addTab("Thesis", jPanel1);
 
         jPanel2.setLayout(null);
 
-        jPanel4.setBackground(java.awt.Color.lightGray);
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Field", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
+        jPanel4.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
         jPanel4.setPreferredSize(new java.awt.Dimension(387, 212));
         jPanel4.setLayout(null);
 
@@ -330,7 +371,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel4.add(btn_Insert_FieldName);
-        btn_Insert_FieldName.setBounds(20, 30, 70, 23);
+        btn_Insert_FieldName.setBounds(350, 30, 70, 23);
 
         btn_EditFieldName.setText("Edit");
         btn_EditFieldName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -340,7 +381,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel4.add(btn_EditFieldName);
-        btn_EditFieldName.setBounds(20, 70, 73, 23);
+        btn_EditFieldName.setBounds(350, 80, 73, 23);
 
         btn_DeleteFieldName.setText("Delete");
         btn_DeleteFieldName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -350,20 +391,29 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel4.add(btn_DeleteFieldName);
-        btn_DeleteFieldName.setBounds(20, 120, 70, 23);
+        btn_DeleteFieldName.setBounds(350, 130, 70, 23);
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Field Name");
         jPanel4.add(jLabel10);
-        jLabel10.setBounds(170, 14, 110, 20);
+        jLabel10.setBounds(450, 40, 110, 20);
         jPanel4.add(txt_FieldName);
-        txt_FieldName.setBounds(170, 30, 180, 80);
+        txt_FieldName.setBounds(440, 60, 180, 80);
 
         btn_Close_Field.setText("Close");
         jPanel4.add(btn_Close_Field);
-        btn_Close_Field.setBounds(239, 160, 90, 23);
+        btn_Close_Field.setBounds(530, 170, 90, 23);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\field.png")); // NOI18N
+        jLabel1.setText("jLabel1");
+        jPanel4.add(jLabel1);
+        jLabel1.setBounds(-3, 0, 330, 199);
 
         jPanel2.add(jPanel4);
-        jPanel4.setBounds(10, 10, 387, 212);
+        jPanel4.setBounds(10, 10, 630, 200);
+
+        jPanel13.setBackground(java.awt.Color.lightGray);
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List Fields", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbl_Field.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -380,24 +430,35 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Field);
 
-        jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(402, 10, 540, 210);
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+        );
 
-        jLabel1.setBackground(new java.awt.Color(0, 51, 51));
-        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 3, 33)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel1.setText("Mangement Thesis System");
-        jPanel2.add(jLabel1);
-        jLabel1.setBounds(160, 280, 510, 130);
+        jPanel2.add(jPanel13);
+        jPanel13.setBounds(650, 10, 290, 200);
 
-        jLabel9.setText("jLabel9");
-        jPanel2.add(jLabel9);
-        jLabel9.setBounds(600, 50, 34, 14);
+        lb_bg.setBackground(new java.awt.Color(0, 102, 102));
+        lb_bg.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\03_.jpg")); // NOI18N
+        lb_bg.setMaximumSize(new java.awt.Dimension(890, 800));
+        lb_bg.setMinimumSize(new java.awt.Dimension(850, 700));
+        jPanel2.add(lb_bg);
+        lb_bg.setBounds(0, 0, 950, 530);
 
         jTabbedPane1.addTab("Field", jPanel2);
 
-        jPanel5.setBackground(java.awt.Color.lightGray);
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
+        jPanel3.setLayout(null);
+
+        jPanel5.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
         jPanel5.setLayout(null);
 
         btn_Insert_TypeName.setText("Insert");
@@ -407,11 +468,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel5.add(btn_Insert_TypeName);
-        btn_Insert_TypeName.setBounds(20, 30, 70, 23);
+        btn_Insert_TypeName.setBounds(320, 30, 70, 23);
 
         Edit_TypeName.setText("Edit");
         jPanel5.add(Edit_TypeName);
-        Edit_TypeName.setBounds(20, 80, 73, 23);
+        Edit_TypeName.setBounds(320, 80, 73, 23);
 
         btn_DeleteType.setText("Delete");
         btn_DeleteType.addActionListener(new java.awt.event.ActionListener() {
@@ -420,13 +481,14 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
         });
         jPanel5.add(btn_DeleteType);
-        btn_DeleteType.setBounds(20, 130, 70, 23);
+        btn_DeleteType.setBounds(320, 130, 70, 23);
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel11.setText("Type Name");
         jPanel5.add(jLabel11);
-        jLabel11.setBounds(170, 14, 110, 20);
+        jLabel11.setBounds(430, 20, 110, 20);
         jPanel5.add(txt_Type);
-        txt_Type.setBounds(170, 30, 180, 80);
+        txt_Type.setBounds(440, 40, 150, 110);
 
         jButton11.setText("close");
         jPanel5.add(jButton11);
@@ -434,7 +496,25 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         btn_Close_Type.setText("Close");
         jPanel5.add(btn_Close_Type);
-        btn_Close_Type.setBounds(239, 160, 90, 23);
+        btn_Close_Type.setBounds(540, 170, 80, 23);
+
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel19.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\White--------.png")); // NOI18N
+        jLabel19.setText("jLabel19");
+        jLabel19.setInheritsPopupMenu(false);
+        jLabel19.setRequestFocusEnabled(false);
+        jLabel19.setVerifyInputWhenFocusTarget(false);
+        jPanel5.add(jLabel19);
+        jLabel19.setBounds(-10, 180, 290, 20);
+
+        jLabel17.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\graduation-hat-on-a-white-background-clipart_csp22454612.jpg")); // NOI18N
+        jPanel5.add(jLabel17);
+        jLabel17.setBounds(0, 0, 380, 200);
+
+        jPanel3.add(jPanel5);
+        jPanel5.setBounds(10, 11, 625, 200);
+
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List Type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbl_Type.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -446,40 +526,129 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(tbl_Type);
 
-        jLabel8.setBackground(new java.awt.Color(0, 51, 51));
-        jLabel8.setFont(new java.awt.Font("Trebuchet MS", 3, 33)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel8.setText("Mangement Thesis System");
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(203, 203, 203)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(67, 67, 67)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
-        );
+        jPanel3.add(jPanel12);
+        jPanel12.setBounds(645, 11, 300, 200);
 
         jTabbedPane1.addTab("Type", jPanel3);
+
+        jPanel6.setLayout(null);
+
+        jPanel7.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
+
+        btn_Insert_TOS.setText("Insert");
+        btn_Insert_TOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Insert_TOSActionPerformed(evt);
+            }
+        });
+
+        btn_Delete_TOS.setText("Delete");
+
+        btn_Close_TOS.setText("Close");
+        btn_Close_TOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Close_TOSActionPerformed(evt);
+            }
+        });
+
+        cb_Thesis_TOS.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cb_Thesis_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cb_Scientist_TOS.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cb_Scientist_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cb_Role_TOS.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cb_Role_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_Role_TOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_Role_TOSActionPerformed(evt);
+            }
+        });
+
+        btn_Edit_TOS.setText("Edit");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel8.setText("Thesis");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setText("Scientist");
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel13.setText("Role");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Insert_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Delete_TOS)
+                    .addComponent(btn_Edit_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(163, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cb_Scientist_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_Thesis_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_Role_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(141, 141, 141))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(btn_Close_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Insert_TOS)
+                    .addComponent(jLabel8))
+                .addGap(11, 11, 11)
+                .addComponent(cb_Thesis_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_Delete_TOS)
+                    .addComponent(jLabel9))
+                .addGap(9, 9, 9)
+                .addComponent(cb_Scientist_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Edit_TOS)
+                    .addComponent(jLabel13))
+                .addGap(5, 5, 5)
+                .addComponent(cb_Role_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(btn_Close_TOS)
+                .addContainerGap())
+        );
+
+        jPanel6.add(jPanel7);
+        jPanel7.setBounds(10, 11, 500, 250);
+
+        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thesis Info", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbl_TOS.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -494,109 +663,94 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(tbl_TOS);
 
-        jPanel7.setBackground(java.awt.Color.lightGray);
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thesises of scientists", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
-
-        btn_Insert_TOS.setText("Insert");
-
-        btn_Delete_TOS.setText("Delete");
-
-        btn_Close_TOS.setText("Close");
-
-        cb_Thesis_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cb_Scientist_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cb_Role_TOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cb_Role_TOS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_Role_TOSActionPerformed(evt);
-            }
-        });
-
-        btn_Edit_TOS.setText("Edit");
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_Close_TOS)
-                        .addContainerGap())
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btn_Insert_TOS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_Edit_TOS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_Delete_TOS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cb_Thesis_TOS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cb_Scientist_TOS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cb_Role_TOS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(btn_Insert_TOS)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_Edit_TOS))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(cb_Thesis_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(cb_Scientist_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(cb_Role_TOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(btn_Delete_TOS)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(btn_Close_TOS)
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jLabel13.setBackground(new java.awt.Color(0, 51, 51));
-        jLabel13.setFont(new java.awt.Font("Trebuchet MS", 3, 33)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel13.setText("Mangement Thesis System");
+        jPanel6.add(jPanel14);
+        jPanel14.setBounds(515, 11, 430, 260);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(203, 203, 203)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(53, 53, 53)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
-        );
+        lb_bg2.setBackground(new java.awt.Color(0, 102, 102));
+        lb_bg2.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\03_.jpg")); // NOI18N
+        lb_bg2.setMaximumSize(new java.awt.Dimension(890, 800));
+        lb_bg2.setMinimumSize(new java.awt.Dimension(850, 700));
+        jPanel6.add(lb_bg2);
+        lb_bg2.setBounds(0, 0, 950, 530);
 
         jTabbedPane1.addTab("Thesises of scientist", jPanel6);
+
+        jPanel8.setLayout(null);
+
+        jPanel9.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
+        jPanel9.setLayout(null);
+
+        btn_Insert_ROS.setText("Insert");
+        btn_Insert_ROS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Insert_ROSActionPerformed(evt);
+            }
+        });
+        jPanel9.add(btn_Insert_ROS);
+        btn_Insert_ROS.setBounds(315, 27, 73, 23);
+
+        btn_Edit_Role.setText("Edit");
+        btn_Edit_Role.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Edit_RoleActionPerformed(evt);
+            }
+        });
+        jPanel9.add(btn_Edit_Role);
+        btn_Edit_Role.setBounds(315, 85, 73, 23);
+
+        btn_Delete_Role.setText("Delete");
+        jPanel9.add(btn_Delete_Role);
+        btn_Delete_Role.setBounds(315, 149, 73, 23);
+
+        txt_Role.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_RoleActionPerformed(evt);
+            }
+        });
+        jPanel9.add(txt_Role);
+        txt_Role.setBounds(406, 61, 148, 94);
+
+        jButton5.setText("Close");
+        jPanel9.add(jButton5);
+        jButton5.setBounds(529, 200, 70, 23);
+
+        jLabel16.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\role 1.png")); // NOI18N
+        jLabel16.setMaximumSize(new java.awt.Dimension(330, 330));
+        jPanel9.add(jLabel16);
+        jLabel16.setBounds(0, 0, 309, 176);
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setText("Role");
+        jPanel9.add(jLabel15);
+        jLabel15.setBounds(410, 40, 44, 14);
+
+        jLabel14.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\White--------.png")); // NOI18N
+        jLabel14.setText("jLabel14");
+        jPanel9.add(jLabel14);
+        jLabel14.setBounds(-3, 170, 290, 70);
+
+        jPanel8.add(jPanel9);
+        jPanel9.setBounds(10, 11, 607, 252);
+
+        jPanel11.setBackground(java.awt.Color.lightGray);
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List Roles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbl_Role.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -609,99 +763,37 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Role.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_RoleMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(tbl_Role);
 
-        jPanel9.setBackground(java.awt.Color.lightGray);
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Role", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Console", 0, 13))); // NOI18N
-
-        btn_Insert_ROS.setText("Insert");
-        btn_Insert_ROS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_Insert_ROSActionPerformed(evt);
-            }
-        });
-
-        btn_Delete_Role.setText("Delete");
-
-        jButton5.setText("Close");
-
-        txt_Role.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_RoleActionPerformed(evt);
-            }
-        });
-
-        btn_Edit_Role.setText("Edit");
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_Edit_Role, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_Insert_ROS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_Delete_Role, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
-                .addComponent(txt_Role, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(btn_Insert_ROS)
-                        .addGap(26, 26, 26)
-                        .addComponent(btn_Edit_Role)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addComponent(btn_Delete_Role))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txt_Role, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(23, 23, 23)
-                .addComponent(jButton5)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jLabel14.setBackground(new java.awt.Color(0, 51, 51));
-        jLabel14.setFont(new java.awt.Font("Trebuchet MS", 3, 33)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel14.setText("Mangement Thesis System");
+        jPanel8.add(jPanel11);
+        jPanel11.setBounds(621, 10, 320, 240);
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(203, 203, 203)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(232, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(144, Short.MAX_VALUE))
-        );
+        jLabel21.setBackground(new java.awt.Color(0, 102, 102));
+        jLabel21.setIcon(new javax.swing.ImageIcon("E:\\QuanLiBaoCao\\icon file\\03_.jpg")); // NOI18N
+        jLabel21.setMaximumSize(new java.awt.Dimension(890, 800));
+        jLabel21.setMinimumSize(new java.awt.Dimension(850, 700));
+        jLabel21.setPreferredSize(new java.awt.Dimension(1000, 800));
+        jPanel8.add(jLabel21);
+        jLabel21.setBounds(-10, 0, 960, 530);
 
         jTabbedPane1.addTab("Role of scientist", jPanel8);
 
@@ -731,11 +823,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     private void clearRole() {
         txt_Role.setText("");
     }
-
-
-    private void cb_FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_FieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cb_FieldActionPerformed
 
     private String getCellValue(int x, int y) {
 
@@ -835,61 +922,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     }
 
 
-    private void btn_Export_To_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Export_To_ExcelActionPerformed
-        btn_Export_To_Excel.setEnabled(false);
-        try {
-
-            writeToExcel();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(rootPane, "Co loi xay ra o trong ham  write to excel");
-            Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        btn_Export_To_Excel.setEnabled(true);
-
-    }//GEN-LAST:event_btn_Export_To_ExcelActionPerformed
-
-    private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
-
-    }//GEN-LAST:event_btn_SaveActionPerformed
-
-    private void txt_Name_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_Name_ThesisesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_Name_ThesisesActionPerformed
-
-    private void btn_Add_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Add_ThesisesActionPerformed
-        // TODO add your handling code here:
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
-        BaocaoJpaController controller = new BaocaoJpaController(emf);
-        Baocao baocao = new Baocao();
-
-        Linhvuc linhvuc = (Linhvuc) cb_Field.getSelectedItem();
-        Loaibaocao loaibaocao = (Loaibaocao) cb_Type.getSelectedItem();
-        baocao.setTen(txt_Name_Thesises.getText());
-        baocao.setThoiGian(Date_ChooserThesises.getDate());
-        baocao.setTomTat(txa_Resume.getText());
-        baocao.setUrl(txt_Url.getText());
-        baocao.setUrlData(txt_UrlData.getText());
-
-        baocao.setIDLinhVuc(linhvuc);
-        baocao.setIDLoai(loaibaocao);
-
-        if (txt_Name_Thesises.getText().equals("") || txt_Url.getText().equals("")
-                || txa_Resume.getText().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Missing Field blank");
-        } else {
-            controller.create(baocao);
-            JOptionPane.showMessageDialog(rootPane, "Added successfully!");
-            bindCBboxType();
-            binCBboxField();
-            clearThesises();
-        }
-        bindThesises();
-
-
-    }//GEN-LAST:event_btn_Add_ThesisesActionPerformed
-
     private void btn_DeleteFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeleteFieldNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_DeleteFieldNameActionPerformed
@@ -917,7 +949,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
                 bindField();
                 clearField();
-                binCBboxField();
+                bindCBboxField();
             }
         } catch (Exception e) {
         }
@@ -979,6 +1011,27 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     }
 
+    private void bindTOS() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NhanghiencuuBaocaoJpaController controller = new NhanghiencuuBaocaoJpaController(emf);
+        List<NhanghiencuuBaocao> nhanghiencuuBaocaos = controller.findNhanghiencuuBaocaoEntities();
+
+        String Scientist = "";
+        String Thesis = "";
+        String Role = "";
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Bao cao", " Nha nghien cuu", "Vai tro"});
+        for (NhanghiencuuBaocao nhanghiencuuBaocao : nhanghiencuuBaocaos) {
+            Thesis = nhanghiencuuBaocao.getBaocao().getTen();
+            Scientist = nhanghiencuuBaocao.getNhanghiencuu().getTen();
+            Role = nhanghiencuuBaocao.getIDVaiTro().toString();
+            model.addRow(new String[]{Thesis, Scientist, Role});
+        }
+        tbl_TOS.setModel(model);
+
+    }
+
     private void bindRole() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
         VaitroJpaController controller = new VaitroJpaController(emf);
@@ -997,6 +1050,37 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     }
 
+    private void bindCBTOS() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        BaocaoJpaController controller = new BaocaoJpaController(emf);
+
+        List<Baocao> baocaos = controller.findBaocaoEntities();
+        Object[] ArrayBs = baocaos.toArray();
+        DefaultComboBoxModel model = new DefaultComboBoxModel(ArrayBs);
+        cb_Thesis_TOS.setModel(model);
+    }
+
+    private void bindCBSOT() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NhanghiencuuJpaController controller = new NhanghiencuuJpaController(emf);
+        List<Nhanghiencuu> nhanghiencuus = controller.findNhanghiencuuEntities();
+        Object[] ArrayNnc = nhanghiencuus.toArray();// tra ve 1 mang cac nha nghien cuu tu dau den cuoi
+        DefaultComboBoxModel model = new DefaultComboBoxModel(ArrayNnc);
+        cb_Scientist_TOS.setModel(model);
+    }
+
+    private void bindCBRole() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        VaitroJpaController controller = new VaitroJpaController(emf);
+
+        List<Vaitro> vaitros = controller.findVaitroEntities();
+        Object[] ArrayVaiTro = vaitros.toArray();
+
+        DefaultComboBoxModel model = new DefaultComboBoxModel(ArrayVaiTro);
+        cb_Role_TOS.setModel(model);
+
+    }
+
     private void bindCBboxType() {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
@@ -1009,7 +1093,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     }
 
-    private void binCBboxField() {
+    private void bindCBboxField() {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
         LinhvucJpaController controller = new LinhvucJpaController(emf);
@@ -1020,13 +1104,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         cb_Field.setModel(model);
 
     }
-    private void btn_Close_ThesisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Close_ThesisActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        Form_Home fh = new Form_Home();
-        fh.setVisible(true);
-    }//GEN-LAST:event_btn_Close_ThesisActionPerformed
-
     private void btn_Insert_TypeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_TypeNameActionPerformed
         // TODO add your handling code here:
         try {
@@ -1052,56 +1129,10 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_Insert_TypeNameActionPerformed
 
-    private void btn_AttachFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileActionPerformed
-        // TODO add your handling code here:
-
-        JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
-        int returnVal = chooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            chooser.setDialogTitle("Choose a file");
-            File file = chooser.getSelectedFile();//lay ve file duoc chon
-            String fileName = file.getAbsolutePath();// truyen  duong dan truc tiep cho bien string file name
-            txt_Url.setText(fileName);// gan string file name cho text field url
-        }
-
-
-    }//GEN-LAST:event_btn_AttachFileActionPerformed
-
-    private void btn_AttachFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileDataActionPerformed
-        // TODO add your handling code here:
-
-        JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-
-            File file = chooser.getSelectedFile();
-            String fileDataName = file.getAbsolutePath();
-            txt_UrlData.setText(fileDataName);
-        }
-    }//GEN-LAST:event_btn_AttachFileDataActionPerformed
-
-    private void txt_UrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UrlActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txt_UrlActionPerformed
-
-    private void txt_UrlDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UrlDataActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_UrlDataActionPerformed
-
-    private void tbl_ThesisesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ThesisesMouseClicked
-        // TODO add your handling code here:
-//        int rowNum = tbl_Thesises.getSelectedRow();
-//        int selectedThesisID = Integer.parseInt(tbl_Thesises.getValueAt(rowNum, 0).toString());
-//        
-
-    }//GEN-LAST:event_tbl_ThesisesMouseClicked
-
     private void btn_EditFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditFieldNameActionPerformed
 //        // TODO add your handling code here:
-        if (txt_FieldName.getText().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Nothing to edit! please choose a row");
-        } else {
+        if (selectedFieldID != -1) {
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
             LinhvucJpaController controller = new LinhvucJpaController(emf);
 
@@ -1109,7 +1140,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             linhvuc.setTen(txt_FieldName.getText());
 
             try {
-                btn_EditFieldName.setEnabled(false);
+
                 controller.edit(linhvuc);
                 JOptionPane.showMessageDialog(rootPane, "Updated successfully");
 
@@ -1121,28 +1152,28 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
             }
 
             clearField();
-            binCBboxField();
+            bindCBboxField();
             bindField();
             bindThesises();
-            btn_EditFieldName.setEnabled(false);
             selectedFieldID = -1;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "You must select a row first!");
         }
+
     }//GEN-LAST:event_btn_EditFieldNameActionPerformed
 
     private void tbl_FieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_FieldMouseClicked
         // TODO add your handling code here:
-        try {
-            int rowNum = tbl_Field.getSelectedRow();
-            selectedFieldID = Integer.parseInt(tbl_Field.getValueAt(rowNum, 0).toString());
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
-            LinhvucJpaController controller = new LinhvucJpaController(emf);
-            Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
 
-            txt_FieldName.setText(linhvuc.getTen());
-            btn_EditFieldName.setEnabled(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        int rowNum = tbl_Field.getSelectedRow();// when i click table field i retieve a id of field
+        selectedFieldID = Integer.parseInt(tbl_Field.getValueAt(rowNum, 0).toString());// ep kieu object ve kieu string roi ep ve kieu int
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        LinhvucJpaController controller = new LinhvucJpaController(emf);
+
+        Linhvuc linhvuc = controller.findLinhvuc(selectedFieldID);
+        txt_FieldName.setText(linhvuc.getTen());
 
 
     }//GEN-LAST:event_tbl_FieldMouseClicked
@@ -1168,7 +1199,7 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
         } else {
             try {
                 controller.create(vaitro);
-                
+
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Co Loi");
@@ -1177,26 +1208,207 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
 
         }
         bindRole();
+        bindCBRole();
         clearRole();
     }//GEN-LAST:event_btn_Insert_ROSActionPerformed
 
+    private void btn_Edit_RoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Edit_RoleActionPerformed
+        // TODO add your handling code here:
+        if (selectedRoleID != -1) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+            VaitroJpaController controller = new VaitroJpaController(emf);
+
+            Vaitro vaitro = controller.findVaitro(selectedRoleID);
+            vaitro.setTen(txt_Role.getText());
+
+            try {
+                controller.edit(vaitro);
+            } catch (Exception ex) {
+                Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "You must select a row first!", "Not a row selected", JOptionPane.ERROR_MESSAGE);
+        }
+        selectedRoleID = -1;
+        clearRole();
+        bindCBRole();
+        bindRole();
+
+
+    }//GEN-LAST:event_btn_Edit_RoleActionPerformed
+
+    private void tbl_RoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_RoleMouseClicked
+        // TODO add your handling code here:
+        int rowNum = tbl_Role.getSelectedRow();
+        selectedRoleID = Integer.parseInt(tbl_Role.getValueAt(rowNum, 0).toString());// ep kieu object ve String va tu String sang integer
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        VaitroJpaController controller = new VaitroJpaController(emf);
+
+        Vaitro vaitro = controller.findVaitro(selectedRoleID);
+        txt_Role.setText(vaitro.getTen());
+
+
+    }//GEN-LAST:event_tbl_RoleMouseClicked
+
+    private void tbl_ThesisesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ThesisesMouseClicked
+        // TODO add your handling code here:
+        //        int rowNum = tbl_Thesises.getSelectedRow();
+        //        int selectedThesisID = Integer.parseInt(tbl_Thesises.getValueAt(rowNum, 0).toString());
+        //
+    }//GEN-LAST:event_tbl_ThesisesMouseClicked
+
+    private void txt_UrlDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UrlDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_UrlDataActionPerformed
+
+    private void btn_AttachFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileDataActionPerformed
+        // TODO add your handling code here:
+
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+            File file = chooser.getSelectedFile();
+            String fileDataName = file.getAbsolutePath();
+            txt_UrlData.setText(fileDataName);
+        }
+    }//GEN-LAST:event_btn_AttachFileDataActionPerformed
+
+    private void btn_AttachFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AttachFileActionPerformed
+        // TODO add your handling code here:
+
+        JFileChooser chooser = new JFileChooser();// khoi tao object jfilechooser
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            chooser.setDialogTitle("Choose a file");
+            File file = chooser.getSelectedFile();//lay ve file duoc chon
+            String fileName = file.getAbsolutePath();// truyen  duong dan truc tiep cho bien string file name
+            txt_Url.setText(fileName);// gan string file name cho text field url
+        }
+
+    }//GEN-LAST:event_btn_AttachFileActionPerformed
+
+    private void cb_FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_FieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_FieldActionPerformed
+
+    private void btn_Close_ThesisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Close_ThesisActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Form_Home fh = new Form_Home();
+        fh.setVisible(true);
+    }//GEN-LAST:event_btn_Close_ThesisActionPerformed
+
+    private void btn_Export_To_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Export_To_ExcelActionPerformed
+        btn_Export_To_Excel.setEnabled(false);
+        try {
+
+            writeToExcel();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, "Co loi xay ra o trong ham  write to excel");
+            Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        btn_Export_To_Excel.setEnabled(true);
+    }//GEN-LAST:event_btn_Export_To_ExcelActionPerformed
+
+    private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
+
+    }//GEN-LAST:event_btn_SaveActionPerformed
+
+    private void txt_UrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UrlActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_UrlActionPerformed
+
+    private void txt_Name_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_Name_ThesisesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_Name_ThesisesActionPerformed
+
+    private void btn_Add_ThesisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Add_ThesisesActionPerformed
+        // TODO add your handling code here:
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        BaocaoJpaController controller = new BaocaoJpaController(emf);
+        Baocao baocao = new Baocao();
+
+        Linhvuc linhvuc = (Linhvuc) cb_Field.getSelectedItem();
+        Loaibaocao loaibaocao = (Loaibaocao) cb_Type.getSelectedItem();
+        baocao.setIDLinhVuc(linhvuc);
+        baocao.setIDLoai(loaibaocao);
+
+        baocao.setTen(txt_Name_Thesises.getText());
+        baocao.setThoiGian(Date_ChooserThesises.getDate());
+        baocao.setTomTat(txa_Resume.getText());
+        baocao.setUrl(txt_Url.getText());
+        baocao.setUrlData(txt_UrlData.getText());
+
+        if (txt_Name_Thesises.getText().equals("") || txt_Url.getText().equals("")
+                || txa_Resume.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Missing Field blank");
+        } else {
+            controller.create(baocao);
+            JOptionPane.showMessageDialog(rootPane, "Added successfully!");
+            bindCBboxType();
+            bindCBboxField();
+            clearThesises();
+        }
+        bindThesises();
+
+    }//GEN-LAST:event_btn_Add_ThesisesActionPerformed
+
+    private void btn_Insert_TOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Insert_TOSActionPerformed
+        // TODO add your handling code here:
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuanLiBaoCaoKhoaHocPU");
+        NhanghiencuuBaocaoJpaController controller = new NhanghiencuuBaocaoJpaController(emf);
+        NhanghiencuuBaocao nhanghiencuuBaocao = new NhanghiencuuBaocao();
+
+        Baocao baocao = (Baocao) cb_Thesis_TOS.getSelectedItem();
+        Nhanghiencuu nhanghiencuu = (Nhanghiencuu) cb_Scientist_TOS.getSelectedItem();
+        Vaitro vaitro = (Vaitro) cb_Role_TOS.getSelectedItem();
+        NhanghiencuuBaocaoPK nhanghiencuuBaocaoPK = new NhanghiencuuBaocaoPK();
+        nhanghiencuuBaocaoPK.setIDBaoCao(baocao.getId());
+        nhanghiencuuBaocaoPK.setIDNguoiNghienCuu(nhanghiencuu.getId());
+        nhanghiencuuBaocao.setNhanghiencuuBaocaoPK(nhanghiencuuBaocaoPK);
+
+        nhanghiencuuBaocao.setIDVaiTro(vaitro);
+        try {
+            bindTOS();
+            JOptionPane.showMessageDialog(null, "Inserted successfully", "Inserted", JOptionPane.NO_OPTION);
+            controller.create(nhanghiencuuBaocao);
+            
+
+        } catch (Exception ex) {
+            Logger.getLogger(Form_Manager_Thesis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btn_Insert_TOSActionPerformed
+
+    private void btn_Close_TOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Close_TOSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Close_TOSActionPerformed
+
     /**
-     * @param args the command line arguments
+     * 
      */
     public void createAndShow() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         this.setSize(965, 595);
         this.setLocationRelativeTo(null);
-        bindThesises();
-        txt_Url.setEditable(false);
-        txt_UrlData.setEditable(false);
+        txt_Url.setEditable(false);// set read only for url textfield
+        txt_UrlData.setEditable(false);//set read only for url data textfield
         bindCBboxType();
-        binCBboxField();
+        bindCBboxField();
+        bindThesises();
         bindField();
         bindType();
+        bindTOS();
         bindRole();
-        
+        bindCBRole();
+        bindCBSOT();
+        bindCBTOS();
 
     }
 
@@ -1262,7 +1474,6 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JButton btn_Insert_ROS;
     javax.swing.JButton btn_Insert_TOS;
     javax.swing.JButton btn_Insert_TypeName;
-    javax.swing.JButton btn_Print;
     javax.swing.JButton btn_Save;
     javax.swing.JComboBox<String> cb_Field;
     javax.swing.JComboBox<String> cb_Role_TOS;
@@ -1277,7 +1488,12 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JLabel jLabel12;
     javax.swing.JLabel jLabel13;
     javax.swing.JLabel jLabel14;
+    javax.swing.JLabel jLabel15;
+    javax.swing.JLabel jLabel16;
+    javax.swing.JLabel jLabel17;
+    javax.swing.JLabel jLabel19;
     javax.swing.JLabel jLabel2;
+    javax.swing.JLabel jLabel21;
     javax.swing.JLabel jLabel3;
     javax.swing.JLabel jLabel4;
     javax.swing.JLabel jLabel5;
@@ -1286,6 +1502,11 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JLabel jLabel8;
     javax.swing.JLabel jLabel9;
     javax.swing.JPanel jPanel1;
+    javax.swing.JPanel jPanel10;
+    javax.swing.JPanel jPanel11;
+    javax.swing.JPanel jPanel12;
+    javax.swing.JPanel jPanel13;
+    javax.swing.JPanel jPanel14;
     javax.swing.JPanel jPanel2;
     javax.swing.JPanel jPanel3;
     javax.swing.JPanel jPanel4;
@@ -1301,6 +1522,9 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JScrollPane jScrollPane5;
     javax.swing.JScrollPane jScrollPane6;
     javax.swing.JTabbedPane jTabbedPane1;
+    javax.swing.JLabel lb_bg;
+    javax.swing.JLabel lb_bg2;
+    javax.swing.JLabel lb_bg3;
     javax.swing.JTable tbl_Field;
     javax.swing.JTable tbl_Role;
     javax.swing.JTable tbl_TOS;
@@ -1314,8 +1538,9 @@ public class Form_Manager_Thesis extends javax.swing.JFrame {
     javax.swing.JTextField txt_Url;
     javax.swing.JTextField txt_UrlData;
     // End of variables declaration//GEN-END:variables
-    int selectedTypeID;
-    int selectedFieldID;
+    int selectedTypeID = -1;
+    int selectedFieldID = -1;
+    int selectedRoleID = -1;
 
     private static class ActionListenerImpl implements ActionListener {
 
